@@ -126,15 +126,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DatabaseInterface.cpp" />
-    <ClCompile Include="DataEncrptionInterface.cpp" />
+    <ClCompile Include="Database.cpp" />
+    <ClCompile Include="DatabaseEncryptionAndDecryption.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NewPage.cpp" />
     <ClCompile Include="StarterPage.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DatabaseInterface.h" />
-    <ClInclude Include="DataEncryptionInterface.h" />
+    <ClInclude Include="Database.h" />
+    <ClInclude Include="DatabaseEncryptionAndDecryption.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="NewPage.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -144,6 +146,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DatabaseEncryptionAndDecryption.resx">
+      <DependentUpon>DatabaseEncryptionAndDecryption.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NewPage.resx">
       <DependentUpon>NewPage.h</DependentUpon>
     </EmbeddedResource>

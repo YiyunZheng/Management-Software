@@ -1,7 +1,6 @@
 #pragma once
 #include <Windows.h>
-#include "DatabaseInterface.h"
-#include "DataEncryptionInterface.h"
+#include "Database.h"
 
 /*
  * NewPage.h
@@ -34,7 +33,7 @@ namespace WeAlumni {
 			//
 			//TODO: Add the constructor code here
 			//
-			database = gcnew DatabaseInterface();
+			database = gcnew Database(Database::DatabaseType::Admin);
 			UpdateDataGridView();
 		}
 
@@ -209,8 +208,7 @@ namespace WeAlumni {
 #pragma endregion
 	private:
 		bool DBHasPassword;
-		DatabaseInterface^ database;
-		DataEncryption^ encryption;
+		Database^ database;
 		bool VerifyPassword(String^ username, String^ inputPassword);
 		bool SetPassword(String^ username, String^ newPassword);
 		Void btn_SetPassword_Click(System::Object^ sender, System::EventArgs^ e);
