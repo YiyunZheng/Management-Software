@@ -93,6 +93,35 @@ void WeAlumni::Database::Initialize() {
 }
 
 /*
+ * GetTableName
+ * This method will offer the corrsponding table name by the given DatabaseTable
+ * @param DatabaseTable type of the database table
+ * @return String^ table name
+ */
+System::String^ WeAlumni::Database::GetTableName(DatabaseTable tableType) {
+    String^ tableName;
+    switch (tableType) {
+    case DatabaseTable::Member:
+        tableName = "Member"; break;
+    case DatabaseTable::Staff:
+        tableName = "Staff"; break;
+    case DatabaseTable::Record:
+        tableName = "Record"; break;
+    case DatabaseTable::OPT:
+        tableName = "OPT"; break;
+    case DatabaseTable::Log:
+        tableName = "Log"; break;
+    case DatabaseTable::Item:
+        tableName = "Item"; break;
+    case DatabaseTable::Orders:
+        tableName = "Orders"; break;
+    case DatabaseTable::Treasury:
+        tableName = "Treasury"; break;
+    }
+    return tableName;
+}
+
+/*
  * CreateDatabaseFile
  * This method will create a new Database file, with password set in.
  * @param None
@@ -138,12 +167,41 @@ bool WeAlumni::Database::CreateDatabaseFile() {
 }
 
 /*
+ * GetNextId
+ * This method will offer you the next available Id value to be inserted
+ * @param DatabaseTable
+ * @return int next available Id in the corresponding database table
+ */
+int WeAlumni::Database::GetNextId(DatabaseTable tableName) {
+    String^ command = "SELECT MAX(Id) FROM " + GetTableName(tableName) + ";";
+    ReadData(command);
+    String^ nextId = dataReader[0]->ToString();
+    dataReader->Close();
+    if (nextId == "" || nextId == "NULL") {
+        return 0;
+    }
+    return Int32::Parse(nextId) + 1;
+}
+
+/*
+ * GetSystemTime
+ * This method will offer the current time of system
+ * @param None
+ * @return String^ current system time
+ */
+System::String^ WeAlumni::Database::GetSystemTime() {
+    DateTime^ curTime = gcnew DateTime();
+    curTime = curTime->Now;
+    return curTime->ToString();
+}
+
+/*
  * ReadData
  * This method will try to read the Database as the command given.
  * @param String^ command that will be executed
                   "SELECT [* or COLUMN_NAME] FROM [TABLE_NAME] WHERE [CONDITION(s)];"
                   "SELECT [COLUMN_NAME] AS '[NEW_NAME]' FROM [TABLE_NAME] WHERE [CONDITION(s)];"
- * @return int -1 if nothing is read or catch an exception
+ * @return int -1 if catch an exception
  *             # of rows read if the execution is successful
  */
 int WeAlumni::Database::ReadData(String^ cmd) {
@@ -198,7 +256,6 @@ int WeAlumni::Database::ReadDataAdapter(String^ cmd) {
  *             # of rows that are successfully inserted 
  */
 int WeAlumni::Database::InsertData(String^ cmd) {
-    if (dataReader && !dataReader->IsClosed) dataReader->Close();
     int rowInserted = -1;
     try {
         command->CommandText = cmd;
@@ -219,14 +276,33 @@ int WeAlumni::Database::InsertData(String^ cmd) {
  *             # of rows that are successfully updated 
  */
 int WeAlumni::Database::UpdateData(String^ cmd) {
-    if (dataReader && !dataReader->IsClosed) dataReader->Close();
-    int rowupdated = -1;
+    int rowUpdated = -1;
     try {
         command->CommandText = cmd;
-        rowupdated = command->ExecuteNonQuery();
+        rowUpdated = command->ExecuteNonQuery();
     }
     catch (SQLiteException^) {
         // Leave empty
     }
-    return rowupdated;
+    return rowUpdated;
+}
+
+/*
+ * DeleteDataData
+ * This method will try to remove data from the Database as the command given.
+ * @param String^ command that will be executed
+ *                "DELETE FROM [TABLE_NAME] WHERE [CONDITION];"
+ * @return int -1 if catch an exception
+ *             # of rows that are successfully deleted
+ */
+int WeAlumni::Database::DeleteData(String^ cmd) {
+    int rowDeleted = -1;
+    try {
+        command->CommandText = cmd;
+        rowDeleted = command->ExecuteNonQuery();
+    }
+    catch (SQLiteException^) {
+        // Leave empty
+    }
+    return rowDeleted;
 }

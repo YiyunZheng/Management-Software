@@ -25,6 +25,21 @@
     <Filter Include="Header Files\Database">
       <UniqueIdentifier>{8d0dd403-d579-46aa-bbec-5a7ceb124f93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Demo">
+      <UniqueIdentifier>{70cc6ad4-6431-4238-84b0-2cbae4e94978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Log">
+      <UniqueIdentifier>{1f34f568-5bfb-4959-8e91-f9ba760ae5c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Log">
+      <UniqueIdentifier>{bb8e72d4-810d-4662-8a6b-987283a78a4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MainWindow">
+      <UniqueIdentifier>{32a1db52-0f9b-4ce6-97cd-c131e52e085d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MainWindow">
+      <UniqueIdentifier>{b91f38b9-5f87-4720-b933-d0e7c951ffb4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -42,13 +57,19 @@
     <ClCompile Include="DatabaseEncryptionAndDecryption.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Source Files\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Source Files\MainWindow</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StarterPage.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Demo</Filter>
     </ClInclude>
     <ClInclude Include="NewPage.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Demo</Filter>
     </ClInclude>
     <ClInclude Include="DatabaseParam.h">
       <Filter>Header Files\Database</Filter>
@@ -58,6 +79,12 @@
     </ClInclude>
     <ClInclude Include="DatabaseEncryptionAndDecryption.h">
       <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="MainWindow.h">
+      <Filter>Header Files\MainWindow</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
