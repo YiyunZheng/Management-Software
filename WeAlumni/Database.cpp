@@ -79,7 +79,7 @@ System::String^ WeAlumni::Database::GetConnectionString() {
  */
 void WeAlumni::Database::Initialize() {
     if (!CheckDatabaseFileExistence()) {
-        throw gcnew Exception("´ËÊı¾İ¿â²»´æÔÚ»ò²»ÔÚÖ¸¶¨Î»ÖÃ£º" + GetDatabaseName());
+        throw gcnew Exception("æ­¤æ•°æ®åº“ä¸å­˜åœ¨æˆ–ä¸åœ¨æŒ‡å®šä½ç½®ï¼š" + GetDatabaseName());
     }
 
     try {

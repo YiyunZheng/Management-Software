@@ -28,11 +28,14 @@
     <Filter Include="Header Files\Demo">
       <UniqueIdentifier>{70cc6ad4-6431-4238-84b0-2cbae4e94978}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\MemInfoPage">
+      <UniqueIdentifier>{e2f4a6d8-18bd-444c-838c-6159073266ae}</UniqueIdentifier>
+	</Filter>
     <Filter Include="Header Files\Log">
       <UniqueIdentifier>{1f34f568-5bfb-4959-8e91-f9ba760ae5c5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Log">
-      <UniqueIdentifier>{bb8e72d4-810d-4662-8a6b-987283a78a4d}</UniqueIdentifier>
+      <UniqueIdentifier>{bb8e72d4-810d-4662-8a6b-987283a78a4d}</UniqueIdentifier>	
     </Filter>
     <Filter Include="Source Files\MainWindow">
       <UniqueIdentifier>{32a1db52-0f9b-4ce6-97cd-c131e52e085d}</UniqueIdentifier>
@@ -57,6 +60,9 @@
     <ClCompile Include="DatabaseEncryptionAndDecryption.cpp">
       <Filter>Source Files\Database</Filter>
     </ClCompile>
+    <ClCompile Include="MemInfoPage.cpp">
+      <Filter>Header Files\MemInfoPage</Filter>
+	</ClCompile>
     <ClCompile Include="Log.cpp">
       <Filter>Source Files\Log</Filter>
     </ClCompile>
@@ -80,6 +86,9 @@
     <ClInclude Include="DatabaseEncryptionAndDecryption.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
+    <ClInclude Include="MemInfoPage.h">
+      <Filter>Header Files\MemInfoPage</Filter>
+	</ClInclude>
     <ClInclude Include="Log.h">
       <Filter>Header Files\Log</Filter>
     </ClInclude>
