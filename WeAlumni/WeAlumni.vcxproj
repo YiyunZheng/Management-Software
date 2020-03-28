@@ -135,6 +135,7 @@
     <ClCompile Include="NewPage.cpp" />
     <ClCompile Include="OPTInfoPage.cpp" />
     <ClCompile Include="StarterPage.cpp" />
+    <ClCompile Include="StfInfoPage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Database.h" />
@@ -158,6 +159,9 @@
     <ClInclude Include="StarterPage.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="StfInfoPage.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DatabaseEncryptionAndDecryption.resx">
@@ -174,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StarterPage.resx">
       <DependentUpon>StarterPage.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StfInfoPage.resx">
+      <DependentUpon>StfInfoPage.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
