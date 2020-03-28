@@ -1,6 +1,17 @@
-#include "Database.h"
-#include "string"
 #pragma once
+#include "Database.h"
+
+
+/*
+ * StarterPage.h
+ *
+ * This file set up Treasury Info Page and support modifying treasury infomation, 
+ * comfirm modify and delete record.
+ *
+ * @author: Yiyun Zheng
+ * Revised: 3/27/20
+ *
+ */
 
 namespace WeAlumni {
 
@@ -30,7 +41,7 @@ namespace WeAlumni {
 		{
 			InitializeComponent();
 			OrderId = OId;
-			UpdatePageInfo(OrderId);
+			UpdateInfo(OrderId);
 
 			//
 			//TODO:  在此处添加构造函数代码
@@ -53,50 +64,93 @@ namespace WeAlumni {
 			{
 				delete components;
 			}
-			_DataDB->~Database();
-			_TreDB->~Database();
+			if (_DataDB) {
+				_DataDB->~Database();
+			}
+			if (_TreDB) {
+				_TreDB->~Database();
+			}
+			
+			
 		}
-	private: System::Windows::Forms::Label^ Title;
-	private: System::Windows::Forms::Label^ ID;
-	private: System::Windows::Forms::Label^ Time;
-	private: System::Windows::Forms::Label^ StfId;
-	private: System::Windows::Forms::Label^ StfName;
-	private: System::Windows::Forms::Label^ Dept;
-	private: System::Windows::Forms::Label^ Position;
-	private: System::Windows::Forms::Label^ Amount;
-	private: System::Windows::Forms::Label^ Comment;
-	private: System::Windows::Forms::TextBox^ IdText;
-	private: System::Windows::Forms::TextBox^ StfText;
+	private: System::Windows::Forms::Label^ lbl_Prompt_Title;
+	private: System::Windows::Forms::Label^ lbl_Prompt_Id;
+	private: System::Windows::Forms::Label^ lbl_Prompt_Time;
+	private: System::Windows::Forms::Label^ lbl_Prompt_StfId;
+	private: System::Windows::Forms::Label^ lbl_Prompt_StfName;
+	private: System::Windows::Forms::Label^ lbl_Prompt_Dept;
+	private: System::Windows::Forms::Label^ lbl_Prompt_Position;
+	private: System::Windows::Forms::Label^ lbl_Prompt_Amount;
+	private: System::Windows::Forms::Label^ lbl_Prompt_Comment;
+	private: System::Windows::Forms::TextBox^ txt_Id;
+	private: System::Windows::Forms::TextBox^ txt_StfId;
 
-
-	private: System::Windows::Forms::TextBox^ TimeText;
-	private: System::Windows::Forms::TextBox^ AmountText;
-
-
-	private: System::Windows::Forms::TextBox^ DeptText;
-	private: System::Windows::Forms::TextBox^ PositionText;
+	protected:
 
 
 
-	private: System::Windows::Forms::TextBox^ StfNameText;
-	private: System::Windows::Forms::RichTextBox^ CommentText;
-	private: System::Windows::Forms::Button^ ModTre;
-	private: System::Windows::Forms::Button^ DelTre;
-	private: System::Windows::Forms::Label^ IdShow;
-	private: System::Windows::Forms::Label^ TimeShow;
-	private: System::Windows::Forms::Label^ StfIdShow;
-	private: System::Windows::Forms::Label^ DepartmentShow;
-	private: System::Windows::Forms::Label^ StfNameShow;
-	private: System::Windows::Forms::Label^ PositionShow;
-	private: System::Windows::Forms::Label^ AmountShow;
-	private: System::Windows::Forms::Label^ CommentShow;
-	private: System::Windows::Forms::Label^ TypeShow;
-	private: System::Windows::Forms::TextBox^ TypeText;
 
 
-	private: System::Windows::Forms::Label^ Type;
-	private: System::Windows::Forms::Button^ CancelMod;
-	private: System::Windows::Forms::Button^ ConfirmMod;
+
+
+
+
+
+
+	private: System::Windows::Forms::TextBox^ txt_Time;
+	private: System::Windows::Forms::TextBox^ txt_Amount;
+
+
+
+
+	private: System::Windows::Forms::TextBox^ txt_Dept;
+	private: System::Windows::Forms::TextBox^ txt_Position;
+
+
+
+
+	private: System::Windows::Forms::TextBox^ txt_StfName;
+	private: System::Windows::Forms::RichTextBox^ txt_Comment;
+	private: System::Windows::Forms::Button^ btn_ChangeInfo;
+	private: System::Windows::Forms::Button^ btn_Delete;
+
+
+
+
+
+
+
+	private: System::Windows::Forms::Label^ lbl_Id;
+	private: System::Windows::Forms::Label^ lbl_Time;
+	private: System::Windows::Forms::Label^ lbl_StfId;
+	private: System::Windows::Forms::Label^ lbl_Dept;
+
+
+
+
+	private: System::Windows::Forms::Label^ lbl_StfName;
+	private: System::Windows::Forms::Label^ lbl_Position;
+	private: System::Windows::Forms::Label^ lbl_Amount;
+	private: System::Windows::Forms::Label^ lbl_Comment;
+
+
+
+
+
+	private: System::Windows::Forms::Label^ lbl_Type;
+private: System::Windows::Forms::TextBox^ txt_Type;
+
+
+	private: System::Windows::Forms::Label^ lbl_Prompt_Type;
+private: System::Windows::Forms::Button^ btn_Cancle;
+
+
+
+
+private: System::Windows::Forms::Button^ btn_Accpet;
+private: System::Windows::Forms::Label^ lbl_Error;
+
+
 
 
 
@@ -123,420 +177,428 @@ namespace WeAlumni {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->Title = (gcnew System::Windows::Forms::Label());
-			this->ID = (gcnew System::Windows::Forms::Label());
-			this->Time = (gcnew System::Windows::Forms::Label());
-			this->StfId = (gcnew System::Windows::Forms::Label());
-			this->StfName = (gcnew System::Windows::Forms::Label());
-			this->Dept = (gcnew System::Windows::Forms::Label());
-			this->Position = (gcnew System::Windows::Forms::Label());
-			this->Amount = (gcnew System::Windows::Forms::Label());
-			this->Comment = (gcnew System::Windows::Forms::Label());
-			this->IdText = (gcnew System::Windows::Forms::TextBox());
-			this->StfText = (gcnew System::Windows::Forms::TextBox());
-			this->TimeText = (gcnew System::Windows::Forms::TextBox());
-			this->AmountText = (gcnew System::Windows::Forms::TextBox());
-			this->DeptText = (gcnew System::Windows::Forms::TextBox());
-			this->PositionText = (gcnew System::Windows::Forms::TextBox());
-			this->StfNameText = (gcnew System::Windows::Forms::TextBox());
-			this->CommentText = (gcnew System::Windows::Forms::RichTextBox());
-			this->ModTre = (gcnew System::Windows::Forms::Button());
-			this->DelTre = (gcnew System::Windows::Forms::Button());
-			this->IdShow = (gcnew System::Windows::Forms::Label());
-			this->TimeShow = (gcnew System::Windows::Forms::Label());
-			this->StfIdShow = (gcnew System::Windows::Forms::Label());
-			this->DepartmentShow = (gcnew System::Windows::Forms::Label());
-			this->StfNameShow = (gcnew System::Windows::Forms::Label());
-			this->PositionShow = (gcnew System::Windows::Forms::Label());
-			this->AmountShow = (gcnew System::Windows::Forms::Label());
-			this->CommentShow = (gcnew System::Windows::Forms::Label());
-			this->TypeShow = (gcnew System::Windows::Forms::Label());
-			this->TypeText = (gcnew System::Windows::Forms::TextBox());
-			this->Type = (gcnew System::Windows::Forms::Label());
-			this->CancelMod = (gcnew System::Windows::Forms::Button());
-			this->ConfirmMod = (gcnew System::Windows::Forms::Button());
+			this->lbl_Prompt_Title = (gcnew System::Windows::Forms::Label());
+			this->lbl_Prompt_Id = (gcnew System::Windows::Forms::Label());
+			this->lbl_Prompt_Time = (gcnew System::Windows::Forms::Label());
+			this->lbl_Prompt_StfId = (gcnew System::Windows::Forms::Label());
+			this->lbl_Prompt_StfName = (gcnew System::Windows::Forms::Label());
+			this->lbl_Prompt_Dept = (gcnew System::Windows::Forms::Label());
+			this->lbl_Prompt_Position = (gcnew System::Windows::Forms::Label());
+			this->lbl_Prompt_Amount = (gcnew System::Windows::Forms::Label());
+			this->lbl_Prompt_Comment = (gcnew System::Windows::Forms::Label());
+			this->txt_Id = (gcnew System::Windows::Forms::TextBox());
+			this->txt_StfId = (gcnew System::Windows::Forms::TextBox());
+			this->txt_Time = (gcnew System::Windows::Forms::TextBox());
+			this->txt_Amount = (gcnew System::Windows::Forms::TextBox());
+			this->txt_Dept = (gcnew System::Windows::Forms::TextBox());
+			this->txt_Position = (gcnew System::Windows::Forms::TextBox());
+			this->txt_StfName = (gcnew System::Windows::Forms::TextBox());
+			this->txt_Comment = (gcnew System::Windows::Forms::RichTextBox());
+			this->btn_ChangeInfo = (gcnew System::Windows::Forms::Button());
+			this->btn_Delete = (gcnew System::Windows::Forms::Button());
+			this->lbl_Id = (gcnew System::Windows::Forms::Label());
+			this->lbl_Time = (gcnew System::Windows::Forms::Label());
+			this->lbl_StfId = (gcnew System::Windows::Forms::Label());
+			this->lbl_Dept = (gcnew System::Windows::Forms::Label());
+			this->lbl_StfName = (gcnew System::Windows::Forms::Label());
+			this->lbl_Position = (gcnew System::Windows::Forms::Label());
+			this->lbl_Amount = (gcnew System::Windows::Forms::Label());
+			this->lbl_Comment = (gcnew System::Windows::Forms::Label());
+			this->lbl_Type = (gcnew System::Windows::Forms::Label());
+			this->txt_Type = (gcnew System::Windows::Forms::TextBox());
+			this->lbl_Prompt_Type = (gcnew System::Windows::Forms::Label());
+			this->btn_Cancle = (gcnew System::Windows::Forms::Button());
+			this->btn_Accpet = (gcnew System::Windows::Forms::Button());
+			this->lbl_Error = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
-			// Title
+			// lbl_Prompt_Title
 			// 
-			this->Title->AutoSize = true;
-			this->Title->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Prompt_Title->AutoSize = true;
+			this->lbl_Prompt_Title->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Title->Location = System::Drawing::Point(566, 82);
-			this->Title->Name = L"Title";
-			this->Title->Size = System::Drawing::Size(374, 48);
-			this->Title->TabIndex = 0;
-			this->Title->Text = L"Treasury Info Page";
-			this->Title->TextAlign = System::Drawing::ContentAlignment::TopCenter;
+			this->lbl_Prompt_Title->Location = System::Drawing::Point(566, 82);
+			this->lbl_Prompt_Title->Name = L"lbl_Prompt_Title";
+			this->lbl_Prompt_Title->Size = System::Drawing::Size(374, 48);
+			this->lbl_Prompt_Title->TabIndex = 0;
+			this->lbl_Prompt_Title->Text = L"Treasury Info Page";
+			this->lbl_Prompt_Title->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
-			// ID
+			// lbl_Prompt_Id
 			// 
-			this->ID->AutoSize = true;
-			this->ID->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Prompt_Id->AutoSize = true;
+			this->lbl_Prompt_Id->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->ID->Location = System::Drawing::Point(268, 201);
-			this->ID->Name = L"ID";
-			this->ID->Size = System::Drawing::Size(52, 40);
-			this->ID->TabIndex = 1;
-			this->ID->Text = L"ID";
+			this->lbl_Prompt_Id->Location = System::Drawing::Point(268, 201);
+			this->lbl_Prompt_Id->Name = L"lbl_Prompt_Id";
+			this->lbl_Prompt_Id->Size = System::Drawing::Size(52, 40);
+			this->lbl_Prompt_Id->TabIndex = 1;
+			this->lbl_Prompt_Id->Text = L"ID";
 			// 
-			// Time
+			// lbl_Prompt_Time
 			// 
-			this->Time->AutoSize = true;
-			this->Time->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Prompt_Time->AutoSize = true;
+			this->lbl_Prompt_Time->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Time->Location = System::Drawing::Point(916, 201);
-			this->Time->Name = L"Time";
-			this->Time->Size = System::Drawing::Size(97, 40);
-			this->Time->TabIndex = 2;
-			this->Time->Text = L"Time";
+			this->lbl_Prompt_Time->Location = System::Drawing::Point(916, 201);
+			this->lbl_Prompt_Time->Name = L"lbl_Prompt_Time";
+			this->lbl_Prompt_Time->Size = System::Drawing::Size(97, 40);
+			this->lbl_Prompt_Time->TabIndex = 2;
+			this->lbl_Prompt_Time->Text = L"Time";
 			// 
-			// StfId
+			// lbl_Prompt_StfId
 			// 
-			this->StfId->AutoSize = true;
-			this->StfId->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Prompt_StfId->AutoSize = true;
+			this->lbl_Prompt_StfId->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->StfId->Location = System::Drawing::Point(268, 300);
-			this->StfId->Name = L"StfId";
-			this->StfId->Size = System::Drawing::Size(136, 40);
-			this->StfId->TabIndex = 3;
-			this->StfId->Text = L"Staff ID";
-			this->StfId->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			this->lbl_Prompt_StfId->Location = System::Drawing::Point(268, 300);
+			this->lbl_Prompt_StfId->Name = L"lbl_Prompt_StfId";
+			this->lbl_Prompt_StfId->Size = System::Drawing::Size(136, 40);
+			this->lbl_Prompt_StfId->TabIndex = 3;
+			this->lbl_Prompt_StfId->Text = L"Staff ID";
+			this->lbl_Prompt_StfId->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			// 
-			// StfName
+			// lbl_Prompt_StfName
 			// 
-			this->StfName->AutoSize = true;
-			this->StfName->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Prompt_StfName->AutoSize = true;
+			this->lbl_Prompt_StfName->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->StfName->Location = System::Drawing::Point(916, 300);
-			this->StfName->Name = L"StfName";
-			this->StfName->Size = System::Drawing::Size(197, 40);
-			this->StfName->TabIndex = 4;
-			this->StfName->Text = L"Staff Name";
+			this->lbl_Prompt_StfName->Location = System::Drawing::Point(916, 300);
+			this->lbl_Prompt_StfName->Name = L"lbl_Prompt_StfName";
+			this->lbl_Prompt_StfName->Size = System::Drawing::Size(197, 40);
+			this->lbl_Prompt_StfName->TabIndex = 4;
+			this->lbl_Prompt_StfName->Text = L"Staff Name";
 			// 
-			// Dept
+			// lbl_Prompt_Dept
 			// 
-			this->Dept->AutoSize = true;
-			this->Dept->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Prompt_Dept->AutoSize = true;
+			this->lbl_Prompt_Dept->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Dept->Location = System::Drawing::Point(268, 405);
-			this->Dept->Name = L"Dept";
-			this->Dept->Size = System::Drawing::Size(205, 40);
-			this->Dept->TabIndex = 5;
-			this->Dept->Text = L"Department";
+			this->lbl_Prompt_Dept->Location = System::Drawing::Point(268, 405);
+			this->lbl_Prompt_Dept->Name = L"lbl_Prompt_Dept";
+			this->lbl_Prompt_Dept->Size = System::Drawing::Size(205, 40);
+			this->lbl_Prompt_Dept->TabIndex = 5;
+			this->lbl_Prompt_Dept->Text = L"Department";
 			// 
-			// Position
+			// lbl_Prompt_Position
 			// 
-			this->Position->AutoSize = true;
-			this->Position->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Prompt_Position->AutoSize = true;
+			this->lbl_Prompt_Position->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			this->lbl_Prompt_Position->Location = System::Drawing::Point(916, 405);
+			this->lbl_Prompt_Position->Name = L"lbl_Prompt_Position";
+			this->lbl_Prompt_Position->Size = System::Drawing::Size(145, 40);
+			this->lbl_Prompt_Position->TabIndex = 6;
+			this->lbl_Prompt_Position->Text = L"Position";
+			// 
+			// lbl_Prompt_Amount
+			// 
+			this->lbl_Prompt_Amount->AutoSize = true;
+			this->lbl_Prompt_Amount->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Position->Location = System::Drawing::Point(916, 405);
-			this->Position->Name = L"Position";
-			this->Position->Size = System::Drawing::Size(145, 40);
-			this->Position->TabIndex = 6;
-			this->Position->Text = L"Position";
+			this->lbl_Prompt_Amount->Location = System::Drawing::Point(916, 511);
+			this->lbl_Prompt_Amount->Name = L"lbl_Prompt_Amount";
+			this->lbl_Prompt_Amount->Size = System::Drawing::Size(141, 40);
+			this->lbl_Prompt_Amount->TabIndex = 7;
+			this->lbl_Prompt_Amount->Text = L"Amount";
 			// 
-			// Amount
+			// lbl_Prompt_Comment
 			// 
-			this->Amount->AutoSize = true;
-			this->Amount->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Prompt_Comment->AutoSize = true;
+			this->lbl_Prompt_Comment->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Amount->Location = System::Drawing::Point(916, 511);
-			this->Amount->Name = L"Amount";
-			this->Amount->Size = System::Drawing::Size(141, 40);
-			this->Amount->TabIndex = 7;
-			this->Amount->Text = L"Amount";
+			this->lbl_Prompt_Comment->Location = System::Drawing::Point(268, 609);
+			this->lbl_Prompt_Comment->Name = L"lbl_Prompt_Comment";
+			this->lbl_Prompt_Comment->Size = System::Drawing::Size(173, 40);
+			this->lbl_Prompt_Comment->TabIndex = 8;
+			this->lbl_Prompt_Comment->Text = L"Comment";
 			// 
-			// Comment
+			// txt_Id
 			// 
-			this->Comment->AutoSize = true;
-			this->Comment->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->txt_Id->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Comment->Location = System::Drawing::Point(268, 609);
-			this->Comment->Name = L"Comment";
-			this->Comment->Size = System::Drawing::Size(173, 40);
-			this->Comment->TabIndex = 8;
-			this->Comment->Text = L"Comment";
+			this->txt_Id->Location = System::Drawing::Point(530, 208);
+			this->txt_Id->Name = L"txt_Id";
+			this->txt_Id->Size = System::Drawing::Size(196, 41);
+			this->txt_Id->TabIndex = 9;
+			this->txt_Id->Visible = false;
 			// 
-			// IdText
+			// txt_StfId
 			// 
-			this->IdText->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->txt_StfId->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->IdText->Location = System::Drawing::Point(530, 208);
-			this->IdText->Name = L"IdText";
-			this->IdText->Size = System::Drawing::Size(196, 41);
-			this->IdText->TabIndex = 9;
-			this->IdText->Visible = false;
+			this->txt_StfId->Location = System::Drawing::Point(530, 300);
+			this->txt_StfId->Name = L"txt_StfId";
+			this->txt_StfId->Size = System::Drawing::Size(196, 41);
+			this->txt_StfId->TabIndex = 10;
+			this->txt_StfId->Visible = false;
 			// 
-			// StfText
+			// txt_Time
 			// 
-			this->StfText->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->txt_Time->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->StfText->Location = System::Drawing::Point(530, 300);
-			this->StfText->Name = L"StfText";
-			this->StfText->Size = System::Drawing::Size(196, 41);
-			this->StfText->TabIndex = 10;
-			this->StfText->Visible = false;
+			this->txt_Time->Location = System::Drawing::Point(1145, 208);
+			this->txt_Time->Name = L"txt_Time";
+			this->txt_Time->Size = System::Drawing::Size(189, 41);
+			this->txt_Time->TabIndex = 11;
+			this->txt_Time->Visible = false;
 			// 
-			// TimeText
+			// txt_Amount
 			// 
-			this->TimeText->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->txt_Amount->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->TimeText->Location = System::Drawing::Point(1145, 208);
-			this->TimeText->Name = L"TimeText";
-			this->TimeText->Size = System::Drawing::Size(189, 41);
-			this->TimeText->TabIndex = 11;
-			this->TimeText->Visible = false;
+			this->txt_Amount->Location = System::Drawing::Point(1138, 510);
+			this->txt_Amount->Name = L"txt_Amount";
+			this->txt_Amount->Size = System::Drawing::Size(196, 41);
+			this->txt_Amount->TabIndex = 13;
+			this->txt_Amount->Visible = false;
 			// 
-			// AmountText
+			// txt_Dept
 			// 
-			this->AmountText->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->txt_Dept->Location = System::Drawing::Point(530, 405);
+			this->txt_Dept->Name = L"txt_Dept";
+			this->txt_Dept->Size = System::Drawing::Size(196, 35);
+			this->txt_Dept->TabIndex = 14;
+			this->txt_Dept->Visible = false;
+			// 
+			// txt_Position
+			// 
+			this->txt_Position->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->AmountText->Location = System::Drawing::Point(1138, 510);
-			this->AmountText->Name = L"AmountText";
-			this->AmountText->Size = System::Drawing::Size(196, 41);
-			this->AmountText->TabIndex = 13;
-			this->AmountText->Visible = false;
+			this->txt_Position->Location = System::Drawing::Point(1145, 412);
+			this->txt_Position->Name = L"txt_Position";
+			this->txt_Position->Size = System::Drawing::Size(189, 41);
+			this->txt_Position->TabIndex = 16;
+			this->txt_Position->Visible = false;
 			// 
-			// DeptText
+			// txt_StfName
 			// 
-			this->DeptText->Location = System::Drawing::Point(530, 405);
-			this->DeptText->Name = L"DeptText";
-			this->DeptText->Size = System::Drawing::Size(196, 35);
-			this->DeptText->TabIndex = 14;
-			this->DeptText->Visible = false;
-			// 
-			// PositionText
-			// 
-			this->PositionText->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->txt_StfName->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->PositionText->Location = System::Drawing::Point(1145, 412);
-			this->PositionText->Name = L"PositionText";
-			this->PositionText->Size = System::Drawing::Size(189, 41);
-			this->PositionText->TabIndex = 16;
-			this->PositionText->Visible = false;
+			this->txt_StfName->Location = System::Drawing::Point(1145, 307);
+			this->txt_StfName->Name = L"txt_StfName";
+			this->txt_StfName->Size = System::Drawing::Size(189, 41);
+			this->txt_StfName->TabIndex = 17;
+			this->txt_StfName->Visible = false;
 			// 
-			// StfNameText
+			// txt_Comment
 			// 
-			this->StfNameText->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->txt_Comment->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->StfNameText->Location = System::Drawing::Point(1145, 307);
-			this->StfNameText->Name = L"StfNameText";
-			this->StfNameText->Size = System::Drawing::Size(189, 41);
-			this->StfNameText->TabIndex = 17;
-			this->StfNameText->Visible = false;
+			this->txt_Comment->Location = System::Drawing::Point(275, 703);
+			this->txt_Comment->Name = L"txt_Comment";
+			this->txt_Comment->Size = System::Drawing::Size(1034, 289);
+			this->txt_Comment->TabIndex = 18;
+			this->txt_Comment->Text = L"";
+			this->txt_Comment->Visible = false;
 			// 
-			// CommentText
+			// btn_ChangeInfo
 			// 
-			this->CommentText->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->btn_ChangeInfo->Location = System::Drawing::Point(444, 1117);
+			this->btn_ChangeInfo->Name = L"btn_ChangeInfo";
+			this->btn_ChangeInfo->Size = System::Drawing::Size(213, 117);
+			this->btn_ChangeInfo->TabIndex = 19;
+			this->btn_ChangeInfo->Text = L"Modify Record";
+			this->btn_ChangeInfo->UseVisualStyleBackColor = true;
+			this->btn_ChangeInfo->Click += gcnew System::EventHandler(this, &TreInfoPage::btn_ChangeInfo_Click);
+			// 
+			// btn_Delete
+			// 
+			this->btn_Delete->Location = System::Drawing::Point(900, 1119);
+			this->btn_Delete->Name = L"btn_Delete";
+			this->btn_Delete->Size = System::Drawing::Size(213, 113);
+			this->btn_Delete->TabIndex = 20;
+			this->btn_Delete->Text = L"Delete Record";
+			this->btn_Delete->UseVisualStyleBackColor = true;
+			this->btn_Delete->Click += gcnew System::EventHandler(this, &TreInfoPage::btn_Delete_Click);
+			// 
+			// lbl_Id
+			// 
+			this->lbl_Id->AutoSize = true;
+			this->lbl_Id->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->CommentText->Location = System::Drawing::Point(275, 703);
-			this->CommentText->Name = L"CommentText";
-			this->CommentText->Size = System::Drawing::Size(1034, 289);
-			this->CommentText->TabIndex = 18;
-			this->CommentText->Text = L"";
-			this->CommentText->Visible = false;
+			this->lbl_Id->Location = System::Drawing::Point(524, 211);
+			this->lbl_Id->Name = L"lbl_Id";
+			this->lbl_Id->Size = System::Drawing::Size(42, 36);
+			this->lbl_Id->TabIndex = 21;
+			this->lbl_Id->Text = L"-1";
 			// 
-			// ModTre
+			// lbl_Time
 			// 
-			this->ModTre->Location = System::Drawing::Point(444, 1117);
-			this->ModTre->Name = L"ModTre";
-			this->ModTre->Size = System::Drawing::Size(213, 117);
-			this->ModTre->TabIndex = 19;
-			this->ModTre->Text = L"Modify Record";
-			this->ModTre->UseVisualStyleBackColor = true;
-			this->ModTre->Click += gcnew System::EventHandler(this, &TreInfoPage::ModTre_Click);
-			// 
-			// DelTre
-			// 
-			this->DelTre->Location = System::Drawing::Point(923, 1117);
-			this->DelTre->Name = L"DelTre";
-			this->DelTre->Size = System::Drawing::Size(213, 113);
-			this->DelTre->TabIndex = 20;
-			this->DelTre->Text = L"Delete Record";
-			this->DelTre->UseVisualStyleBackColor = true;
-			// 
-			// IdShow
-			// 
-			this->IdShow->AutoSize = true;
-			this->IdShow->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Time->AutoSize = true;
+			this->lbl_Time->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->IdShow->Location = System::Drawing::Point(524, 211);
-			this->IdShow->Name = L"IdShow";
-			this->IdShow->Size = System::Drawing::Size(32, 36);
-			this->IdShow->TabIndex = 21;
-			this->IdShow->Text = L"0";
+			this->lbl_Time->Location = System::Drawing::Point(1139, 211);
+			this->lbl_Time->Name = L"lbl_Time";
+			this->lbl_Time->Size = System::Drawing::Size(0, 36);
+			this->lbl_Time->TabIndex = 22;
 			// 
-			// TimeShow
+			// lbl_StfId
 			// 
-			this->TimeShow->AutoSize = true;
-			this->TimeShow->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_StfId->AutoSize = true;
+			this->lbl_StfId->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->TimeShow->Location = System::Drawing::Point(1139, 211);
-			this->TimeShow->Name = L"TimeShow";
-			this->TimeShow->Size = System::Drawing::Size(155, 36);
-			this->TimeShow->TabIndex = 22;
-			this->TimeShow->Text = L"TimeShow";
+			this->lbl_StfId->Location = System::Drawing::Point(524, 303);
+			this->lbl_StfId->Name = L"lbl_StfId";
+			this->lbl_StfId->Size = System::Drawing::Size(0, 36);
+			this->lbl_StfId->TabIndex = 23;
 			// 
-			// StfIdShow
+			// lbl_Dept
 			// 
-			this->StfIdShow->AutoSize = true;
-			this->StfIdShow->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Dept->AutoSize = true;
+			this->lbl_Dept->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->StfIdShow->Location = System::Drawing::Point(524, 303);
-			this->StfIdShow->Name = L"StfIdShow";
-			this->StfIdShow->Size = System::Drawing::Size(152, 36);
-			this->StfIdShow->TabIndex = 23;
-			this->StfIdShow->Text = L"StfIdShow";
+			this->lbl_Dept->Location = System::Drawing::Point(524, 402);
+			this->lbl_Dept->Name = L"lbl_Dept";
+			this->lbl_Dept->Size = System::Drawing::Size(0, 36);
+			this->lbl_Dept->TabIndex = 24;
 			// 
-			// DepartmentShow
+			// lbl_StfName
 			// 
-			this->DepartmentShow->AutoSize = true;
-			this->DepartmentShow->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_StfName->AutoSize = true;
+			this->lbl_StfName->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->DepartmentShow->Location = System::Drawing::Point(524, 409);
-			this->DepartmentShow->Name = L"DepartmentShow";
-			this->DepartmentShow->Size = System::Drawing::Size(243, 36);
-			this->DepartmentShow->TabIndex = 24;
-			this->DepartmentShow->Text = L"DepartmentShow";
+			this->lbl_StfName->Location = System::Drawing::Point(1148, 307);
+			this->lbl_StfName->Name = L"lbl_StfName";
+			this->lbl_StfName->Size = System::Drawing::Size(0, 36);
+			this->lbl_StfName->TabIndex = 25;
 			// 
-			// StfNameShow
+			// lbl_Position
 			// 
-			this->StfNameShow->AutoSize = true;
-			this->StfNameShow->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Position->AutoSize = true;
+			this->lbl_Position->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->StfNameShow->Location = System::Drawing::Point(1139, 310);
-			this->StfNameShow->Name = L"StfNameShow";
-			this->StfNameShow->Size = System::Drawing::Size(204, 36);
-			this->StfNameShow->TabIndex = 25;
-			this->StfNameShow->Text = L"StfNameShow";
+			this->lbl_Position->Location = System::Drawing::Point(1139, 417);
+			this->lbl_Position->Name = L"lbl_Position";
+			this->lbl_Position->Size = System::Drawing::Size(0, 36);
+			this->lbl_Position->TabIndex = 26;
 			// 
-			// PositionShow
+			// lbl_Amount
 			// 
-			this->PositionShow->AutoSize = true;
-			this->PositionShow->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Amount->AutoSize = true;
+			this->lbl_Amount->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->PositionShow->Location = System::Drawing::Point(1139, 409);
-			this->PositionShow->Name = L"PositionShow";
-			this->PositionShow->Size = System::Drawing::Size(199, 36);
-			this->PositionShow->TabIndex = 26;
-			this->PositionShow->Text = L"PositionShow";
+			this->lbl_Amount->Location = System::Drawing::Point(1139, 508);
+			this->lbl_Amount->Name = L"lbl_Amount";
+			this->lbl_Amount->Size = System::Drawing::Size(0, 36);
+			this->lbl_Amount->TabIndex = 27;
 			// 
-			// AmountShow
+			// lbl_Comment
 			// 
-			this->AmountShow->AutoSize = true;
-			this->AmountShow->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Comment->AutoSize = true;
+			this->lbl_Comment->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->AmountShow->Location = System::Drawing::Point(1139, 513);
-			this->AmountShow->Name = L"AmountShow";
-			this->AmountShow->Size = System::Drawing::Size(194, 36);
-			this->AmountShow->TabIndex = 27;
-			this->AmountShow->Text = L"AmountShow";
+			this->lbl_Comment->Location = System::Drawing::Point(278, 706);
+			this->lbl_Comment->Name = L"lbl_Comment";
+			this->lbl_Comment->Size = System::Drawing::Size(0, 36);
+			this->lbl_Comment->TabIndex = 28;
 			// 
-			// CommentShow
+			// lbl_Type
 			// 
-			this->CommentShow->AutoSize = true;
-			this->CommentShow->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Type->AutoSize = true;
+			this->lbl_Type->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->CommentShow->Location = System::Drawing::Point(278, 706);
-			this->CommentShow->Name = L"CommentShow";
-			this->CommentShow->Size = System::Drawing::Size(216, 36);
-			this->CommentShow->TabIndex = 28;
-			this->CommentShow->Text = L"CommentShow";
+			this->lbl_Type->Location = System::Drawing::Point(524, 510);
+			this->lbl_Type->Name = L"lbl_Type";
+			this->lbl_Type->Size = System::Drawing::Size(0, 36);
+			this->lbl_Type->TabIndex = 31;
 			// 
-			// TypeShow
+			// txt_Type
 			// 
-			this->TypeShow->AutoSize = true;
-			this->TypeShow->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->txt_Type->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->TypeShow->Location = System::Drawing::Point(524, 510);
-			this->TypeShow->Name = L"TypeShow";
-			this->TypeShow->Size = System::Drawing::Size(157, 36);
-			this->TypeShow->TabIndex = 31;
-			this->TypeShow->Text = L"TypeShow";
+			this->txt_Type->Location = System::Drawing::Point(530, 508);
+			this->txt_Type->Name = L"txt_Type";
+			this->txt_Type->Size = System::Drawing::Size(196, 41);
+			this->txt_Type->TabIndex = 30;
+			this->txt_Type->Visible = false;
 			// 
-			// TypeText
+			// lbl_Prompt_Type
 			// 
-			this->TypeText->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->lbl_Prompt_Type->AutoSize = true;
+			this->lbl_Prompt_Type->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->TypeText->Location = System::Drawing::Point(530, 508);
-			this->TypeText->Name = L"TypeText";
-			this->TypeText->Size = System::Drawing::Size(196, 41);
-			this->TypeText->TabIndex = 30;
-			this->TypeText->Visible = false;
+			this->lbl_Prompt_Type->Location = System::Drawing::Point(268, 511);
+			this->lbl_Prompt_Type->Name = L"lbl_Prompt_Type";
+			this->lbl_Prompt_Type->Size = System::Drawing::Size(97, 40);
+			this->lbl_Prompt_Type->TabIndex = 29;
+			this->lbl_Prompt_Type->Text = L"Type";
 			// 
-			// Type
+			// btn_Cancle
 			// 
-			this->Type->AutoSize = true;
-			this->Type->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->Type->Location = System::Drawing::Point(268, 511);
-			this->Type->Name = L"Type";
-			this->Type->Size = System::Drawing::Size(97, 40);
-			this->Type->TabIndex = 29;
-			this->Type->Text = L"Type";
+			this->btn_Cancle->ForeColor = System::Drawing::Color::Red;
+			this->btn_Cancle->Location = System::Drawing::Point(900, 1117);
+			this->btn_Cancle->Name = L"btn_Cancle";
+			this->btn_Cancle->Size = System::Drawing::Size(213, 113);
+			this->btn_Cancle->TabIndex = 33;
+			this->btn_Cancle->Text = L"Cancel Modify";
+			this->btn_Cancle->UseVisualStyleBackColor = true;
+			this->btn_Cancle->Visible = false;
+			this->btn_Cancle->Click += gcnew System::EventHandler(this, &TreInfoPage::btn_Cancle_Click);
 			// 
-			// CancelMod
+			// btn_Accpet
 			// 
-			this->CancelMod->ForeColor = System::Drawing::Color::Red;
-			this->CancelMod->Location = System::Drawing::Point(923, 1113);
-			this->CancelMod->Name = L"CancelMod";
-			this->CancelMod->Size = System::Drawing::Size(213, 113);
-			this->CancelMod->TabIndex = 33;
-			this->CancelMod->Text = L"Cancel Modify";
-			this->CancelMod->UseVisualStyleBackColor = true;
-			this->CancelMod->Visible = false;
-			// 
-			// ConfirmMod
-			// 
-			this->ConfirmMod->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+			this->btn_Accpet->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
 				static_cast<System::Int32>(static_cast<System::Byte>(0)));
-			this->ConfirmMod->Location = System::Drawing::Point(444, 1113);
-			this->ConfirmMod->Name = L"ConfirmMod";
-			this->ConfirmMod->Size = System::Drawing::Size(213, 117);
-			this->ConfirmMod->TabIndex = 32;
-			this->ConfirmMod->Text = L"Confirm Modify";
-			this->ConfirmMod->UseVisualStyleBackColor = true;
-			this->ConfirmMod->Visible = false;
-			this->ConfirmMod->Click += gcnew System::EventHandler(this, &TreInfoPage::ConfirmMod_Click);
+			this->btn_Accpet->Location = System::Drawing::Point(444, 1119);
+			this->btn_Accpet->Name = L"btn_Accpet";
+			this->btn_Accpet->Size = System::Drawing::Size(213, 117);
+			this->btn_Accpet->TabIndex = 32;
+			this->btn_Accpet->Text = L"Confirm Modify";
+			this->btn_Accpet->UseVisualStyleBackColor = true;
+			this->btn_Accpet->Visible = false;
+			this->btn_Accpet->Click += gcnew System::EventHandler(this, &TreInfoPage::btn_Accpet_Click);
+			// 
+			// lbl_Error
+			// 
+			this->lbl_Error->AutoSize = true;
+			this->lbl_Error->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lbl_Error->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)), static_cast<System::Int32>(static_cast<System::Byte>(192)),
+				static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->lbl_Error->Location = System::Drawing::Point(608, 1036);
+			this->lbl_Error->Name = L"lbl_Error";
+			this->lbl_Error->Size = System::Drawing::Size(0, 40);
+			this->lbl_Error->TabIndex = 34;
 			// 
 			// TreInfoPage
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(14, 29);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1583, 1402);
-			this->Controls->Add(this->CancelMod);
-			this->Controls->Add(this->ConfirmMod);
-			this->Controls->Add(this->TypeShow);
-			this->Controls->Add(this->TypeText);
-			this->Controls->Add(this->Type);
-			this->Controls->Add(this->CommentShow);
-			this->Controls->Add(this->AmountShow);
-			this->Controls->Add(this->PositionShow);
-			this->Controls->Add(this->StfNameShow);
-			this->Controls->Add(this->DepartmentShow);
-			this->Controls->Add(this->StfIdShow);
-			this->Controls->Add(this->TimeShow);
-			this->Controls->Add(this->IdShow);
-			this->Controls->Add(this->DelTre);
-			this->Controls->Add(this->ModTre);
-			this->Controls->Add(this->CommentText);
-			this->Controls->Add(this->StfNameText);
-			this->Controls->Add(this->PositionText);
-			this->Controls->Add(this->DeptText);
-			this->Controls->Add(this->AmountText);
-			this->Controls->Add(this->TimeText);
-			this->Controls->Add(this->StfText);
-			this->Controls->Add(this->IdText);
-			this->Controls->Add(this->Comment);
-			this->Controls->Add(this->Amount);
-			this->Controls->Add(this->Position);
-			this->Controls->Add(this->Dept);
-			this->Controls->Add(this->StfName);
-			this->Controls->Add(this->StfId);
-			this->Controls->Add(this->Time);
-			this->Controls->Add(this->ID);
-			this->Controls->Add(this->Title);
+			this->Controls->Add(this->lbl_Error);
+			this->Controls->Add(this->btn_Cancle);
+			this->Controls->Add(this->btn_Accpet);
+			this->Controls->Add(this->lbl_Type);
+			this->Controls->Add(this->txt_Type);
+			this->Controls->Add(this->lbl_Prompt_Type);
+			this->Controls->Add(this->lbl_Comment);
+			this->Controls->Add(this->lbl_Amount);
+			this->Controls->Add(this->lbl_Position);
+			this->Controls->Add(this->lbl_StfName);
+			this->Controls->Add(this->lbl_Dept);
+			this->Controls->Add(this->lbl_StfId);
+			this->Controls->Add(this->lbl_Time);
+			this->Controls->Add(this->lbl_Id);
+			this->Controls->Add(this->btn_Delete);
+			this->Controls->Add(this->btn_ChangeInfo);
+			this->Controls->Add(this->txt_Comment);
+			this->Controls->Add(this->txt_StfName);
+			this->Controls->Add(this->txt_Position);
+			this->Controls->Add(this->txt_Dept);
+			this->Controls->Add(this->txt_Amount);
+			this->Controls->Add(this->txt_Time);
+			this->Controls->Add(this->txt_StfId);
+			this->Controls->Add(this->txt_Id);
+			this->Controls->Add(this->lbl_Prompt_Comment);
+			this->Controls->Add(this->lbl_Prompt_Amount);
+			this->Controls->Add(this->lbl_Prompt_Position);
+			this->Controls->Add(this->lbl_Prompt_Dept);
+			this->Controls->Add(this->lbl_Prompt_StfName);
+			this->Controls->Add(this->lbl_Prompt_StfId);
+			this->Controls->Add(this->lbl_Prompt_Time);
+			this->Controls->Add(this->lbl_Prompt_Id);
+			this->Controls->Add(this->lbl_Prompt_Title);
 			this->Name = L"TreInfoPage";
 			this->Text = L"TreInfoPage";
 			this->ResumeLayout(false);
@@ -546,20 +608,29 @@ namespace WeAlumni {
 #pragma endregion
 	
 	
-	private: Void UpdatePageInfo(String^ OrderId);
-	private: String^ OrderId;
-	private: Database^ _TreDB = gcnew Database(Database::DatabaseType::Treasury);
-	private: Database^ _DataDB = gcnew Database(Database::DatabaseType::Data);
+	private: 
+		Void UpdateInfo(String^ OrderId);
+		Void UpdateOutsideInfo(String^);
+
+	private: 
+		String^ OrderId;
+		Database^ _TreDB = gcnew Database(Database::DatabaseType::Treasury);
+		Database^ _DataDB = gcnew Database(Database::DatabaseType::Data);
 
 	
 
-	private: System::Void ModTre_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void WeAlumni::TreInfoPage::SetShowLabelStatus(bool);
-	private: System::Void WeAlumni::TreInfoPage::SetTextStatus(bool);
-	private: System::Void WeAlumni::TreInfoPage::SetShowToText(bool);
-	private: System::Void WeAlumni::TreInfoPage::SetButtonStatus(bool);
+	private:
+		System::Void btn_ChangeInfo_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void btn_Accpet_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void btn_Delete_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void btn_Cancle_Click(System::Object^ sender, System::EventArgs^ e);
 
-	private: System::Void ConfirmMod_Click(System::Object^ sender, System::EventArgs^ e);
-	private: int WeAlumni::TreInfoPage::UpdateDB();
+	private: 
+		System::Void WeAlumni::TreInfoPage::SetShowLabelStatus(bool);
+		System::Void WeAlumni::TreInfoPage::SetTextStatus(bool);
+		System::Void WeAlumni::TreInfoPage::SetShowToText(bool);
+		System::Void WeAlumni::TreInfoPage::SetButtonStatus(bool);
+		int WeAlumni::TreInfoPage::UpdateDB();
+
 };
 }
