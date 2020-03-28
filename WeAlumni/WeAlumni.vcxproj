@@ -116,10 +116,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
-      <HintPath>D:\software\ManagementSoftware\System.Data.SQLite.dll</HintPath>
+      <HintPath>System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.SQLite.Linq">
-      <HintPath>D:\software\ManagementSoftware\System.Data.SQLite.Linq.dll</HintPath>
+      <HintPath>System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -130,16 +130,22 @@
     <ClCompile Include="DatabaseEncryptionAndDecryption.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MemInfoPage.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="NewPage.cpp" />
+    <ClCompile Include="OPTInfoPage.cpp" />
     <ClCompile Include="StarterPage.cpp" />
+    <ClCompile Include="StfInfoPage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Database.h" />
     <ClInclude Include="DatabaseEncryptionAndDecryption.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Log.h" />
+    <ClInclude Include="MemInfoPage.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Log.h" />	
     <ClInclude Include="MainWindow.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -147,7 +153,13 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="DatabaseParam.h" />
+    <ClInclude Include="OPTInfoPage.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="StarterPage.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="StfInfoPage.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
@@ -155,6 +167,9 @@
     <EmbeddedResource Include="DatabaseEncryptionAndDecryption.resx">
       <DependentUpon>DatabaseEncryptionAndDecryption.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MemInfoPage.resx">
+      <DependentUpon>MemInfoPage.h</DependentUpon>
+	</EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.h</DependentUpon>
     </EmbeddedResource>
@@ -163,6 +178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StarterPage.resx">
       <DependentUpon>StarterPage.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StfInfoPage.resx">
+      <DependentUpon>StfInfoPage.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

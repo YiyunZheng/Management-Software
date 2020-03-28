@@ -40,6 +40,21 @@
     <Filter Include="Header Files\MainWindow">
       <UniqueIdentifier>{b91f38b9-5f87-4720-b933-d0e7c951ffb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Member">
+      <UniqueIdentifier>{e2f4a6d8-18bd-444c-838c-6159073266ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\OPT">
+      <UniqueIdentifier>{f61f0c52-c07e-45ec-8bbb-1db2b03b1659}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\OPT">
+      <UniqueIdentifier>{c0d379a7-f18e-48a9-96ab-4f799e33b87e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Staff">
+      <UniqueIdentifier>{e6d53abf-6fdf-4b93-9c59-3b698e6f00e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Member">
+      <UniqueIdentifier>{77cdda35-2c66-4155-8915-1debf776ce79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -63,6 +78,15 @@
     <ClCompile Include="MainWindow.cpp">
       <Filter>Source Files\MainWindow</Filter>
     </ClCompile>
+    <ClCompile Include="OPTInfoPage.cpp">
+      <Filter>Source Files\OPT</Filter>
+    </ClCompile>
+    <ClCompile Include="StfInfoPage.cpp">
+      <Filter>Source Files\Staff</Filter>
+    </ClCompile>
+    <ClCompile Include="MemInfoPage.cpp">
+      <Filter>Source Files\Member</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StarterPage.h">
@@ -80,11 +104,20 @@
     <ClInclude Include="DatabaseEncryptionAndDecryption.h">
       <Filter>Header Files\Database</Filter>
     </ClInclude>
+    <ClInclude Include="MemInfoPage.h">
+      <Filter>Header Files\Member</Filter>
+    </ClInclude>
     <ClInclude Include="Log.h">
       <Filter>Header Files\Log</Filter>
     </ClInclude>
     <ClInclude Include="MainWindow.h">
       <Filter>Header Files\MainWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="StfInfoPage.h">
+      <Filter>Header Files\Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="OPTInfoPage.h">
+      <Filter>Header Files\OPT</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
