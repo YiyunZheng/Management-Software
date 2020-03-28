@@ -133,6 +133,7 @@
     <ClCompile Include="MemInfoPage.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="NewPage.cpp" />
+    <ClCompile Include="OPTInfoPage.cpp" />
     <ClCompile Include="StarterPage.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="DatabaseParam.h" />
+    <ClInclude Include="OPTInfoPage.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="StarterPage.h">
       <FileType>CppForm</FileType>
     </ClInclude>
