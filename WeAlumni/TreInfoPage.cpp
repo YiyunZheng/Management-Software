@@ -27,27 +27,17 @@ System::Void WeAlumni::TreInfoPage::UpdateInfo(String^ Record_Id) {
 
     if (RowNum != -1) {
         StaffId = _TreDB->dataReader[0]->ToString();
-        lbl_StfId->Text = StaffId;
-
+        
         lbl_Time->Text = _TreDB->dataReader[1]->ToString();
         lbl_Type->Text = _TreDB->dataReader[2]->ToString();
         lbl_Amount->Text = _TreDB->dataReader[3]->ToString();
         lbl_Comment->Text = _TreDB->dataReader[4]->ToString();
         UpdateOutsideInfo(StaffId);
-
-
     }
     else {
         lbl_Error->Text = "Error: Id Not Existed ";
         lbl_Error->ForeColor = System::Drawing::Color::Red;
     }
-
-
-    
-
-    
-
-
 }
 
 /*
@@ -56,24 +46,24 @@ System::Void WeAlumni::TreInfoPage::UpdateInfo(String^ Record_Id) {
  * @param String^ Staff Id tell method which staff's infomation should be shown.
  * @return None
  */
-System::Void WeAlumni::TreInfoPage::UpdateOutsideInfo(String^ SId) {
+int WeAlumni::TreInfoPage::UpdateOutsideInfo(String^ SId) {
     int RowNum = _DataDB->ReadData("SELECT S.Dept, S.Position, M.Name "
         "FROM Staff S, Member M WHERE S.Id = " + SId + " And M.Id = S.MemId;");
 
     if (RowNum != -1) {
-
-
+        lbl_StfId->Text = SId;
         lbl_Dept->Text = _DataDB->dataReader[0]->ToString();
         lbl_Position->Text = _DataDB->dataReader[1]->ToString();
         lbl_StfName->Text = _DataDB->dataReader[2]->ToString();
         lbl_Error->Text = "Success: All Info Show Above";
         lbl_Error->ForeColor = System::Drawing::Color::Green;
-
     }
     else {
         lbl_Error->Text = "Error: Staff or Member Not Found ";
         lbl_Error->ForeColor = System::Drawing::Color::Red;
     }
+
+    return RowNum;
 }
 
 /*
@@ -99,12 +89,8 @@ System::Void WeAlumni::TreInfoPage::btn_ChangeInfo_Click(System::Object^ sender,
  * @return None
  */
 System::Void WeAlumni::TreInfoPage::SetShowLabelStatus(bool NewStatus) {
-    //IdShow->Visible = NewStatus;
     lbl_StfId->Visible = NewStatus;
     lbl_Time->Visible = NewStatus;
-    //DepartmentShow->Visible = NewStatus;
-    //StfNameShow->Visible = NewStatus;
-    //PositionShow->Visible = NewStatus;
     lbl_Type->Visible = NewStatus;
     lbl_Amount->Visible = NewStatus;
     lbl_Comment->Visible = NewStatus;
@@ -118,12 +104,8 @@ System::Void WeAlumni::TreInfoPage::SetShowLabelStatus(bool NewStatus) {
  * @return None
  */
 System::Void WeAlumni::TreInfoPage::SetTextStatus(bool NewStatus) {
-    //IdText->Visible = NewStatus;
     txt_StfId->Visible = NewStatus;
     txt_Time->Visible = NewStatus;
-    //DeptText->Visible = NewStatus;
-    //StfNameText->Visible = NewStatus;
-    //PositionText->Visible = NewStatus;
     txt_Type->Visible = NewStatus;
     txt_Amount->Visible = NewStatus;
     txt_Comment->Visible = NewStatus;
@@ -139,28 +121,19 @@ System::Void WeAlumni::TreInfoPage::SetTextStatus(bool NewStatus) {
  */
 System::Void WeAlumni::TreInfoPage::SetShowToText(bool Mode) {
     if (Mode) {
-        //IdText->Text = IdShow->Text;
         txt_StfId->Text = lbl_StfId->Text;
         txt_Time->Text = lbl_Time->Text;;
-        //DeptText->Text = DepartmentShow->Text;
-        //StfNameText->Text = StfNameShow->Text;
-        //PositionText->Text = PositionShow->Text;
         txt_Type->Text = lbl_Type->Text;
         txt_Amount->Text = lbl_Amount->Text;
         txt_Comment->Text = lbl_Comment->Text;
     }
     else {
-        //IdShow->Text = IdText->Text;
         lbl_StfId->Text = txt_StfId->Text;
         lbl_Time->Text = txt_Time->Text;
-        //DepartmentShow->Text = DeptText->Text;
-        //StfNameShow->Text = StfNameText->Text;
-        //PositionShow->Text = PositionText->Text;
         lbl_Type->Text = txt_Type->Text;
         lbl_Amount->Text = txt_Amount->Text;
         lbl_Comment->Text = txt_Comment->Text;
     }
-    
 }
 
 /*
@@ -196,20 +169,19 @@ System::Void WeAlumni::TreInfoPage::SetButtonStatus(bool ModifyStatus) {
  */
 System::Void WeAlumni::TreInfoPage::btn_Accpet_Click(System::Object^ sender, System::EventArgs^ e) {
     if (UpdateDB() != -1) {
-        UpdateInfo(OrderId);
-        SetShowLabelStatus(true);
-        SetTextStatus(false);
-        SetButtonStatus(false);
-        lbl_Error->Text = "Success: Modify Accepted";
-        lbl_Error->ForeColor = System::Drawing::Color::Green;
+        if (UpdateOutsideInfo(txt_StfId->Text) != -1) {
+            UpdateInfo(OrderId);
+            SetShowLabelStatus(true);
+            SetTextStatus(false);
+            SetButtonStatus(false);
+            lbl_Error->Text = "Success: Modify Accepted";
+            lbl_Error->ForeColor = System::Drawing::Color::Green;
+        }
     }
     else {
         lbl_Error->Text = "Error: Unable to Modify ";
         lbl_Error->ForeColor = System::Drawing::Color::Red;
     }
-    
-    
-    
 }
 /*
  * btn_Delete_Click
@@ -230,8 +202,7 @@ System::Void WeAlumni::TreInfoPage::btn_Delete_Click(System::Object^ sender, Sys
     else {
         lbl_Error->Text = "Error: Unable to Delete ";
         lbl_Error->ForeColor = System::Drawing::Color::Red;
-    }
-    
+    } 
 }
 
 /*

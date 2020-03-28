@@ -48,12 +48,6 @@ namespace WeAlumni {
 			//
 		}
 		
-		
-		
-
-		
-		
-
 	protected:
 		/// <summary>
 		/// 清理所有正在使用的资源。
@@ -70,8 +64,6 @@ namespace WeAlumni {
 			if (_TreDB) {
 				_TreDB->~Database();
 			}
-			
-			
 		}
 	private: System::Windows::Forms::Label^ lbl_Prompt_Title;
 	private: System::Windows::Forms::Label^ lbl_Prompt_Id;
@@ -82,87 +74,33 @@ namespace WeAlumni {
 	private: System::Windows::Forms::Label^ lbl_Prompt_Position;
 	private: System::Windows::Forms::Label^ lbl_Prompt_Amount;
 	private: System::Windows::Forms::Label^ lbl_Prompt_Comment;
+	private: System::Windows::Forms::Label^ lbl_Prompt_Type;
+
 	private: System::Windows::Forms::TextBox^ txt_Id;
 	private: System::Windows::Forms::TextBox^ txt_StfId;
-
-	protected:
-
-
-
-
-
-
-
-
-
-
-
 	private: System::Windows::Forms::TextBox^ txt_Time;
 	private: System::Windows::Forms::TextBox^ txt_Amount;
-
-
-
-
 	private: System::Windows::Forms::TextBox^ txt_Dept;
 	private: System::Windows::Forms::TextBox^ txt_Position;
-
-
-
-
 	private: System::Windows::Forms::TextBox^ txt_StfName;
+	private: System::Windows::Forms::TextBox^ txt_Type;
 	private: System::Windows::Forms::RichTextBox^ txt_Comment;
-	private: System::Windows::Forms::Button^ btn_ChangeInfo;
-	private: System::Windows::Forms::Button^ btn_Delete;
-
-
-
-
-
-
 
 	private: System::Windows::Forms::Label^ lbl_Id;
 	private: System::Windows::Forms::Label^ lbl_Time;
 	private: System::Windows::Forms::Label^ lbl_StfId;
 	private: System::Windows::Forms::Label^ lbl_Dept;
-
-
-
-
 	private: System::Windows::Forms::Label^ lbl_StfName;
 	private: System::Windows::Forms::Label^ lbl_Position;
 	private: System::Windows::Forms::Label^ lbl_Amount;
 	private: System::Windows::Forms::Label^ lbl_Comment;
-
-
-
-
-
 	private: System::Windows::Forms::Label^ lbl_Type;
-private: System::Windows::Forms::TextBox^ txt_Type;
+	private: System::Windows::Forms::Label^ lbl_Error;
 
-
-	private: System::Windows::Forms::Label^ lbl_Prompt_Type;
-private: System::Windows::Forms::Button^ btn_Cancle;
-
-
-
-
-private: System::Windows::Forms::Button^ btn_Accpet;
-private: System::Windows::Forms::Label^ lbl_Error;
-
-
-
-
-
-
-
-
-
-
-
-	protected:
-
-	protected:
+	private: System::Windows::Forms::Button^ btn_Cancle;
+	private: System::Windows::Forms::Button^ btn_ChangeInfo;
+	private: System::Windows::Forms::Button^ btn_Delete;
+	private: System::Windows::Forms::Button^ btn_Accpet;
 
 	private:
 		/// <summary>
@@ -610,14 +548,12 @@ private: System::Windows::Forms::Label^ lbl_Error;
 	
 	private: 
 		Void UpdateInfo(String^ OrderId);
-		Void UpdateOutsideInfo(String^);
+		int UpdateOutsideInfo(String^);
 
 	private: 
 		String^ OrderId;
 		Database^ _TreDB = gcnew Database(Database::DatabaseType::Treasury);
 		Database^ _DataDB = gcnew Database(Database::DatabaseType::Data);
-
-	
 
 	private:
 		System::Void btn_ChangeInfo_Click(System::Object^ sender, System::EventArgs^ e);
@@ -631,6 +567,5 @@ private: System::Windows::Forms::Label^ lbl_Error;
 		System::Void WeAlumni::TreInfoPage::SetShowToText(bool);
 		System::Void WeAlumni::TreInfoPage::SetButtonStatus(bool);
 		int WeAlumni::TreInfoPage::UpdateDB();
-
-};
+	};
 }
