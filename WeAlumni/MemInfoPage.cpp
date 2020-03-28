@@ -34,8 +34,10 @@ Void WeAlumni::MemInfoPage::UpdateInfo() {
 	lbl_error->Visible = false;
 	String^ cmd= "SELECT * FROM Member WHERE Id = " + _id;
 	
+	int status = -1;
+
 	try {
-		int status = database->ReadData(cmd);
+		status = database->ReadData(cmd);
 	}
 	catch (Exception^ exception) {
 		lbl_error->ForeColor = System::Drawing::Color::Red;
@@ -163,8 +165,10 @@ Void WeAlumni::MemInfoPage::btn_ShwPrcssActn_Click(System::Object^ sender, Syste
 				"Member.Id = Staff.MemId AND " + 
 				"Record.MemId = " + _id + " ORDER BY Record.Id ASC;";
 	
+	int status = -1;
+
 	try {
-		int status = database->ReadDataAdapter(command);
+		status = database->ReadDataAdapter(command);
 	}
 	catch (Exception^ exception) {
 		lbl_error->ForeColor = System::Drawing::Color::Red;
@@ -219,8 +223,10 @@ Void WeAlumni::MemInfoPage::btn_ChangeInfoAccept_Click(System::Object^ sender, S
 			  "SearchAuth = '" + txt_SearchAuth->Text + "' " +
 		      "WHERE Id = " + _id;
 	
+	int status = -1;
+
 	try {
-		int status = database->UpdateData(cmd);
+		status = database->UpdateData(cmd);
 	}
 	catch (Exception^ exception) {
 		lbl_error->ForeColor = System::Drawing::Color::Red;
@@ -357,8 +363,10 @@ Void WeAlumni::MemInfoPage::btn_DeleteAccept_Click(System::Object^ sender, Syste
 	String^ cmd = "DELETE FROM Member " +
 		      "WHERE Id = " + _id;
 	
+	int status = -1;
+
 	try {
-		int status = database->DeleteData(cmd);
+		status = database->DeleteData(cmd);
 	}
 	catch (Exception^ exception) {
 		btn_DeleteAccept->Visible = false;
