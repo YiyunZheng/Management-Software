@@ -1,5 +1,4 @@
 #include "TreInfoPage.h"
-
 /*
  * TreInfoPage.cpp
  *
@@ -21,14 +20,17 @@ System::Void WeAlumni::TreInfoPage::UpdateInfo(String^ Record_Id) {
     lbl_Id->Text = Record_Id;
     String^ StaffId;
     int Status = -1;
+    String^ cmd = "SELECT StfId, Time, Type, Amount, Comment "
+                  "FROM Treasury "
+                  "WHERE Id = " + Record_Id + "; ";
 
     try {
-        Status = _TreDB->ReadData("SELECT StfId, Time, Type, Amount, Comment"
-            " FROM Treasury WHERE Id = " + Record_Id + "; ");
+        Status = _TreDB->ReadData(cmd);
     }
     catch (Exception^ exception){
         lbl_Error->Text = exception->Message;
         lbl_Error->ForeColor = System::Drawing::Color::Red;
+        return;
     }
     if (Status == 1) {
         StaffId = _TreDB->dataReader[0]->ToString();
@@ -40,7 +42,7 @@ System::Void WeAlumni::TreInfoPage::UpdateInfo(String^ Record_Id) {
         UpdateOutsideInfo(StaffId);
     }
     else {
-        lbl_Error->Text = "Unable to load Treasury Info Page.";
+        lbl_Error->Text = "Unable to find Treasury Info Page.";
         lbl_Error->ForeColor = System::Drawing::Color::Red;
     }
 }
@@ -53,15 +55,16 @@ System::Void WeAlumni::TreInfoPage::UpdateInfo(String^ Record_Id) {
  */
 int WeAlumni::TreInfoPage::UpdateOutsideInfo(String^ SId) {
     int Status = -1;
+    String^ cmd = "SELECT S.Dept, S.Position, M.Name "
+                  "FROM Staff S, Member M "
+                  "WHERE S.MemId = " + SId + " And M.Id = " + SId + ";";
     try {
-        Status = _DataDB->ReadData("SELECT S.Dept, S.Position, M.Name "
-            "FROM Staff S, Member M "
-            "WHERE S.MemId = " + SId + 
-            " And M.Id = " + SId + ";");
+        Status = _DataDB->ReadData(cmd);
     }
     catch (Exception^ exception) {
         lbl_Error->Text = exception->Message;
         lbl_Error->ForeColor = System::Drawing::Color::Red;
+        return -1;
     }
     if (Status == 1) {
         lbl_StfId->Text = SId;
@@ -184,11 +187,19 @@ System::Void WeAlumni::TreInfoPage::btn_Accpet_Click(System::Object^ sender, Sys
     int Status = -1;
     if (UpdateOutsideInfo(txt_StfId->Text) > 0) {
         try {
-            Status = UpdateDB();
+            String^ cmd = "UPDATE Treasury "
+                          "SET StfId = " + txt_StfId->Text + ", "
+                              "Time = '" + txt_Time->Text + "', "
+                              "Type = '" + txt_Type->Text + "', "
+                              "Amount = '" + txt_Amount->Text + "', "
+                              "Comment = '" + txt_Comment->Text + "' "
+                          "WHERE Id = " + OrderId + ";";
+            Status = _TreDB->UpdateData(cmd);
         }
         catch (Exception^ exception) {
             lbl_Error->Text = exception->Message;
             lbl_Error->ForeColor = System::Drawing::Color::Red;
+            return;
         }
         if (Status > 0) {
             UpdateInfo(OrderId);
@@ -222,6 +233,7 @@ System::Void WeAlumni::TreInfoPage::btn_Delete_Click(System::Object^ sender, Sys
     catch (Exception^ exception) {
         lbl_Error->Text = exception->Message;
         lbl_Error->ForeColor = System::Drawing::Color::Red;
+        return;
     }
     if (Status == 1) {
         this->Close();
@@ -246,24 +258,4 @@ System::Void WeAlumni::TreInfoPage::btn_Cancle_Click(System::Object^ sender, Sys
     SetShowLabelStatus(true);
     SetTextStatus(false);
     SetButtonStatus(false);
-}
-
-/*
- * UpdateDB
- * This method will update changed info to data base
- * if successed, return num of rows got changed, otherwise return -1
- *
- * @param None
- * @return int
- */
-int WeAlumni::TreInfoPage::UpdateDB() {
-    String^ cmd = "UPDATE Treasury SET "
-        "StfId = " + txt_StfId->Text + ", "
-        "Time = '" + txt_Time->Text + "', "
-        "Type = '" + txt_Type->Text + "', "
-        "Amount = '" + txt_Amount->Text + "', "
-        "Comment = '" + txt_Comment->Text + "' "
-        "WHERE Id = " + OrderId + ";";
-    
-    return _TreDB->UpdateData(cmd);
 }

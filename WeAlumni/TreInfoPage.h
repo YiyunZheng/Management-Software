@@ -1,7 +1,5 @@
 #pragma once
 #include "Database.h"
-
-
 /*
  * StarterPage.h
  *
@@ -28,30 +26,14 @@ namespace WeAlumni {
 	public ref class TreInfoPage : public System::Windows::Forms::Form
 	{
 	public:
-		
-		TreInfoPage(void)
-		{
-			InitializeComponent( );
-
-			//
-			//TODO:  在此处添加构造函数代码
-			//
-		}
 		TreInfoPage(String^ OId)
 		{
 			InitializeComponent();
 			OrderId = OId;
 			UpdateInfo(OrderId);
-
-			//
-			//TODO:  在此处添加构造函数代码
-			//
 		}
 		
 	protected:
-		/// <summary>
-		/// 清理所有正在使用的资源。
-		/// </summary>
 		~TreInfoPage()
 		{
 			if (components)
@@ -544,8 +526,6 @@ namespace WeAlumni {
 
 		}
 #pragma endregion
-	
-	
 	private: 
 		Void UpdateInfo(String^ OrderId);
 		int UpdateOutsideInfo(String^);
@@ -566,6 +546,5 @@ namespace WeAlumni {
 		System::Void WeAlumni::TreInfoPage::SetTextStatus(bool);
 		System::Void WeAlumni::TreInfoPage::SetShowToText(bool);
 		System::Void WeAlumni::TreInfoPage::SetButtonStatus(bool);
-		int WeAlumni::TreInfoPage::UpdateDB();
 	};
 }
