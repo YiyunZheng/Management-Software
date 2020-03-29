@@ -89,12 +89,13 @@ CREATE TABLE IF NOT EXISTS Orders (
   Time TEXT,
   MemId INT,
   StfId INT,
-  Item TEXT,
+  ItemId INT,
   Amount INT,
-  Price TEXT,
+  Price INT,
   Comment TEXT,
   FOREIGN KEY(MemId) REFERENCES Member(Id),
-  FOREIGN KEY(StfId) REFERENCES Staff(Id)
+  FOREIGN KEY(StfId) REFERENCES Staff(Id),
+  FOREIGN KEY(ItemId) REFERENCES Item(Id)
 );
 
 CREATE TABLE IF NOT EXISTS Treasury (
