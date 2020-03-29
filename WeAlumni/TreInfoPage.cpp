@@ -86,7 +86,6 @@ int WeAlumni::TreInfoPage::UpdateOutsideInfo(String^ SId) {
  * btn_ChangeInfo_Click
  * This method will hide infomation label, show text box for modifying, 
  * and show other two button for accepting modify or not.
- * 
  * @param None
  * @return None
  */
@@ -99,8 +98,7 @@ System::Void WeAlumni::TreInfoPage::btn_ChangeInfo_Click(System::Object^ sender,
 
 /*
  * SetShowLabelStatus
- * This method will show infomation label on infopage depend on input bool.
- *
+ * This method will show infomation label on infopage depend on input bool
  * @param bool
  * @return None
  */
@@ -131,7 +129,6 @@ System::Void WeAlumni::TreInfoPage::SetTextStatus(bool NewStatus) {
  * SetShowToText
  * If input ture, this method will set text of info label to text of text box.
  * Otherwise, set text of text box to text of info label
- *
  * @param bool
  * @return None
  */
@@ -154,8 +151,7 @@ System::Void WeAlumni::TreInfoPage::SetShowToText(bool Mode) {
 
 /*
  * SetButtonStatus
- * Show different button depend on input.
- *
+ * Show different button depend on input
  * @param bool
  * @return None
  */
@@ -177,9 +173,8 @@ System::Void WeAlumni::TreInfoPage::SetButtonStatus(bool ModifyStatus) {
 /*
  * btn_Accpet_Click
  * This method will update changing to data base, if successed
- * show infomation label, hide text box,
+ * show infomation label, hide text box
  * and show other two button for modify or delete.
- *
  * @param None
  * @return None
  */
@@ -219,8 +214,7 @@ System::Void WeAlumni::TreInfoPage::btn_Accpet_Click(System::Object^ sender, Sys
 /*
  * btn_Delete_Click
  * This method will delete current record from data base, if successed
- * close infopage,
- *
+ * close infopage
  * @param None
  * @return None
  */
@@ -243,14 +237,13 @@ System::Void WeAlumni::TreInfoPage::btn_Delete_Click(System::Object^ sender, Sys
     else {
         lbl_Error->Text = "Error: Unable to Delete ";
         lbl_Error->ForeColor = System::Drawing::Color::Red;
-    } 
+    }
 }
 
 /*
  * btn_Cancle_Click
  * This method will show infomation label, hide text box,
  * and show other two button for modify or delete without change any infomation.
- *
  * @param None
  * @return None
  */
