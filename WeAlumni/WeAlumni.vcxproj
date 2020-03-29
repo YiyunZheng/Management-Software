@@ -136,6 +136,7 @@
     <ClCompile Include="OPTInfoPage.cpp" />
     <ClCompile Include="StarterPage.cpp" />
     <ClCompile Include="StfInfoPage.cpp" />
+    <ClCompile Include="TreInfoPage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Database.h" />
@@ -145,7 +146,7 @@
     <ClInclude Include="MemInfoPage.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Log.h" />	
+    <ClInclude Include="Log.h" />
     <ClInclude Include="MainWindow.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -162,6 +163,7 @@
     <ClInclude Include="StfInfoPage.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="TreInfoPage.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="DatabaseEncryptionAndDecryption.resx">
@@ -169,7 +171,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MemInfoPage.resx">
       <DependentUpon>MemInfoPage.h</DependentUpon>
-	</EmbeddedResource>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.h</DependentUpon>
     </EmbeddedResource>

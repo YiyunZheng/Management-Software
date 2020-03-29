@@ -19,15 +19,20 @@
   */
 System::Void WeAlumni::TreInfoPage::UpdateInfo(String^ Record_Id) {
     lbl_Id->Text = Record_Id;
-    
-    int RowNum = _TreDB->ReadData("SELECT StfId, Time, Type, Amount, Comment" 
-                                    " FROM Treasury WHERE Id = " + Record_Id +"; ");
-    
     String^ StaffId;
+    int Status = -1;
 
-    if (RowNum != -1) {
+    try {
+        Status = _TreDB->ReadData("SELECT StfId, Time, Type, Amount, Comment"
+            " FROM Treasury WHERE Id = " + Record_Id + "; ");
+    }
+    catch (Exception^ exception){
+        lbl_Error->Text = exception->Message;
+        lbl_Error->ForeColor = System::Drawing::Color::Red;
+    }
+    if (Status == 1) {
         StaffId = _TreDB->dataReader[0]->ToString();
-        
+        lbl_StfId->Text = StaffId;
         lbl_Time->Text = _TreDB->dataReader[1]->ToString();
         lbl_Type->Text = _TreDB->dataReader[2]->ToString();
         lbl_Amount->Text = _TreDB->dataReader[3]->ToString();
@@ -35,7 +40,7 @@ System::Void WeAlumni::TreInfoPage::UpdateInfo(String^ Record_Id) {
         UpdateOutsideInfo(StaffId);
     }
     else {
-        lbl_Error->Text = "Error: Id Not Existed ";
+        lbl_Error->Text = "Unable to load Treasury Info Page.";
         lbl_Error->ForeColor = System::Drawing::Color::Red;
     }
 }
@@ -47,10 +52,18 @@ System::Void WeAlumni::TreInfoPage::UpdateInfo(String^ Record_Id) {
  * @return None
  */
 int WeAlumni::TreInfoPage::UpdateOutsideInfo(String^ SId) {
-    int RowNum = _DataDB->ReadData("SELECT S.Dept, S.Position, M.Name "
-        "FROM Staff S, Member M WHERE S.Id = " + SId + " And M.Id = S.MemId;");
-
-    if (RowNum != -1) {
+    int Status = -1;
+    try {
+        Status = _DataDB->ReadData("SELECT S.Dept, S.Position, M.Name "
+            "FROM Staff S, Member M "
+            "WHERE S.MemId = " + SId + 
+            " And M.Id = " + SId + ";");
+    }
+    catch (Exception^ exception) {
+        lbl_Error->Text = exception->Message;
+        lbl_Error->ForeColor = System::Drawing::Color::Red;
+    }
+    if (Status == 1) {
         lbl_StfId->Text = SId;
         lbl_Dept->Text = _DataDB->dataReader[0]->ToString();
         lbl_Position->Text = _DataDB->dataReader[1]->ToString();
@@ -59,11 +72,11 @@ int WeAlumni::TreInfoPage::UpdateOutsideInfo(String^ SId) {
         lbl_Error->ForeColor = System::Drawing::Color::Green;
     }
     else {
-        lbl_Error->Text = "Error: Staff or Member Not Found ";
+        lbl_Error->Text = "Error: Staff or Member Not Found, Error Status = " + Status;
         lbl_Error->ForeColor = System::Drawing::Color::Red;
     }
 
-    return RowNum;
+    return Status;
 }
 
 /*
@@ -168,19 +181,28 @@ System::Void WeAlumni::TreInfoPage::SetButtonStatus(bool ModifyStatus) {
  * @return None
  */
 System::Void WeAlumni::TreInfoPage::btn_Accpet_Click(System::Object^ sender, System::EventArgs^ e) {
-    if (UpdateDB() != -1) {
-        if (UpdateOutsideInfo(txt_StfId->Text) != -1) {
+    int Status = -1;
+    if (UpdateOutsideInfo(txt_StfId->Text) > 0) {
+        try {
+            Status = UpdateDB();
+        }
+        catch (Exception^ exception) {
+            lbl_Error->Text = exception->Message;
+            lbl_Error->ForeColor = System::Drawing::Color::Red;
+        }
+        if (Status > 0) {
             UpdateInfo(OrderId);
             SetShowLabelStatus(true);
             SetTextStatus(false);
             SetButtonStatus(false);
             lbl_Error->Text = "Success: Modify Accepted";
             lbl_Error->ForeColor = System::Drawing::Color::Green;
+
         }
-    }
-    else {
-        lbl_Error->Text = "Error: Unable to Modify ";
-        lbl_Error->ForeColor = System::Drawing::Color::Red;
+        else {
+            lbl_Error->Text = "Error: Unable to Modify ";
+            lbl_Error->ForeColor = System::Drawing::Color::Red;
+        }
     }
 }
 /*
@@ -192,9 +214,16 @@ System::Void WeAlumni::TreInfoPage::btn_Accpet_Click(System::Object^ sender, Sys
  * @return None
  */
 System::Void WeAlumni::TreInfoPage::btn_Delete_Click(System::Object^ sender, System::EventArgs^ e) {
+    int Status = -1;
     String^ cmd = "DELETE FROM Treasury WHERE Id = " + OrderId + ";";
-    int RowNum = _TreDB->DeleteData(cmd);
-    if (RowNum != -1) {
+    try {
+        Status = _TreDB->DeleteData(cmd);
+    }
+    catch (Exception^ exception) {
+        lbl_Error->Text = exception->Message;
+        lbl_Error->ForeColor = System::Drawing::Color::Red;
+    }
+    if (Status == 1) {
         this->Close();
         lbl_Error->Text = "Success: Deleted";
         lbl_Error->ForeColor = System::Drawing::Color::Green;
@@ -235,7 +264,6 @@ int WeAlumni::TreInfoPage::UpdateDB() {
         "Amount = '" + txt_Amount->Text + "', "
         "Comment = '" + txt_Comment->Text + "' "
         "WHERE Id = " + OrderId + ";";
-    int RowNum = _TreDB->UpdateData(cmd);
     
-    return RowNum;
+    return _TreDB->UpdateData(cmd);
 }

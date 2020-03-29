@@ -55,6 +55,12 @@
     <Filter Include="Source Files\Member">
       <UniqueIdentifier>{77cdda35-2c66-4155-8915-1debf776ce79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Treasury">
+      <UniqueIdentifier>{65375734-f039-4763-9ca7-5da710a23d14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Treasury">
+      <UniqueIdentifier>{e8fd781c-27b8-431c-a943-cc8dcf932f62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -87,6 +93,9 @@
     <ClCompile Include="MemInfoPage.cpp">
       <Filter>Source Files\Member</Filter>
     </ClCompile>
+    <ClCompile Include="TreInfoPage.cpp">
+      <Filter>Source Files\Treasury</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StarterPage.h">
@@ -118,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="OPTInfoPage.h">
       <Filter>Header Files\OPT</Filter>
+    </ClInclude>
+    <ClInclude Include="TreInfoPage.h">
+      <Filter>Header Files\Treasury</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
