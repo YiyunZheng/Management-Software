@@ -113,7 +113,6 @@ System::Void WeAlumni::TreInfoPage::SetShowLabelStatus(bool NewStatus) {
 /*
  * SetTextStatus
  * This method will show text box on infopage depend on input bool.
- *
  * @param bool
  * @return None
  */
