@@ -1,13 +1,16 @@
 3/24
   ----Info Page----
-  Jiaying   | Member
-  Rui       | Staff
-  Sen       | Record
-  Xiangdong | OPT
-  Yiyun     | Treasury
-
-3/25
-  Nothing
-
-3/26
-  Nothing
+  Jiaying   | Member   (Completed 3/28/20)
+  Rui       | Staff    (Completed 3/28/20)
+  Sen       | Record   (Completed 3/28/20)
+  Xiangdong | OPT      (Completed 3/28/20)
+  Yiyun     | Treasury (Completed 3/28/20)
+  
+3/28
+  ----Add Page----
+  Jiaying   | Member   (In progress)
+  Rui       | Staff    (In progress)
+  Xiangdong | OPT      (In progress)
+  Yiyun     | Treasury (In progress)
+  ----Info Page----
+  Sen       | Order    (In progress)
