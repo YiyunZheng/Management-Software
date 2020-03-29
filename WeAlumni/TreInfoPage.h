@@ -1,5 +1,6 @@
 #pragma once
 #include "Database.h"
+
 /*
  * StarterPage.h
  *
@@ -7,7 +8,7 @@
  * comfirm modify and delete record.
  *
  * @author: Yiyun Zheng
- * Revised: 3/27/20
+ * Revised: 3/28/20
  *
  */
 
