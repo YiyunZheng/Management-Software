@@ -6,7 +6,7 @@
  * This file implements all StfInfoPage interfaces.
  *
  * @author: Rui Jia
- * Revised: 3/28/20
+ * Revised: 4/1/20
  *
  */
 
@@ -44,14 +44,15 @@ Void WeAlumni::StfInfoPage::UpdateInfo() {
         return;
     }
     if (status > 0) {
+        lbl_StfId->Text = _StfId.ToString();
         lbl_MemId->Text = _database->dataReader->GetInt32(0).ToString();
         lbl_Dept->Text = _database->dataReader->GetString(1);
         lbl_Posi->Text = _database->dataReader->GetString(2);
         lbl_Auth->Text = _database->dataReader->GetString(3);
 
-        txt_Dept->Text = lbl_Dept->Text;
-        txt_Posi->Text = lbl_Posi->Text;
-        txt_Auth->Text = lbl_Auth->Text;
+        cmb_Dept->Text = lbl_Dept->Text;
+        cmb_Posi->Text = lbl_Posi->Text;
+        cmb_Auth->Text = lbl_Auth->Text;
     }
     else {
         lbl_error->Text = "ERROR";
@@ -84,26 +85,26 @@ Void WeAlumni::StfInfoPage::UpdateInfo() {
 
 /*
  * ChangeTxtVisible()
- * Set all texts visible.
+ * Set all comboboxs visible.
  * @param None
  * @return None
  */
 Void WeAlumni::StfInfoPage::ChangeTxtVisible() {
-    txt_Dept->Visible = true;
-    txt_Posi->Visible = true;
-    txt_Auth->Visible = true;
+    cmb_Dept->Visible = true;
+    cmb_Posi->Visible = true;
+    cmb_Auth->Visible = true;
 }
 
 /*
  * ChangeTxtInVisible()
- * Set all texts invisible.
+ * Set all comboboxs invisible.
  * @param None
  * @return None
  */
 Void WeAlumni::StfInfoPage::ChangeTxtInvisible() {
-    txt_Dept->Visible = false;
-    txt_Posi->Visible = false;
-    txt_Auth->Visible = false;
+    cmb_Dept->Visible = false;
+    cmb_Posi->Visible = false;
+    cmb_Auth->Visible = false;
 }
 
 /*
@@ -156,10 +157,10 @@ Void WeAlumni::StfInfoPage::ChangeInfo_Click(System::Object^ sender, System::Eve
 Void WeAlumni::StfInfoPage::AcceptButton_Click(System::Object^ sender, System::EventArgs^ e) {
     int status = -1;
     String^ command = "UPDATE Staff " + 
-                      "SET    Dept = '"     + txt_Dept->Text + "', " +
-                              "Position = '" + txt_Posi->Text + "', " +
-                              "Auth = '"     + txt_Auth->Text + "' " +
-                      "WHERE   MemId = '"    + _MemId + "';";
+                      "SET    Dept = '"     + cmb_Dept->Text + "', " +
+                             "Position = '" + cmb_Posi->Text + "', " +
+                             "Auth = '"     + cmb_Auth->Text + "' " +
+                      "WHERE  MemId = '"    + _MemId + "';";
     try {
         status = _database->UpdateData(command);
     }
@@ -225,6 +226,7 @@ Void WeAlumni::StfInfoPage::DeleteAcceptButton_Click(System::Object^ sender, Sys
         lbl_error->Text = exception->Message;
         return;
     }
+
     if (status > 0) {
         this->Close();
     }
@@ -261,7 +263,7 @@ Void WeAlumni::StfInfoPage::AddNewRecord(System::Object^ sender, System::EventAr
     String^ time = _database->GetSystemTime();
     String^ action = "a";
     String^ command = "INSERT INTO Record VALUES(" + RecordId + "," +
-                                                     MemId + "," +
+                                                     _StfId + "," +
                                                      MemId + ", '" +
                                                      Name + "', '" +
                                                      time + "', '" +
@@ -273,6 +275,7 @@ Void WeAlumni::StfInfoPage::AddNewRecord(System::Object^ sender, System::EventAr
         lbl_error->Text = exception->Message;
         return;
     }
+
     if (status > 0) {
         lbl_success->Text = "Update recording data successful!";
         lbl_success->Visible = true;
@@ -292,13 +295,12 @@ Void WeAlumni::StfInfoPage::AddNewRecord(System::Object^ sender, System::EventAr
  */
 Void WeAlumni::StfInfoPage::UpdateDataGridView() {
     int status = -1;
-    String^ command = "SELECT R.Id     AS 'Recording ID', " +
-                             "R.Time   As 'Recording Time', " +
-                             "M.Id     AS 'Member ID', " +
-                             "M.Name   AS 'Member Name', " +
-                             "R.Action AS 'Action' " +
-                      "FROM   Member M," +
-                             "Record R";
+    String^ command = "SELECT R.Id      AS 'Recording ID', " +
+                             "R.Time    As 'Recording Time', " +
+                             "R.MemId   AS 'Member ID', " +
+                             "R.MemName AS 'Member Name', " +
+                             "R.Action  AS 'Action' " +
+                       "FROM  Record R";
     BindingSource^ bSource = gcnew BindingSource();
     try {
         status = _database->ReadDataAdapter(command);
@@ -308,6 +310,7 @@ Void WeAlumni::StfInfoPage::UpdateDataGridView() {
         lbl_error->Visible = true;
         return;
     }
+
     if (status > 0) {
         lbl_error->Visible = false;
         bSource->DataSource = _database->dataTable;

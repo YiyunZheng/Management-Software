@@ -7,7 +7,7 @@
  * This file have basic Staff Information interaction actions.
  *
  * @author: Rui Jia
- * Revised: 3/28/20
+ * Revised: 4/1/20
  *
  */
 
@@ -57,9 +57,7 @@ namespace WeAlumni {
 				delete _database;
 			}
 		}
-	private: System::Windows::Forms::TextBox^ txt_Dept;
-	private: System::Windows::Forms::TextBox^ txt_Posi;
-	private: System::Windows::Forms::TextBox^ txt_Auth;
+
 	private: System::Windows::Forms::Label^ lbl_Prompt_StfInfoPage;
 	private: System::Windows::Forms::Label^ lbl_Prompt_MemId;
 	private: System::Windows::Forms::Label^ lbl_Prompt_Name;
@@ -92,6 +90,11 @@ namespace WeAlumni {
 	private: System::Windows::Forms::Label^ lbl_error;
 	private: System::Windows::Forms::DataGridView^ dgv_Staff;
 	private: System::Windows::Forms::Label^ lbl_success;
+	private: System::Windows::Forms::ComboBox^ cmb_Dept;
+	private: System::Windows::Forms::ComboBox^ cmb_Posi;
+	private: System::Windows::Forms::ComboBox^ cmb_Auth;
+	private: System::Windows::Forms::Label^ lbl_Prompt_StfId;
+	private: System::Windows::Forms::Label^ lbl_StfId;
 	private:
 		/// <summary>
 		/// Required designer variable.
@@ -116,13 +119,10 @@ namespace WeAlumni {
 			this->lbl_Prompt_Phone = (gcnew System::Windows::Forms::Label());
 			this->lbl_Prompt_Wechat = (gcnew System::Windows::Forms::Label());
 			this->lbl_Prompt_Dept = (gcnew System::Windows::Forms::Label());
-			this->txt_Dept = (gcnew System::Windows::Forms::TextBox());
 			this->lbl_Prompt_Posi = (gcnew System::Windows::Forms::Label());
-			this->txt_Posi = (gcnew System::Windows::Forms::TextBox());
 			this->lbl_Prompt_Auth = (gcnew System::Windows::Forms::Label());
 			this->btn_AddRecord = (gcnew System::Windows::Forms::Button());
 			this->btn_Cancle = (gcnew System::Windows::Forms::Button());
-			this->txt_Auth = (gcnew System::Windows::Forms::TextBox());
 			this->lbl_MemId = (gcnew System::Windows::Forms::Label());
 			this->lbl_Name = (gcnew System::Windows::Forms::Label());
 			this->lbl_Gender = (gcnew System::Windows::Forms::Label());
@@ -139,6 +139,11 @@ namespace WeAlumni {
 			this->lbl_error = (gcnew System::Windows::Forms::Label());
 			this->dgv_Staff = (gcnew System::Windows::Forms::DataGridView());
 			this->lbl_success = (gcnew System::Windows::Forms::Label());
+			this->cmb_Dept = (gcnew System::Windows::Forms::ComboBox());
+			this->cmb_Posi = (gcnew System::Windows::Forms::ComboBox());
+			this->cmb_Auth = (gcnew System::Windows::Forms::ComboBox());
+			this->lbl_Prompt_StfId = (gcnew System::Windows::Forms::Label());
+			this->lbl_StfId = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgv_Staff))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -154,7 +159,7 @@ namespace WeAlumni {
 			// lbl_Prompt_MemId
 			// 
 			this->lbl_Prompt_MemId->AutoSize = true;
-			this->lbl_Prompt_MemId->Location = System::Drawing::Point(151, 74);
+			this->lbl_Prompt_MemId->Location = System::Drawing::Point(287, 74);
 			this->lbl_Prompt_MemId->Name = L"lbl_Prompt_MemId";
 			this->lbl_Prompt_MemId->Size = System::Drawing::Size(79, 15);
 			this->lbl_Prompt_MemId->TabIndex = 24;
@@ -163,7 +168,7 @@ namespace WeAlumni {
 			// lbl_Prompt_Name
 			// 
 			this->lbl_Prompt_Name->AutoSize = true;
-			this->lbl_Prompt_Name->Location = System::Drawing::Point(420, 77);
+			this->lbl_Prompt_Name->Location = System::Drawing::Point(548, 74);
 			this->lbl_Prompt_Name->Name = L"lbl_Prompt_Name";
 			this->lbl_Prompt_Name->Size = System::Drawing::Size(39, 15);
 			this->lbl_Prompt_Name->TabIndex = 25;
@@ -181,7 +186,7 @@ namespace WeAlumni {
 			// lbl_Prompt_Email
 			// 
 			this->lbl_Prompt_Email->AutoSize = true;
-			this->lbl_Prompt_Email->Location = System::Drawing::Point(236, 125);
+			this->lbl_Prompt_Email->Location = System::Drawing::Point(319, 125);
 			this->lbl_Prompt_Email->Name = L"lbl_Prompt_Email";
 			this->lbl_Prompt_Email->Size = System::Drawing::Size(47, 15);
 			this->lbl_Prompt_Email->TabIndex = 27;
@@ -209,7 +214,7 @@ namespace WeAlumni {
 			// 
 			// btn_Accpet
 			// 
-			this->btn_Accpet->Location = System::Drawing::Point(360, 342);
+			this->btn_Accpet->Location = System::Drawing::Point(228, 342);
 			this->btn_Accpet->Name = L"btn_Accpet";
 			this->btn_Accpet->Size = System::Drawing::Size(75, 23);
 			this->btn_Accpet->TabIndex = 30;
@@ -221,7 +226,7 @@ namespace WeAlumni {
 			// lbl_Prompt_Gender
 			// 
 			this->lbl_Prompt_Gender->AutoSize = true;
-			this->lbl_Prompt_Gender->Location = System::Drawing::Point(671, 80);
+			this->lbl_Prompt_Gender->Location = System::Drawing::Point(747, 74);
 			this->lbl_Prompt_Gender->Name = L"lbl_Prompt_Gender";
 			this->lbl_Prompt_Gender->Size = System::Drawing::Size(55, 15);
 			this->lbl_Prompt_Gender->TabIndex = 31;
@@ -230,7 +235,7 @@ namespace WeAlumni {
 			// lbl_Prompt_Phone
 			// 
 			this->lbl_Prompt_Phone->AutoSize = true;
-			this->lbl_Prompt_Phone->Location = System::Drawing::Point(478, 125);
+			this->lbl_Prompt_Phone->Location = System::Drawing::Point(548, 125);
 			this->lbl_Prompt_Phone->Name = L"lbl_Prompt_Phone";
 			this->lbl_Prompt_Phone->Size = System::Drawing::Size(47, 15);
 			this->lbl_Prompt_Phone->TabIndex = 33;
@@ -239,7 +244,7 @@ namespace WeAlumni {
 			// lbl_Prompt_Wechat
 			// 
 			this->lbl_Prompt_Wechat->AutoSize = true;
-			this->lbl_Prompt_Wechat->Location = System::Drawing::Point(747, 128);
+			this->lbl_Prompt_Wechat->Location = System::Drawing::Point(747, 125);
 			this->lbl_Prompt_Wechat->Name = L"lbl_Prompt_Wechat";
 			this->lbl_Prompt_Wechat->Size = System::Drawing::Size(55, 15);
 			this->lbl_Prompt_Wechat->TabIndex = 35;
@@ -254,35 +259,19 @@ namespace WeAlumni {
 			this->lbl_Prompt_Dept->TabIndex = 37;
 			this->lbl_Prompt_Dept->Text = L"Department";
 			// 
-			// txt_Dept
-			// 
-			this->txt_Dept->Location = System::Drawing::Point(104, 174);
-			this->txt_Dept->Name = L"txt_Dept";
-			this->txt_Dept->Size = System::Drawing::Size(292, 25);
-			this->txt_Dept->TabIndex = 38;
-			this->txt_Dept->Visible = false;
-			// 
 			// lbl_Prompt_Posi
 			// 
 			this->lbl_Prompt_Posi->AutoSize = true;
-			this->lbl_Prompt_Posi->Location = System::Drawing::Point(453, 174);
+			this->lbl_Prompt_Posi->Location = System::Drawing::Point(449, 177);
 			this->lbl_Prompt_Posi->Name = L"lbl_Prompt_Posi";
 			this->lbl_Prompt_Posi->Size = System::Drawing::Size(71, 15);
 			this->lbl_Prompt_Posi->TabIndex = 39;
 			this->lbl_Prompt_Posi->Text = L"Position";
 			// 
-			// txt_Posi
-			// 
-			this->txt_Posi->Location = System::Drawing::Point(526, 167);
-			this->txt_Posi->Name = L"txt_Posi";
-			this->txt_Posi->Size = System::Drawing::Size(182, 25);
-			this->txt_Posi->TabIndex = 40;
-			this->txt_Posi->Visible = false;
-			// 
 			// lbl_Prompt_Auth
 			// 
 			this->lbl_Prompt_Auth->AutoSize = true;
-			this->lbl_Prompt_Auth->Location = System::Drawing::Point(726, 174);
+			this->lbl_Prompt_Auth->Location = System::Drawing::Point(725, 177);
 			this->lbl_Prompt_Auth->Name = L"lbl_Prompt_Auth";
 			this->lbl_Prompt_Auth->Size = System::Drawing::Size(39, 15);
 			this->lbl_Prompt_Auth->TabIndex = 41;
@@ -300,7 +289,7 @@ namespace WeAlumni {
 			// 
 			// btn_Cancle
 			// 
-			this->btn_Cancle->Location = System::Drawing::Point(808, 342);
+			this->btn_Cancle->Location = System::Drawing::Point(827, 342);
 			this->btn_Cancle->Name = L"btn_Cancle";
 			this->btn_Cancle->Size = System::Drawing::Size(75, 23);
 			this->btn_Cancle->TabIndex = 43;
@@ -309,18 +298,10 @@ namespace WeAlumni {
 			this->btn_Cancle->Visible = false;
 			this->btn_Cancle->Click += gcnew System::EventHandler(this, &StfInfoPage::CancelButton_Click);
 			// 
-			// txt_Auth
-			// 
-			this->txt_Auth->Location = System::Drawing::Point(799, 167);
-			this->txt_Auth->Name = L"txt_Auth";
-			this->txt_Auth->Size = System::Drawing::Size(210, 25);
-			this->txt_Auth->TabIndex = 44;
-			this->txt_Auth->Visible = false;
-			// 
 			// lbl_MemId
 			// 
 			this->lbl_MemId->AutoSize = true;
-			this->lbl_MemId->Location = System::Drawing::Point(262, 74);
+			this->lbl_MemId->Location = System::Drawing::Point(401, 74);
 			this->lbl_MemId->Name = L"lbl_MemId";
 			this->lbl_MemId->Size = System::Drawing::Size(119, 15);
 			this->lbl_MemId->TabIndex = 47;
@@ -329,7 +310,7 @@ namespace WeAlumni {
 			// lbl_Name
 			// 
 			this->lbl_Name->AutoSize = true;
-			this->lbl_Name->Location = System::Drawing::Point(504, 77);
+			this->lbl_Name->Location = System::Drawing::Point(606, 74);
 			this->lbl_Name->Name = L"lbl_Name";
 			this->lbl_Name->Size = System::Drawing::Size(119, 15);
 			this->lbl_Name->TabIndex = 48;
@@ -338,7 +319,7 @@ namespace WeAlumni {
 			// lbl_Gender
 			// 
 			this->lbl_Gender->AutoSize = true;
-			this->lbl_Gender->Location = System::Drawing::Point(747, 80);
+			this->lbl_Gender->Location = System::Drawing::Point(816, 74);
 			this->lbl_Gender->Name = L"lbl_Gender";
 			this->lbl_Gender->Size = System::Drawing::Size(119, 15);
 			this->lbl_Gender->TabIndex = 49;
@@ -347,7 +328,7 @@ namespace WeAlumni {
 			// lbl_Birth
 			// 
 			this->lbl_Birth->AutoSize = true;
-			this->lbl_Birth->Location = System::Drawing::Point(101, 125);
+			this->lbl_Birth->Location = System::Drawing::Point(137, 125);
 			this->lbl_Birth->Name = L"lbl_Birth";
 			this->lbl_Birth->Size = System::Drawing::Size(119, 15);
 			this->lbl_Birth->TabIndex = 50;
@@ -356,7 +337,7 @@ namespace WeAlumni {
 			// lbl_Email
 			// 
 			this->lbl_Email->AutoSize = true;
-			this->lbl_Email->Location = System::Drawing::Point(289, 125);
+			this->lbl_Email->Location = System::Drawing::Point(401, 125);
 			this->lbl_Email->Name = L"lbl_Email";
 			this->lbl_Email->Size = System::Drawing::Size(119, 15);
 			this->lbl_Email->TabIndex = 51;
@@ -365,7 +346,7 @@ namespace WeAlumni {
 			// lbl_Phone
 			// 
 			this->lbl_Phone->AutoSize = true;
-			this->lbl_Phone->Location = System::Drawing::Point(568, 125);
+			this->lbl_Phone->Location = System::Drawing::Point(606, 125);
 			this->lbl_Phone->Name = L"lbl_Phone";
 			this->lbl_Phone->Size = System::Drawing::Size(119, 15);
 			this->lbl_Phone->TabIndex = 52;
@@ -374,7 +355,7 @@ namespace WeAlumni {
 			// lbl_Wechat
 			// 
 			this->lbl_Wechat->AutoSize = true;
-			this->lbl_Wechat->Location = System::Drawing::Point(816, 128);
+			this->lbl_Wechat->Location = System::Drawing::Point(816, 125);
 			this->lbl_Wechat->Name = L"lbl_Wechat";
 			this->lbl_Wechat->Size = System::Drawing::Size(119, 15);
 			this->lbl_Wechat->TabIndex = 53;
@@ -383,7 +364,7 @@ namespace WeAlumni {
 			// lbl_Dept
 			// 
 			this->lbl_Dept->AutoSize = true;
-			this->lbl_Dept->Location = System::Drawing::Point(113, 177);
+			this->lbl_Dept->Location = System::Drawing::Point(142, 177);
 			this->lbl_Dept->Name = L"lbl_Dept";
 			this->lbl_Dept->Size = System::Drawing::Size(119, 15);
 			this->lbl_Dept->TabIndex = 54;
@@ -392,7 +373,7 @@ namespace WeAlumni {
 			// lbl_Posi
 			// 
 			this->lbl_Posi->AutoSize = true;
-			this->lbl_Posi->Location = System::Drawing::Point(550, 170);
+			this->lbl_Posi->Location = System::Drawing::Point(548, 177);
 			this->lbl_Posi->Name = L"lbl_Posi";
 			this->lbl_Posi->Size = System::Drawing::Size(119, 15);
 			this->lbl_Posi->TabIndex = 55;
@@ -401,7 +382,7 @@ namespace WeAlumni {
 			// lbl_Auth
 			// 
 			this->lbl_Auth->AutoSize = true;
-			this->lbl_Auth->Location = System::Drawing::Point(816, 174);
+			this->lbl_Auth->Location = System::Drawing::Point(816, 177);
 			this->lbl_Auth->Name = L"lbl_Auth";
 			this->lbl_Auth->Size = System::Drawing::Size(119, 15);
 			this->lbl_Auth->TabIndex = 56;
@@ -409,7 +390,7 @@ namespace WeAlumni {
 			// 
 			// btn_Delete
 			// 
-			this->btn_Delete->Location = System::Drawing::Point(360, 295);
+			this->btn_Delete->Location = System::Drawing::Point(228, 295);
 			this->btn_Delete->Name = L"btn_Delete";
 			this->btn_Delete->Size = System::Drawing::Size(75, 23);
 			this->btn_Delete->TabIndex = 57;
@@ -420,7 +401,7 @@ namespace WeAlumni {
 			// 
 			// btn_Close
 			// 
-			this->btn_Close->Location = System::Drawing::Point(799, 295);
+			this->btn_Close->Location = System::Drawing::Point(827, 291);
 			this->btn_Close->Name = L"btn_Close";
 			this->btn_Close->Size = System::Drawing::Size(75, 23);
 			this->btn_Close->TabIndex = 58;
@@ -432,7 +413,7 @@ namespace WeAlumni {
 			// lbl_Prompt_dgvStaff
 			// 
 			this->lbl_Prompt_dgvStaff->AutoSize = true;
-			this->lbl_Prompt_dgvStaff->Location = System::Drawing::Point(548, 391);
+			this->lbl_Prompt_dgvStaff->Location = System::Drawing::Point(548, 388);
 			this->lbl_Prompt_dgvStaff->Name = L"lbl_Prompt_dgvStaff";
 			this->lbl_Prompt_dgvStaff->Size = System::Drawing::Size(79, 15);
 			this->lbl_Prompt_dgvStaff->TabIndex = 59;
@@ -442,7 +423,7 @@ namespace WeAlumni {
 			// 
 			this->lbl_error->AutoSize = true;
 			this->lbl_error->ForeColor = System::Drawing::Color::Red;
-			this->lbl_error->Location = System::Drawing::Point(568, 299);
+			this->lbl_error->Location = System::Drawing::Point(478, 299);
 			this->lbl_error->Name = L"lbl_error";
 			this->lbl_error->Size = System::Drawing::Size(47, 15);
 			this->lbl_error->TabIndex = 70;
@@ -463,18 +444,77 @@ namespace WeAlumni {
 			// 
 			this->lbl_success->AutoSize = true;
 			this->lbl_success->ForeColor = System::Drawing::Color::Green;
-			this->lbl_success->Location = System::Drawing::Point(548, 329);
+			this->lbl_success->Location = System::Drawing::Point(478, 346);
 			this->lbl_success->Name = L"lbl_success";
 			this->lbl_success->Size = System::Drawing::Size(95, 15);
 			this->lbl_success->TabIndex = 72;
 			this->lbl_success->Text = L"Successful!";
 			this->lbl_success->Visible = false;
 			// 
+			// cmb_Dept
+			// 
+			this->cmb_Dept->FormattingEnabled = true;
+			this->cmb_Dept->Items->AddRange(gcnew cli::array< System::Object^  >(3) {
+				L"General Administration", L"Information Technology Support",
+					L"Career Development Support"
+			});
+			this->cmb_Dept->Location = System::Drawing::Point(140, 174);
+			this->cmb_Dept->Name = L"cmb_Dept";
+			this->cmb_Dept->Size = System::Drawing::Size(243, 23);
+			this->cmb_Dept->TabIndex = 73;
+			this->cmb_Dept->Visible = false;
+			// 
+			// cmb_Posi
+			// 
+			this->cmb_Posi->FormattingEnabled = true;
+			this->cmb_Posi->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Director", L"Manager", L"Staff" });
+			this->cmb_Posi->Location = System::Drawing::Point(526, 174);
+			this->cmb_Posi->Name = L"cmb_Posi";
+			this->cmb_Posi->Size = System::Drawing::Size(185, 23);
+			this->cmb_Posi->TabIndex = 74;
+			this->cmb_Posi->Visible = false;
+			// 
+			// cmb_Auth
+			// 
+			this->cmb_Auth->FormattingEnabled = true;
+			this->cmb_Auth->Items->AddRange(gcnew cli::array< System::Object^  >(5) {
+				L"Level 1", L"Level 2", L"Level 3", L"Level 4",
+					L"Level 5"
+			});
+			this->cmb_Auth->Location = System::Drawing::Point(783, 174);
+			this->cmb_Auth->Name = L"cmb_Auth";
+			this->cmb_Auth->Size = System::Drawing::Size(185, 23);
+			this->cmb_Auth->TabIndex = 75;
+			this->cmb_Auth->Visible = false;
+			// 
+			// lbl_Prompt_StfId
+			// 
+			this->lbl_Prompt_StfId->AutoSize = true;
+			this->lbl_Prompt_StfId->Location = System::Drawing::Point(28, 74);
+			this->lbl_Prompt_StfId->Name = L"lbl_Prompt_StfId";
+			this->lbl_Prompt_StfId->Size = System::Drawing::Size(71, 15);
+			this->lbl_Prompt_StfId->TabIndex = 76;
+			this->lbl_Prompt_StfId->Text = L"Staff ID";
+			// 
+			// lbl_StfId
+			// 
+			this->lbl_StfId->AutoSize = true;
+			this->lbl_StfId->Location = System::Drawing::Point(137, 74);
+			this->lbl_StfId->Name = L"lbl_StfId";
+			this->lbl_StfId->Size = System::Drawing::Size(119, 15);
+			this->lbl_StfId->TabIndex = 77;
+			this->lbl_StfId->Text = L"No Information";
+			// 
 			// StfInfoPage
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 15);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1432, 603);
+			this->ClientSize = System::Drawing::Size(1096, 603);
+			this->Controls->Add(this->lbl_StfId);
+			this->Controls->Add(this->lbl_Prompt_StfId);
+			this->Controls->Add(this->cmb_Auth);
+			this->Controls->Add(this->cmb_Posi);
+			this->Controls->Add(this->cmb_Dept);
 			this->Controls->Add(this->lbl_success);
 			this->Controls->Add(this->dgv_Staff);
 			this->Controls->Add(this->lbl_error);
@@ -491,13 +531,10 @@ namespace WeAlumni {
 			this->Controls->Add(this->lbl_Gender);
 			this->Controls->Add(this->lbl_Name);
 			this->Controls->Add(this->lbl_MemId);
-			this->Controls->Add(this->txt_Auth);
 			this->Controls->Add(this->btn_Cancle);
 			this->Controls->Add(this->btn_AddRecord);
 			this->Controls->Add(this->lbl_Prompt_Auth);
-			this->Controls->Add(this->txt_Posi);
 			this->Controls->Add(this->lbl_Prompt_Posi);
-			this->Controls->Add(this->txt_Dept);
 			this->Controls->Add(this->lbl_Prompt_Dept);
 			this->Controls->Add(this->lbl_Prompt_Wechat);
 			this->Controls->Add(this->lbl_Prompt_Phone);
@@ -520,6 +557,7 @@ namespace WeAlumni {
 #pragma endregion
 	private:
 		int^ _MemId;
+		int _StfId;
 		Database^ _database;
 	
 	private:
