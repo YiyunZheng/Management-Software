@@ -137,9 +137,10 @@ namespace WeAlumni {
 			this->lbl_PageName->AutoSize = true;
 			this->lbl_PageName->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_PageName->Location = System::Drawing::Point(215, 9);
+			this->lbl_PageName->Location = System::Drawing::Point(502, 20);
+			this->lbl_PageName->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_PageName->Name = L"lbl_PageName";
-			this->lbl_PageName->Size = System::Drawing::Size(153, 25);
+			this->lbl_PageName->Size = System::Drawing::Size(331, 55);
 			this->lbl_PageName->TabIndex = 0;
 			this->lbl_PageName->Text = L"OPTAddPage";
 			// 
@@ -148,18 +149,20 @@ namespace WeAlumni {
 			this->lbl_Promt_OPTID->AutoSize = true;
 			this->lbl_Promt_OPTID->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Promt_OPTID->Location = System::Drawing::Point(18, 63);
+			this->lbl_Promt_OPTID->Location = System::Drawing::Point(42, 141);
+			this->lbl_Promt_OPTID->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_Promt_OPTID->Name = L"lbl_Promt_OPTID";
-			this->lbl_Promt_OPTID->Size = System::Drawing::Size(20, 13);
+			this->lbl_Promt_OPTID->Size = System::Drawing::Size(39, 29);
 			this->lbl_Promt_OPTID->TabIndex = 1;
 			this->lbl_Promt_OPTID->Text = L"ID";
 			// 
 			// lbl_OPTID
 			// 
 			this->lbl_OPTID->AutoSize = true;
-			this->lbl_OPTID->Location = System::Drawing::Point(104, 63);
+			this->lbl_OPTID->Location = System::Drawing::Point(243, 141);
+			this->lbl_OPTID->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_OPTID->Name = L"lbl_OPTID";
-			this->lbl_OPTID->Size = System::Drawing::Size(27, 13);
+			this->lbl_OPTID->Size = System::Drawing::Size(53, 29);
 			this->lbl_OPTID->TabIndex = 2;
 			this->lbl_OPTID->Text = L"N/A";
 			// 
@@ -167,9 +170,10 @@ namespace WeAlumni {
 			// 
 			this->cmb_Status->FormattingEnabled = true;
 			this->cmb_Status->Items->AddRange(gcnew cli::array< System::Object^  >(2) { L"Active", L"Invalid" });
-			this->cmb_Status->Location = System::Drawing::Point(247, 59);
+			this->cmb_Status->Location = System::Drawing::Point(569, 133);
+			this->cmb_Status->Margin = System::Windows::Forms::Padding(7, 7, 7, 7);
 			this->cmb_Status->Name = L"cmb_Status";
-			this->cmb_Status->Size = System::Drawing::Size(121, 21);
+			this->cmb_Status->Size = System::Drawing::Size(277, 37);
 			this->cmb_Status->TabIndex = 4;
 			// 
 			// lbl_Prompt_Status
@@ -177,9 +181,10 @@ namespace WeAlumni {
 			this->lbl_Prompt_Status->AutoSize = true;
 			this->lbl_Prompt_Status->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Prompt_Status->Location = System::Drawing::Point(182, 63);
+			this->lbl_Prompt_Status->Location = System::Drawing::Point(425, 141);
+			this->lbl_Prompt_Status->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_Prompt_Status->Name = L"lbl_Prompt_Status";
-			this->lbl_Prompt_Status->Size = System::Drawing::Size(43, 13);
+			this->lbl_Prompt_Status->Size = System::Drawing::Size(91, 29);
 			this->lbl_Prompt_Status->TabIndex = 5;
 			this->lbl_Prompt_Status->Text = L"Status";
 			// 
@@ -188,17 +193,19 @@ namespace WeAlumni {
 			this->lbl_MemId->AutoSize = true;
 			this->lbl_MemId->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_MemId->Location = System::Drawing::Point(18, 110);
+			this->lbl_MemId->Location = System::Drawing::Point(42, 245);
+			this->lbl_MemId->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_MemId->Name = L"lbl_MemId";
-			this->lbl_MemId->Size = System::Drawing::Size(68, 13);
+			this->lbl_MemId->Size = System::Drawing::Size(146, 29);
 			this->lbl_MemId->TabIndex = 6;
 			this->lbl_MemId->Text = L"Member ID";
 			// 
 			// txt_MemId
 			// 
-			this->txt_MemId->Location = System::Drawing::Point(104, 106);
+			this->txt_MemId->Location = System::Drawing::Point(243, 239);
+			this->txt_MemId->Margin = System::Windows::Forms::Padding(7, 7, 7, 7);
 			this->txt_MemId->Name = L"txt_MemId";
-			this->txt_MemId->Size = System::Drawing::Size(100, 20);
+			this->txt_MemId->Size = System::Drawing::Size(228, 35);
 			this->txt_MemId->TabIndex = 7;
 			// 
 			// lbl_MemName
@@ -206,24 +213,27 @@ namespace WeAlumni {
 			this->lbl_MemName->AutoSize = true;
 			this->lbl_MemName->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_MemName->Location = System::Drawing::Point(223, 110);
+			this->lbl_MemName->Location = System::Drawing::Point(520, 245);
+			this->lbl_MemName->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_MemName->Name = L"lbl_MemName";
-			this->lbl_MemName->Size = System::Drawing::Size(87, 13);
+			this->lbl_MemName->Size = System::Drawing::Size(192, 29);
 			this->lbl_MemName->TabIndex = 8;
 			this->lbl_MemName->Text = L"Member Name";
 			// 
 			// txt_MemName
 			// 
-			this->txt_MemName->Location = System::Drawing::Point(320, 106);
+			this->txt_MemName->Location = System::Drawing::Point(747, 236);
+			this->txt_MemName->Margin = System::Windows::Forms::Padding(7, 7, 7, 7);
 			this->txt_MemName->Name = L"txt_MemName";
-			this->txt_MemName->Size = System::Drawing::Size(100, 20);
+			this->txt_MemName->Size = System::Drawing::Size(228, 35);
 			this->txt_MemName->TabIndex = 9;
 			// 
 			// btn_Verify
 			// 
-			this->btn_Verify->Location = System::Drawing::Point(504, 97);
+			this->btn_Verify->Location = System::Drawing::Point(1176, 216);
+			this->btn_Verify->Margin = System::Windows::Forms::Padding(7, 7, 7, 7);
 			this->btn_Verify->Name = L"btn_Verify";
-			this->btn_Verify->Size = System::Drawing::Size(103, 38);
+			this->btn_Verify->Size = System::Drawing::Size(240, 85);
 			this->btn_Verify->TabIndex = 10;
 			this->btn_Verify->Text = L"Verify";
 			this->btn_Verify->UseVisualStyleBackColor = true;
@@ -234,9 +244,10 @@ namespace WeAlumni {
 			this->lbl_Prompt_StfId->AutoSize = true;
 			this->lbl_Prompt_StfId->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Prompt_StfId->Location = System::Drawing::Point(395, 63);
+			this->lbl_Prompt_StfId->Location = System::Drawing::Point(922, 141);
+			this->lbl_Prompt_StfId->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_Prompt_StfId->Name = L"lbl_Prompt_StfId";
-			this->lbl_Prompt_StfId->Size = System::Drawing::Size(51, 13);
+			this->lbl_Prompt_StfId->Size = System::Drawing::Size(104, 29);
 			this->lbl_Prompt_StfId->TabIndex = 11;
 			this->lbl_Prompt_StfId->Text = L"Staff ID";
 			// 
@@ -245,24 +256,27 @@ namespace WeAlumni {
 			this->lbl_StartDate->AutoSize = true;
 			this->lbl_StartDate->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_StartDate->Location = System::Drawing::Point(18, 163);
+			this->lbl_StartDate->Location = System::Drawing::Point(42, 364);
+			this->lbl_StartDate->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_StartDate->Name = L"lbl_StartDate";
-			this->lbl_StartDate->Size = System::Drawing::Size(65, 13);
+			this->lbl_StartDate->Size = System::Drawing::Size(136, 29);
 			this->lbl_StartDate->TabIndex = 12;
 			this->lbl_StartDate->Text = L"Start Date";
 			// 
 			// txt_StartDate
 			// 
-			this->txt_StartDate->Location = System::Drawing::Point(104, 159);
+			this->txt_StartDate->Location = System::Drawing::Point(243, 355);
+			this->txt_StartDate->Margin = System::Windows::Forms::Padding(7, 7, 7, 7);
 			this->txt_StartDate->Name = L"txt_StartDate";
-			this->txt_StartDate->Size = System::Drawing::Size(100, 20);
+			this->txt_StartDate->Size = System::Drawing::Size(228, 35);
 			this->txt_StartDate->TabIndex = 13;
 			// 
 			// txt_EndDate
 			// 
-			this->txt_EndDate->Location = System::Drawing::Point(320, 159);
+			this->txt_EndDate->Location = System::Drawing::Point(747, 355);
+			this->txt_EndDate->Margin = System::Windows::Forms::Padding(7, 7, 7, 7);
 			this->txt_EndDate->Name = L"txt_EndDate";
-			this->txt_EndDate->Size = System::Drawing::Size(100, 20);
+			this->txt_EndDate->Size = System::Drawing::Size(228, 35);
 			this->txt_EndDate->TabIndex = 15;
 			// 
 			// lbl_EndDate
@@ -270,17 +284,19 @@ namespace WeAlumni {
 			this->lbl_EndDate->AutoSize = true;
 			this->lbl_EndDate->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_EndDate->Location = System::Drawing::Point(223, 163);
+			this->lbl_EndDate->Location = System::Drawing::Point(520, 364);
+			this->lbl_EndDate->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_EndDate->Name = L"lbl_EndDate";
-			this->lbl_EndDate->Size = System::Drawing::Size(60, 13);
+			this->lbl_EndDate->Size = System::Drawing::Size(126, 29);
 			this->lbl_EndDate->TabIndex = 14;
 			this->lbl_EndDate->Text = L"End Date";
 			// 
 			// txt_Title
 			// 
-			this->txt_Title->Location = System::Drawing::Point(104, 224);
+			this->txt_Title->Location = System::Drawing::Point(243, 500);
+			this->txt_Title->Margin = System::Windows::Forms::Padding(7, 7, 7, 7);
 			this->txt_Title->Name = L"txt_Title";
-			this->txt_Title->Size = System::Drawing::Size(100, 20);
+			this->txt_Title->Size = System::Drawing::Size(228, 35);
 			this->txt_Title->TabIndex = 17;
 			// 
 			// lbl_Title
@@ -288,9 +304,10 @@ namespace WeAlumni {
 			this->lbl_Title->AutoSize = true;
 			this->lbl_Title->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Title->Location = System::Drawing::Point(18, 228);
+			this->lbl_Title->Location = System::Drawing::Point(42, 509);
+			this->lbl_Title->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_Title->Name = L"lbl_Title";
-			this->lbl_Title->Size = System::Drawing::Size(32, 13);
+			this->lbl_Title->Size = System::Drawing::Size(66, 29);
 			this->lbl_Title->TabIndex = 16;
 			this->lbl_Title->Text = L"Title";
 			// 
@@ -299,25 +316,28 @@ namespace WeAlumni {
 			this->lbl_Position->AutoSize = true;
 			this->lbl_Position->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Position->Location = System::Drawing::Point(223, 228);
+			this->lbl_Position->Location = System::Drawing::Point(520, 509);
+			this->lbl_Position->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_Position->Name = L"lbl_Position";
-			this->lbl_Position->Size = System::Drawing::Size(52, 13);
+			this->lbl_Position->Size = System::Drawing::Size(112, 29);
 			this->lbl_Position->TabIndex = 18;
 			this->lbl_Position->Text = L"Position";
 			// 
 			// txt_Position
 			// 
-			this->txt_Position->Location = System::Drawing::Point(320, 199);
+			this->txt_Position->Location = System::Drawing::Point(747, 444);
+			this->txt_Position->Margin = System::Windows::Forms::Padding(7, 7, 7, 7);
 			this->txt_Position->Name = L"txt_Position";
-			this->txt_Position->Size = System::Drawing::Size(232, 70);
+			this->txt_Position->Size = System::Drawing::Size(536, 151);
 			this->txt_Position->TabIndex = 19;
 			this->txt_Position->Text = L"";
 			// 
 			// txt_CardNumber
 			// 
-			this->txt_CardNumber->Location = System::Drawing::Point(104, 292);
+			this->txt_CardNumber->Location = System::Drawing::Point(243, 651);
+			this->txt_CardNumber->Margin = System::Windows::Forms::Padding(7, 7, 7, 7);
 			this->txt_CardNumber->Name = L"txt_CardNumber";
-			this->txt_CardNumber->Size = System::Drawing::Size(100, 20);
+			this->txt_CardNumber->Size = System::Drawing::Size(228, 35);
 			this->txt_CardNumber->TabIndex = 21;
 			// 
 			// lbl_CardNumber
@@ -325,17 +345,19 @@ namespace WeAlumni {
 			this->lbl_CardNumber->AutoSize = true;
 			this->lbl_CardNumber->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_CardNumber->Location = System::Drawing::Point(18, 296);
+			this->lbl_CardNumber->Location = System::Drawing::Point(42, 660);
+			this->lbl_CardNumber->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_CardNumber->Name = L"lbl_CardNumber";
-			this->lbl_CardNumber->Size = System::Drawing::Size(80, 13);
+			this->lbl_CardNumber->Size = System::Drawing::Size(175, 29);
 			this->lbl_CardNumber->TabIndex = 20;
 			this->lbl_CardNumber->Text = L"Card Number";
 			// 
 			// txt_CardStartDate
 			// 
-			this->txt_CardStartDate->Location = System::Drawing::Point(320, 292);
+			this->txt_CardStartDate->Location = System::Drawing::Point(747, 651);
+			this->txt_CardStartDate->Margin = System::Windows::Forms::Padding(7, 7, 7, 7);
 			this->txt_CardStartDate->Name = L"txt_CardStartDate";
-			this->txt_CardStartDate->Size = System::Drawing::Size(100, 20);
+			this->txt_CardStartDate->Size = System::Drawing::Size(228, 35);
 			this->txt_CardStartDate->TabIndex = 23;
 			// 
 			// lbl_CardStartDate
@@ -343,17 +365,19 @@ namespace WeAlumni {
 			this->lbl_CardStartDate->AutoSize = true;
 			this->lbl_CardStartDate->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_CardStartDate->Location = System::Drawing::Point(223, 296);
+			this->lbl_CardStartDate->Location = System::Drawing::Point(520, 660);
+			this->lbl_CardStartDate->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_CardStartDate->Name = L"lbl_CardStartDate";
-			this->lbl_CardStartDate->Size = System::Drawing::Size(91, 13);
+			this->lbl_CardStartDate->Size = System::Drawing::Size(194, 29);
 			this->lbl_CardStartDate->TabIndex = 22;
 			this->lbl_CardStartDate->Text = L"Card StartDate";
 			// 
 			// txt_CardEndDate
 			// 
-			this->txt_CardEndDate->Location = System::Drawing::Point(546, 292);
+			this->txt_CardEndDate->Location = System::Drawing::Point(1274, 651);
+			this->txt_CardEndDate->Margin = System::Windows::Forms::Padding(7, 7, 7, 7);
 			this->txt_CardEndDate->Name = L"txt_CardEndDate";
-			this->txt_CardEndDate->Size = System::Drawing::Size(100, 20);
+			this->txt_CardEndDate->Size = System::Drawing::Size(228, 35);
 			this->txt_CardEndDate->TabIndex = 25;
 			// 
 			// lbl_CardEndDate
@@ -361,17 +385,19 @@ namespace WeAlumni {
 			this->lbl_CardEndDate->AutoSize = true;
 			this->lbl_CardEndDate->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_CardEndDate->Location = System::Drawing::Point(454, 296);
+			this->lbl_CardEndDate->Location = System::Drawing::Point(1059, 660);
+			this->lbl_CardEndDate->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_CardEndDate->Name = L"lbl_CardEndDate";
-			this->lbl_CardEndDate->Size = System::Drawing::Size(86, 13);
+			this->lbl_CardEndDate->Size = System::Drawing::Size(184, 29);
 			this->lbl_CardEndDate->TabIndex = 24;
 			this->lbl_CardEndDate->Text = L"Card EndDate";
 			// 
 			// btn_Cancel
 			// 
-			this->btn_Cancel->Location = System::Drawing::Point(244, 354);
+			this->btn_Cancel->Location = System::Drawing::Point(569, 790);
+			this->btn_Cancel->Margin = System::Windows::Forms::Padding(7, 7, 7, 7);
 			this->btn_Cancel->Name = L"btn_Cancel";
-			this->btn_Cancel->Size = System::Drawing::Size(109, 66);
+			this->btn_Cancel->Size = System::Drawing::Size(254, 147);
 			this->btn_Cancel->TabIndex = 27;
 			this->btn_Cancel->Text = L"Cancel";
 			this->btn_Cancel->UseVisualStyleBackColor = true;
@@ -379,9 +405,10 @@ namespace WeAlumni {
 			// 
 			// btn_Confirm
 			// 
-			this->btn_Confirm->Location = System::Drawing::Point(58, 354);
+			this->btn_Confirm->Location = System::Drawing::Point(135, 790);
+			this->btn_Confirm->Margin = System::Windows::Forms::Padding(7, 7, 7, 7);
 			this->btn_Confirm->Name = L"btn_Confirm";
-			this->btn_Confirm->Size = System::Drawing::Size(109, 66);
+			this->btn_Confirm->Size = System::Drawing::Size(254, 147);
 			this->btn_Confirm->TabIndex = 28;
 			this->btn_Confirm->Text = L"Confirm";
 			this->btn_Confirm->UseVisualStyleBackColor = true;
@@ -390,9 +417,10 @@ namespace WeAlumni {
 			// lbl_StfId
 			// 
 			this->lbl_StfId->AutoSize = true;
-			this->lbl_StfId->Location = System::Drawing::Point(488, 63);
+			this->lbl_StfId->Location = System::Drawing::Point(1139, 141);
+			this->lbl_StfId->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_StfId->Name = L"lbl_StfId";
-			this->lbl_StfId->Size = System::Drawing::Size(27, 13);
+			this->lbl_StfId->Size = System::Drawing::Size(53, 29);
 			this->lbl_StfId->TabIndex = 29;
 			this->lbl_StfId->Text = L"N/A";
 			// 
@@ -402,18 +430,19 @@ namespace WeAlumni {
 			this->lbl_error->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->lbl_error->ForeColor = System::Drawing::Color::Red;
-			this->lbl_error->Location = System::Drawing::Point(405, 375);
+			this->lbl_error->Location = System::Drawing::Point(945, 837);
+			this->lbl_error->Margin = System::Windows::Forms::Padding(7, 0, 7, 0);
 			this->lbl_error->Name = L"lbl_error";
-			this->lbl_error->Size = System::Drawing::Size(136, 25);
+			this->lbl_error->Size = System::Drawing::Size(304, 55);
 			this->lbl_error->TabIndex = 30;
 			this->lbl_error->Text = L"System Error";
 			this->lbl_error->Visible = false;
 			// 
 			// OPTAddPage
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleDimensions = System::Drawing::SizeF(14, 29);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(681, 464);
+			this->ClientSize = System::Drawing::Size(1589, 1035);
 			this->Controls->Add(this->lbl_error);
 			this->Controls->Add(this->lbl_StfId);
 			this->Controls->Add(this->btn_Confirm);
@@ -443,10 +472,12 @@ namespace WeAlumni {
 			this->Controls->Add(this->lbl_OPTID);
 			this->Controls->Add(this->lbl_Promt_OPTID);
 			this->Controls->Add(this->lbl_PageName);
+			this->Margin = System::Windows::Forms::Padding(7, 7, 7, 7);
 			this->Name = L"OPTAddPage";
 			this->Text = L"OPTAddPage";
 			this->ResumeLayout(false);
 			this->PerformLayout();
+
 		}
 #pragma endregion
 	private:

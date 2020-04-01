@@ -1,5 +1,6 @@
 #pragma once
 #include "Database.h"
+#include "TreAddPage.h"
 
 /*
  * StarterPage.h
