@@ -7,7 +7,8 @@
  * This file includes functions of editing and deleting on OPT data.
  *
  * @author: Xiangdong Che
- * Revised: 3/28/20
+ * Revised: 3/31/20  Renamed class name from OPT to OPTInfoPage
+ *			3/28/20
  *
  */
 
@@ -21,12 +22,12 @@ namespace WeAlumni {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Summary for OPT
+	/// Summary for OPTInfoPage
 	/// </summary>
-	public ref class OPT : public System::Windows::Forms::Form
+	public ref class OPTInfoPage : public System::Windows::Forms::Form
 	{
 	public:
-		OPT(int^ InputId)
+		OPTInfoPage(int^ InputId)
 		{
 			InitializeComponent();
 			//
@@ -48,12 +49,13 @@ namespace WeAlumni {
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~OPT()
+		~OPTInfoPage()
 		{
 			if (components)
 			{
 				delete components;
-			}if (database)
+			}
+			if (database)
 			{
 				delete database;
 			}
@@ -396,7 +398,7 @@ namespace WeAlumni {
 			this->btn_ChangeInfo->TabIndex = 22;
 			this->btn_ChangeInfo->Text = L"Change Info";
 			this->btn_ChangeInfo->UseVisualStyleBackColor = true;
-			this->btn_ChangeInfo->Click += gcnew System::EventHandler(this, &OPT::btn_ChangeInfo_Click);
+			this->btn_ChangeInfo->Click += gcnew System::EventHandler(this, &OPTInfoPage::btn_ChangeInfo_Click);
 			// 
 			// btn_ChangeConfirm
 			// 
@@ -407,7 +409,7 @@ namespace WeAlumni {
 			this->btn_ChangeConfirm->Text = L"Confirm";
 			this->btn_ChangeConfirm->UseVisualStyleBackColor = true;
 			this->btn_ChangeConfirm->Visible = false;
-			this->btn_ChangeConfirm->Click += gcnew System::EventHandler(this, &OPT::btn_ChangeConfirm_Click);
+			this->btn_ChangeConfirm->Click += gcnew System::EventHandler(this, &OPTInfoPage::btn_ChangeConfirm_Click);
 			// 
 			// btn_ChangeCancel
 			// 
@@ -418,7 +420,7 @@ namespace WeAlumni {
 			this->btn_ChangeCancel->Text = L"Cancel";
 			this->btn_ChangeCancel->UseVisualStyleBackColor = true;
 			this->btn_ChangeCancel->Visible = false;
-			this->btn_ChangeCancel->Click += gcnew System::EventHandler(this, &OPT::btn_ChangeCancel_Click);
+			this->btn_ChangeCancel->Click += gcnew System::EventHandler(this, &OPTInfoPage::btn_ChangeCancel_Click);
 			// 
 			// lbl_PageName
 			// 
@@ -520,7 +522,7 @@ namespace WeAlumni {
 			this->btn_DeleteAll->Text = L"Delete All";
 			this->btn_DeleteAll->UseVisualStyleBackColor = true;
 			this->btn_DeleteAll->Visible = false;
-			this->btn_DeleteAll->Click += gcnew System::EventHandler(this, &OPT::btn_DeleteAllButton_Click);
+			this->btn_DeleteAll->Click += gcnew System::EventHandler(this, &OPTInfoPage::btn_DeleteAllButton_Click);
 			// 
 			// btn_DeleteConfirm
 			// 
@@ -532,7 +534,7 @@ namespace WeAlumni {
 			this->btn_DeleteConfirm->Text = L"Confirm";
 			this->btn_DeleteConfirm->UseVisualStyleBackColor = true;
 			this->btn_DeleteConfirm->Visible = false;
-			this->btn_DeleteConfirm->Click += gcnew System::EventHandler(this, &OPT::btn_DeleteConfirm_Click);
+			this->btn_DeleteConfirm->Click += gcnew System::EventHandler(this, &OPTInfoPage::btn_DeleteConfirm_Click);
 			// 
 			// btn_DeleteCancel
 			// 
@@ -544,7 +546,7 @@ namespace WeAlumni {
 			this->btn_DeleteCancel->Text = L"Cancel";
 			this->btn_DeleteCancel->UseVisualStyleBackColor = true;
 			this->btn_DeleteCancel->Visible = false;
-			this->btn_DeleteCancel->Click += gcnew System::EventHandler(this, &OPT::btn_DeleteCancel_Click);
+			this->btn_DeleteCancel->Click += gcnew System::EventHandler(this, &OPTInfoPage::btn_DeleteCancel_Click);
 			// 
 			// lbl_Email
 			// 
@@ -699,7 +701,7 @@ namespace WeAlumni {
 			this->lbl_CardEndDate->TabIndex = 58;
 			this->lbl_CardEndDate->Text = L"N/A";
 			// 
-			// OPT
+			// OPTInfoPage
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
@@ -756,7 +758,7 @@ namespace WeAlumni {
 			this->Controls->Add(this->txt_Status);
 			this->Controls->Add(this->lbl_Prompt_Status);
 			this->Controls->Add(this->lbl_Prompt_OPTID);
-			this->Name = L"OPT";
+			this->Name = L"OPTInfoPage";
 			this->Text = L"OPT Info Page";
 			this->ResumeLayout(false);
 			this->PerformLayout();

@@ -6,7 +6,8 @@
  * This file will show all info of a certain ID, and contains functions of editing and deleting.
  *
  * @author: Xiangdong Che
- * Revised: 3/27/20
+ * Revised: 3/31/20  Renamed class name from OPT to OPTInfoPage
+ *          3/27/20
  *
  */
 
@@ -18,7 +19,7 @@ using namespace System;
  * @param None
  * @return None
  */
-Void WeAlumni::OPT::SetLableInvisible() {
+Void WeAlumni::OPTInfoPage::SetLableInvisible() {
     lbl_Status->Visible = false;
     lbl_MemId->Visible = false;
     lbl_StfId->Visible = false;
@@ -37,7 +38,7 @@ Void WeAlumni::OPT::SetLableInvisible() {
  * @param None
  * @return None
  */
-Void WeAlumni::OPT::SetLableVisible() {
+Void WeAlumni::OPTInfoPage::SetLableVisible() {
     lbl_Status->Visible = true;
     lbl_MemId->Visible = true;
     lbl_StfId->Visible = true;
@@ -56,7 +57,7 @@ Void WeAlumni::OPT::SetLableVisible() {
  * @param None
  * @return None
  */
-Void WeAlumni::OPT::SetBoxInvisible() {
+Void WeAlumni::OPTInfoPage::SetBoxInvisible() {
     txt_Status->Visible = false;
     txt_MemId->Visible = false;
     txt_StfId->Visible = false;
@@ -75,7 +76,7 @@ Void WeAlumni::OPT::SetBoxInvisible() {
  * @param None
  * @return None
  */
-Void WeAlumni::OPT::SetBoxVisible() {
+Void WeAlumni::OPTInfoPage::SetBoxVisible() {
     txt_Status->Visible = true;
     txt_MemId->Visible = true;
     txt_StfId->Visible = true;
@@ -94,7 +95,7 @@ Void WeAlumni::OPT::SetBoxVisible() {
  * @param None
  * @return None
  */
-Void WeAlumni::OPT::Initialize() {
+Void WeAlumni::OPTInfoPage::Initialize() {
     UpdateInfo();
 }
 
@@ -104,7 +105,7 @@ Void WeAlumni::OPT::Initialize() {
  * @param None
  * @return None
  */
-Void WeAlumni::OPT::UpdateInfo() {
+Void WeAlumni::OPTInfoPage::UpdateInfo() {
     String^ command_OPT = "SELECT * FROM OPT WHERE Id = " + _id + ";";
     String^ command_Member = "SELECT Name, " +
                                     "Gender, " +
@@ -209,7 +210,7 @@ Void WeAlumni::OPT::UpdateInfo() {
  * @param None
  * @return None
  */
-Void WeAlumni::OPT::btn_ChangeInfo_Click(System::Object^ sender, System::EventArgs^ e) {
+Void WeAlumni::OPTInfoPage::btn_ChangeInfo_Click(System::Object^ sender, System::EventArgs^ e) {
     SetLableInvisible();
     SetBoxVisible();
     lbl_error->Visible = false;
@@ -226,7 +227,7 @@ Void WeAlumni::OPT::btn_ChangeInfo_Click(System::Object^ sender, System::EventAr
  * @param None
  * @return None
  */
-Void WeAlumni::OPT::btn_ChangeConfirm_Click(System::Object^ sender, System::EventArgs^ e) {
+Void WeAlumni::OPTInfoPage::btn_ChangeConfirm_Click(System::Object^ sender, System::EventArgs^ e) {
     String^ command = "UPDATE OPT " +
                       "SET Status = '" + txt_Status->Text + "', " +
                           "MemId = '" + txt_MemId->Text + "', "
@@ -274,7 +275,7 @@ Void WeAlumni::OPT::btn_ChangeConfirm_Click(System::Object^ sender, System::Even
  * @param None
  * @return None
  */
-Void WeAlumni::OPT::btn_ChangeCancel_Click(System::Object^ sender, System::EventArgs^ e) {
+Void WeAlumni::OPTInfoPage::btn_ChangeCancel_Click(System::Object^ sender, System::EventArgs^ e) {
     UpdateInfo();
     btn_DeleteAll->Visible = false;
     btn_ChangeConfirm->Visible = false;
@@ -289,7 +290,7 @@ Void WeAlumni::OPT::btn_ChangeCancel_Click(System::Object^ sender, System::Event
  * @param None
  * @return None
  */
-Void WeAlumni::OPT::btn_DeleteAllButton_Click(System::Object^ sender, System::EventArgs^ e) {
+Void WeAlumni::OPTInfoPage::btn_DeleteAllButton_Click(System::Object^ sender, System::EventArgs^ e) {
     btn_DeleteAll->Visible = false;
     btn_DeleteConfirm->Visible = true;
     btn_DeleteCancel->Visible = true;
@@ -303,7 +304,7 @@ Void WeAlumni::OPT::btn_DeleteAllButton_Click(System::Object^ sender, System::Ev
  * @param None
  * @return None
  */
-Void WeAlumni::OPT::btn_DeleteConfirm_Click(System::Object^ sender, System::EventArgs^ e) {
+Void WeAlumni::OPTInfoPage::btn_DeleteConfirm_Click(System::Object^ sender, System::EventArgs^ e) {
     String^ command = "DELETE FROM OPT WHERE Id = " + _id + ";";
     int status = -1;
     try {
@@ -331,7 +332,7 @@ Void WeAlumni::OPT::btn_DeleteConfirm_Click(System::Object^ sender, System::Even
  * @param None
  * @return None
  */
-Void WeAlumni::OPT::btn_DeleteCancel_Click(System::Object^ sender, System::EventArgs^ e) {
+Void WeAlumni::OPTInfoPage::btn_DeleteCancel_Click(System::Object^ sender, System::EventArgs^ e) {
     btn_DeleteAll->Visible = true;
     btn_DeleteConfirm->Visible = false;
     btn_DeleteCancel->Visible = false;
