@@ -96,7 +96,9 @@
     <ClCompile Include="TreInfoPage.cpp">
       <Filter>Source Files\Treasury</Filter>
     </ClCompile>
-
+    <ClCompile Include="MemAddPage.cpp">
+      <Filter>Source Files\Member</Filter>
+    </ClCompile>
     <ClCompile Include="OPTAddPage.cpp">
       <Filter>Source Files\OPT</Filter>
     </ClCompile>
@@ -135,6 +137,9 @@
     <ClInclude Include="TreInfoPage.h">
       <Filter>Header Files\Treasury</Filter>
     </ClInclude>
+    <ClInclude Include="MemAddPage.h">
+      <Filter>Header Files\Member</Filter>
+    </ClCompile>
     <ClInclude Include="OPTAddPage.h">
       <Filter>Header Files\OPT</Filter>
     </ClInclude>

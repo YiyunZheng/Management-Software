@@ -33,7 +33,7 @@ Void WeAlumni::MemInfoPage::Initialize() {
 Void WeAlumni::MemInfoPage::UpdateInfo() {
 	lbl_error->Visible = false;
 	String^ cmd= "SELECT * FROM Member WHERE Id = " + _id;
-	
+
 	int status = -1;
 
 	try {
@@ -164,7 +164,7 @@ Void WeAlumni::MemInfoPage::btn_ShwPrcssActn_Click(System::Object^ sender, Syste
 			  "WHERE Record.StfId = Staff.MemId AND " + 
 				"Member.Id = Staff.MemId AND " + 
 				"Record.MemId = " + _id + " ORDER BY Record.Id ASC;";
-	
+
 	int status = -1;
 
 	try {
@@ -362,7 +362,7 @@ Void WeAlumni::MemInfoPage::btn_ChangeInfoCancel_Click(System::Object^ sender, S
 Void WeAlumni::MemInfoPage::btn_DeleteAccept_Click(System::Object^ sender, System::EventArgs^ e) {
 	String^ cmd = "DELETE FROM Member " +
 		      "WHERE Id = " + _id;
-	
+
 	int status = -1;
 
 	try {
@@ -387,7 +387,6 @@ Void WeAlumni::MemInfoPage::btn_DeleteAccept_Click(System::Object^ sender, Syste
 		lbl_error->ForeColor = System::Drawing::Color::Red;
 		lbl_error->Text = "Error occured";
 	}
-	
 }
 
 /*

@@ -130,6 +130,7 @@
     <ClCompile Include="DatabaseEncryptionAndDecryption.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MemAddPage.cpp" />
     <ClCompile Include="MemInfoPage.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="NewPage.cpp" />
@@ -142,6 +143,9 @@
   <ItemGroup>
     <ClInclude Include="Database.h" />
     <ClInclude Include="DatabaseEncryptionAndDecryption.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="MemAddPage.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MemInfoPage.h">
@@ -172,6 +176,9 @@
   <ItemGroup>
     <EmbeddedResource Include="DatabaseEncryptionAndDecryption.resx">
       <DependentUpon>DatabaseEncryptionAndDecryption.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MemAddPage.resx">
+      <DependentUpon>MemAddPage.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MemInfoPage.resx">
       <DependentUpon>MemInfoPage.h</DependentUpon>
