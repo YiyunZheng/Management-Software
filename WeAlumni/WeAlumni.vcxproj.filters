@@ -96,6 +96,10 @@
     <ClCompile Include="TreInfoPage.cpp">
       <Filter>Source Files\Treasury</Filter>
     </ClCompile>
+
+    <ClCompile Include="OPTAddPage.cpp">
+      <Filter>Source Files\OPT</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StarterPage.h">
@@ -130,6 +134,9 @@
     </ClInclude>
     <ClInclude Include="TreInfoPage.h">
       <Filter>Header Files\Treasury</Filter>
+    </ClInclude>
+    <ClInclude Include="OPTAddPage.h">
+      <Filter>Header Files\OPT</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

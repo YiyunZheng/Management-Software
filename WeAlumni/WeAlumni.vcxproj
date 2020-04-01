@@ -133,6 +133,7 @@
     <ClCompile Include="MemInfoPage.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="NewPage.cpp" />
+    <ClCompile Include="OPTAddPage.cpp" />
     <ClCompile Include="OPTInfoPage.cpp" />
     <ClCompile Include="StarterPage.cpp" />
     <ClCompile Include="StfInfoPage.cpp" />
@@ -154,6 +155,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="DatabaseParam.h" />
+    <ClInclude Include="OPTAddPage.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="OPTInfoPage.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -177,6 +181,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NewPage.resx">
       <DependentUpon>NewPage.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OPTAddPage.resx">
+      <DependentUpon>OPTAddPage.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OPTInfoPage.resx">
+      <DependentUpon>OPTInfoPage.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StarterPage.resx">
       <DependentUpon>StarterPage.h</DependentUpon>
