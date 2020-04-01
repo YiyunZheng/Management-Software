@@ -73,6 +73,7 @@ System::Void WeAlumni::StarterPage::btn_ChangeLabel_Click(System::Object^ sender
  */
 System::Void WeAlumni::StarterPage::btn_JumpAnotherPage_Click(System::Object^ sender, System::EventArgs^ e) {
     // Your page should be initialized here.
-    MainWindow^ mw = gcnew MainWindow();
-    mw->Show();
+    TreAddPage^ tad = gcnew TreAddPage("3");
+    tad->ShowDialog();
+    
 }
