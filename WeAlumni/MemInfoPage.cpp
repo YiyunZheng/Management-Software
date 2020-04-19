@@ -6,7 +6,9 @@
  * This file implements all MemInfoPage interfaces.
  *
  * @author: Jiaying Hou
- * Revised: 4/4/20
+ * Revised: 4/1/20
+ *          4/4/20 UI and bug fixes
+ *          4/12/20 auth control added
  *
  */
 
@@ -21,7 +23,12 @@ using namespace System;
 */
 Void WeAlumni::MemInfoPage::Initialize() {
 	try {
-		database = gcnew Database(Database::DatabaseType::Data);
+		if (_auth == PublicUserInfo::Auth::Level_2) {
+			database = gcnew Database(Database::DatabaseType::Data, true);
+		}
+		else {
+			database = gcnew Database(Database::DatabaseType::Data);
+		}
 		UpdateInfo();
 		UpdateRecord();
 	}
@@ -105,6 +112,12 @@ Void WeAlumni::MemInfoPage::UpdateInfo() {
 		txt_Company->Text = database->dataReader[21]->ToString();
 		txt_Position->Text = database->dataReader[22]->ToString();
 		cmb_SearchAuth->Text = database->dataReader[23]->ToString();
+		if (_auth == PublicUserInfo::Auth::Level_2) {
+			Level2Display();
+		}
+		else if (_auth == PublicUserInfo::Auth::Level_3) {
+			Level3Display();
+		}
 	}
 	else {
 		lbl_error->Text = "Error occured";
@@ -118,32 +131,58 @@ Void WeAlumni::MemInfoPage::UpdateInfo() {
 * When click button "Change Info", multiple TextBoxes will be visible to collect changed information.
 */
 Void WeAlumni::MemInfoPage::btn_ChangeInfo_Click(System::Object^ sender, System::EventArgs^ e) {
-	cmb_Status->Visible = true;
-	cmb_Type->Visible = true;
-	txt_Name->Visible = true;
-	txt_Gender->Visible = true;
-	txt_Birth->Visible = true;
-	txt_Email->Visible = true;
-	txt_Phone->Visible = true;
-	txt_Wechat->Visible = true;
-	txt_Country->Visible = true;
-	txt_Address1->Visible = true;
-	txt_Address2->Visible = true;
-	txt_City->Visible = true;
-	txt_Postal->Visible = true;
-	txt_StdId->Visible = true;
-	cmb_Program->Visible = true;
-	txt_EndDate->Visible = true;
-	cmb_Degree->Visible = true;
-	txt_Major1->Visible = true;
-	txt_Major2->Visible = true;
-	cmb_CareerStatus->Visible = true;
-	txt_Company->Visible = true;
-	txt_Position->Visible = true;
-	cmb_SearchAuth->Visible = true;
-	btn_ChangeInfoAccept->Visible = true;
-	btn_ChangeInfoCancel->Visible = true;
-	lbl_error->Visible = false;
+	if (_auth == PublicUserInfo::Auth::Level_3) {
+		Level3Display();
+		cmb_Status->Visible = true;
+		cmb_Type->Visible = true;
+		txt_Name->Visible = true;
+		txt_Email->Visible = true;
+		txt_Country->Visible = true;
+		txt_Address1->Visible = true;
+		txt_Address2->Visible = true;
+		txt_City->Visible = true;
+		txt_Postal->Visible = true;
+		cmb_Program->Visible = true;
+		txt_EndDate->Visible = true;
+		cmb_Degree->Visible = true;
+		txt_Major1->Visible = true;
+		txt_Major2->Visible = true;
+		cmb_CareerStatus->Visible = true;
+		txt_Company->Visible = true;
+		txt_Position->Visible = true;
+		cmb_SearchAuth->Visible = true;
+		btn_ChangeInfoAccept->Visible = true;
+		btn_ChangeInfoCancel->Visible = true;
+		lbl_error->Visible = false;
+	}
+	else {
+		cmb_Status->Visible = true;
+		cmb_Type->Visible = true;
+		txt_Name->Visible = true;
+		txt_Gender->Visible = true;
+		txt_Birth->Visible = true;
+		txt_Email->Visible = true;
+		txt_Phone->Visible = true;
+		txt_Wechat->Visible = true;
+		txt_Country->Visible = true;
+		txt_Address1->Visible = true;
+		txt_Address2->Visible = true;
+		txt_City->Visible = true;
+		txt_Postal->Visible = true;
+		txt_StdId->Visible = true;
+		cmb_Program->Visible = true;
+		txt_EndDate->Visible = true;
+		cmb_Degree->Visible = true;
+		txt_Major1->Visible = true;
+		txt_Major2->Visible = true;
+		cmb_CareerStatus->Visible = true;
+		txt_Company->Visible = true;
+		txt_Position->Visible = true;
+		cmb_SearchAuth->Visible = true;
+		btn_ChangeInfoAccept->Visible = true;
+		btn_ChangeInfoCancel->Visible = true;
+		lbl_error->Visible = false;
+	}
 }
 
 /*
@@ -224,9 +263,9 @@ Void WeAlumni::MemInfoPage::btn_ChangeInfoAccept_Click(System::Object^ sender, S
 			  "Address2 = '" + txt_Address2->Text + "', " +
 			  "City = '" + txt_City->Text + "', " +
 			  "Postal = '" + txt_Postal->Text + "', " +
-		      	  "StdId = '" + txt_StdId->Text + "', " +
+		      "StdId = '" + txt_StdId->Text + "', " +
 			  "Program = '" + cmb_Program->Text + "', " +
-		      	  "EndDate = '" + txt_EndDate->Text + "', " +
+		      "EndDate = '" + txt_EndDate->Text + "', " +
 			  "Degree = '" + cmb_Degree->Text + "', " +
 			  "Major1 = '" + txt_Major1->Text + "', " +
 			  "Major2 = '" + txt_Major2->Text + "', " +
@@ -237,7 +276,7 @@ Void WeAlumni::MemInfoPage::btn_ChangeInfoAccept_Click(System::Object^ sender, S
 		      "WHERE Id = " + _id;
 	
 	int status = -1;
-
+	String^ logParam = "Changed Member " + _id.ToString() + " info:";
 	try {
 		status = database->UpdateData(cmd);
 	}
@@ -247,31 +286,145 @@ Void WeAlumni::MemInfoPage::btn_ChangeInfoAccept_Click(System::Object^ sender, S
 		lbl_error->Visible = true;
 		return;
 	}
-	
+	int first = 1;
 	if (status > 0) {
-		lbl_Status->Text = cmb_Status->Text;
-		lbl_Type->Text = cmb_Type->Text;
-		lbl_Name->Text = txt_Name->Text;
-		lbl_Gender->Text = txt_Gender->Text;
-		lbl_Birth->Text = txt_Birth->Text;
-		lbl_Email->Text = txt_Email->Text;
-		lbl_Phone->Text = txt_Phone->Text;
-		lbl_Wechat->Text = txt_Wechat->Text;
-		lbl_Country->Text = txt_Country->Text;
-		lbl_Address1->Text = txt_Address1->Text;
-		lbl_Address2->Text = txt_Address2->Text;
-		lbl_City->Text = txt_City->Text;
-		lbl_Postal->Text = txt_Postal->Text;
-		lbl_StdId->Text = txt_StdId->Text;
-		lbl_Program->Text = cmb_Program->Text;
-		lbl_EndDate->Text = txt_EndDate->Text;
-		lbl_Degree->Text = cmb_Degree->Text;
-		lbl_Major1->Text = txt_Major1->Text;
-		lbl_Major2->Text = txt_Major2->Text;
-		lbl_CareerStatus->Text = cmb_CareerStatus->Text;
-		lbl_Company->Text = txt_Company->Text;
-		lbl_Position->Text = txt_Position->Text;
-		lbl_SearchAuth->Text = cmb_SearchAuth->Text;
+		if (lbl_Status->Text != cmb_Status->Text) {
+			lbl_Status->Text = cmb_Status->Text;
+			logParam += " Status";
+			first = 0;
+		}
+		if (lbl_Type->Text != cmb_Type->Text) {
+			lbl_Type->Text = cmb_Type->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Type";
+		}
+		if (lbl_Name->Text != txt_Name->Text) {
+			lbl_Name->Text = txt_Name->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Name";
+		}
+		if (lbl_Gender->Text != txt_Gender->Text) {
+			lbl_Gender->Text = txt_Gender->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Gender";
+		}
+		if (lbl_Birth->Text != txt_Birth->Text) {
+			lbl_Birth->Text = txt_Birth->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Birth";
+		}
+		if (lbl_Email->Text != txt_Email->Text) {
+			lbl_Email->Text = txt_Email->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Email";
+		}
+		if (lbl_Phone->Text != txt_Phone->Text) {
+			lbl_Phone->Text = txt_Phone->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Phone";
+		}
+		if (lbl_Wechat->Text != txt_Wechat->Text) {
+			lbl_Wechat->Text = txt_Wechat->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Wechat,";
+		}
+		if (lbl_Country->Text != txt_Country->Text) {
+			lbl_Country->Text = txt_Country->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Country";
+		}
+		if (lbl_Address1->Text != txt_Address1->Text) {
+			lbl_Address1->Text = txt_Address1->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Address1";
+		}
+		if (lbl_Address2->Text != txt_Address2->Text) {
+			lbl_Address2->Text = txt_Address2->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Address2";
+		}
+		if (lbl_City->Text != txt_City->Text) {
+			lbl_City->Text = txt_City->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " City";
+		}
+		if (lbl_Postal->Text != txt_Postal->Text) {
+			lbl_Postal->Text = txt_Postal->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Postal";
+		}
+		if (lbl_StdId->Text != txt_StdId->Text) {
+			lbl_StdId->Text = txt_StdId->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " StdId";
+		}
+		if (lbl_Program->Text != cmb_Program->Text) {
+			lbl_Program->Text = cmb_Program->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Program";
+		}
+		if (lbl_EndDate->Text != txt_EndDate->Text) {
+			lbl_EndDate->Text = txt_EndDate->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " EndDate";
+		}
+		if (lbl_Degree->Text != cmb_Degree->Text) {
+			lbl_Degree->Text = cmb_Degree->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Degree";
+		}
+		if (lbl_Major1->Text != txt_Major1->Text) {
+			lbl_Major1->Text = txt_Major1->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Major1";
+		}
+		if (lbl_Major2->Text != txt_Major2->Text) {
+			lbl_Major2->Text = txt_Major2->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Major2";
+		}
+		if (lbl_CareerStatus->Text != cmb_CareerStatus->Text) {
+			lbl_CareerStatus->Text = cmb_CareerStatus->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " CareerStatus";
+		}
+		if (lbl_Company->Text != txt_Company->Text) {
+			lbl_Company->Text = txt_Company->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Company";
+		}
+		if (lbl_Position->Text != txt_Position->Text) {
+			lbl_Position->Text = txt_Position->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " Position";
+		}
+		if (lbl_SearchAuth->Text != cmb_SearchAuth->Text) {
+			lbl_SearchAuth->Text = cmb_SearchAuth->Text;
+			if (first = 0) logParam += ",";
+			first = 0;
+			logParam += " SearchAuth";
+		}
 
 		cmb_Status->Visible = false;
 		cmb_Type->Visible = false;
@@ -301,6 +454,9 @@ Void WeAlumni::MemInfoPage::btn_ChangeInfoAccept_Click(System::Object^ sender, S
 		lbl_error->Text = "Changes saved";
 		lbl_error->ForeColor = System::Drawing::Color::Green;
 		lbl_error->Visible = true;
+		if (first != 0) {
+			WeAlumni::Database::Log(_stfId, logParam);
+		}
 	}
 	else {
 		lbl_error->ForeColor = System::Drawing::Color::Red;
@@ -391,6 +547,8 @@ Void WeAlumni::MemInfoPage::btn_DeleteAccept_Click(System::Object^ sender, Syste
 	}
 	
 	if (status > 0) {
+		DeleteRecord();
+		WeAlumni::Database::Log(_stfId, "Deleted Member");
 		this->Close();
 	}	
 	else {
@@ -399,6 +557,28 @@ Void WeAlumni::MemInfoPage::btn_DeleteAccept_Click(System::Object^ sender, Syste
 		lbl_error->Visible = true;
 		lbl_error->ForeColor = System::Drawing::Color::Red;
 		lbl_error->Text = "Error occured";
+	}
+}
+
+/*
+* DeleteRecord
+*
+* This method delete the corresponding record when a member is being deleted. 
+* @param none
+* @return none
+*/
+Void WeAlumni::MemInfoPage::DeleteRecord() {
+	int status = -1;
+	String^ cmd = "DELETE FROM RECORD WHERE MemId = " + _id;
+
+	try {
+		status = database->DeleteData(cmd);
+	}
+	catch (Exception^ exception) {
+		lbl_error->ForeColor = System::Drawing::Color::Red;
+		lbl_error->Text = exception->Message;
+		lbl_error->Visible = true;
+		return;
 	}
 }
 
@@ -421,3 +601,62 @@ Void WeAlumni::MemInfoPage::dataGridView1_CellDoubleClick(System::Object^ sender
 	recInfoPage->ShowDialog();
 }
 
+/*
+* Level2Display
+*
+* This method set labels and buttons visibility to false for auth control
+* @param none
+* @return none
+*/
+Void WeAlumni::MemInfoPage::Level2Display() {
+	lbl_Gender->Visible = false;
+	lbl_Birth->Visible = false;
+	lbl_Phone->Visible = false;
+	lbl_Wechat->Visible = false;
+	lbl_Country->Visible = false;
+	lbl_Address1->Visible = false;
+	lbl_Address2->Visible = false;
+	lbl_City->Visible = false;
+	lbl_Postal->Visible = false;
+	lbl_StdId->Visible = false;
+	
+	lbl_Prompt_Gender->Visible = false;
+	lbl_Prompt_Birth->Visible = false;
+	lbl_Prompt_Phone->Visible = false;
+	lbl_Prompt_Wechat->Visible = false;
+	lbl_Prompt_Country->Visible = false;
+	lbl_Prompt_Address1->Visible = false;
+	lbl_Prompt_Address2->Visible = false;
+	lbl_Prompt_City->Visible = false;
+	lbl_Prompt_Postal->Visible = false;
+	lbl_Prompt_StdId->Visible = false;
+	btn_ChangeInfo->Visible = false;
+	btn_Delete->Visible = false;
+}
+
+/*
+* Level3Display
+*
+* This method set labels, txt boxts visibility to false for auth control
+* @param none
+* @return none
+*/
+Void WeAlumni::MemInfoPage::Level3Display() {
+	lbl_Gender->Visible = false;
+	lbl_Birth->Visible = false;
+	lbl_Phone->Visible = false;
+	lbl_Wechat->Visible = false;
+	lbl_StdId->Visible = false;
+
+	lbl_Prompt_Gender->Visible = false;
+	lbl_Prompt_Birth->Visible = false;
+	lbl_Prompt_Phone->Visible = false;
+	lbl_Prompt_Wechat->Visible = false;
+	lbl_Prompt_StdId->Visible = false;
+
+	txt_Gender->Visible = false;
+	txt_Birth->Visible = false;
+	txt_Phone->Visible = false;
+	txt_Wechat->Visible = false;
+	txt_StdId->Visible = false;
+}

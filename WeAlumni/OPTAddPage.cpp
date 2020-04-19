@@ -8,6 +8,7 @@
  * @author: Xiangdong Che
  * Revised:  4/04/20  Fixed insert fail bug and added Exit button
  *           4/01/20  
+ *           4/14/20  Added PublicUserInfo
  *          
  *
  */
@@ -21,6 +22,14 @@ using namespace System;
  * @return None
  */
 Void WeAlumni::OPTAddPage::Initialize() {
+    try {
+        database = gcnew Database(Database::DatabaseType::Data);
+    }
+    catch (Exception^ exception) {
+        lbl_error->Text = exception->Message;
+        lbl_error->ForeColor = Color::Red;
+        lbl_error->Visible = true;
+    }
     lbl_OPTID->Text = Convert::ToString(database->GetNextId(Database::DatabaseTable::OPT));
     lbl_StfId->Text = _StfId -> ToString();
 }
@@ -45,6 +54,36 @@ Void WeAlumni::OPTAddPage::SetBoxReadOnly() {
 }
 
 /*
+ * InsertRecord
+ * Insert a new item in record after add new OPT
+ * @param None
+ * @return None
+ */
+Void WeAlumni::OPTAddPage::InsertRecord() {
+    int recId = database->GetNextId(WeAlumni::Database::DatabaseTable::Record);
+    String^ currTime = database->GetSystemTime();
+    String^ cmd = "INSERT INTO Record (Id, StfId, MemId, Time, Action)" +
+        "VALUES (" + recId + "," + 
+                    _StfId + "," + 
+                    Convert::ToInt32(txt_MemId->Text) + "," + 
+                "'" + currTime + "'," + 
+                "'Add OPT '" + 
+                "'" + txt_MemId->Text + "'" +  
+                "'Status '" + 
+                "'" + cmb_Status->Text + "'" + ");";
+    int status = -1;
+
+    try {
+        status = database->InsertData(cmd);
+    }
+    catch (Exception^ exception) {
+        lbl_error->ForeColor = System::Drawing::Color::Red;
+        lbl_error->Text = exception->Message;
+        lbl_error->Visible = true;
+    }
+}
+
+/*
  * btn_Verify_Click
  * Verify if Member ID and Member Name valid
  * @param None
@@ -55,7 +94,7 @@ Void WeAlumni::OPTAddPage::btn_Verify_Click(System::Object^ sender, System::Even
     String^ command;
     int status = -1;
     if (txt_MemId->Text == "" && txt_MemName->Text == "") {
-        lbl_Verify->Text = "Empty ID and Name";
+        lbl_Verify->Text = "编号和姓名不能为空";
         lbl_Verify->ForeColor = Color::Red;
         lbl_Verify->Visible = true;
     }
@@ -74,12 +113,12 @@ Void WeAlumni::OPTAddPage::btn_Verify_Click(System::Object^ sender, System::Even
         }
 
         if (status == -1) {
-            lbl_Verify->Text = "Invalid Member ID";
+            lbl_Verify->Text = "无效的编号";
             lbl_Verify->ForeColor = Color::Red;
             lbl_Verify->Visible = true;
         }
         else {
-            lbl_Verify->Text = "Verified";
+            lbl_Verify->Text = "验证成功";
             lbl_Verify->ForeColor = Color::Green;
             lbl_Verify->Visible = true;
             txt_MemName->Text = database->dataReader[0]->ToString();
@@ -101,12 +140,12 @@ Void WeAlumni::OPTAddPage::btn_Verify_Click(System::Object^ sender, System::Even
         }
 
         if (status == -1) {
-            lbl_Verify->Text = "Invalid Member Name";
+            lbl_Verify->Text = "无效的姓名";
             lbl_Verify->ForeColor = Color::Red;
             lbl_Verify->Visible = true;
         }
         else {
-            lbl_Verify->Text = "Verified";
+            lbl_Verify->Text = "验证成功";
             lbl_Verify->ForeColor = Color::Green;
             lbl_Verify->Visible = true;
             txt_MemId->Text = database->dataReader[0]->ToString();
@@ -128,13 +167,13 @@ Void WeAlumni::OPTAddPage::btn_Verify_Click(System::Object^ sender, System::Even
         }
 
         if (database->dataReader[0]->ToString() == lbl_MemName->Text) {
-            lbl_Verify->Text = "Verified";
+            lbl_Verify->Text = "验证成功";
             lbl_Verify->ForeColor = Color::Green;
             lbl_Verify->Visible = true;
             success = true;
         }
         else {
-            lbl_Verify->Text = "ID and Name are not matched";
+            lbl_Verify->Text = "编号和姓名不匹配";
             lbl_Verify->ForeColor = Color::Red;
             lbl_Verify->Visible = true;
         }
@@ -156,7 +195,7 @@ Void WeAlumni::OPTAddPage::btn_Verify_Click(System::Object^ sender, System::Even
 Void WeAlumni::OPTAddPage::btn_Confirm_Click(System::Object^ sender, System::EventArgs^ e) {
     bool finish = false;
     if (btn_Verify->Enabled == true) {
-        lbl_error->Text = "Need Verification";
+        lbl_error->Text = "需要验证";
         lbl_error->ForeColor = Color::Red;
         lbl_error->Visible = true;
     }
@@ -195,12 +234,12 @@ Void WeAlumni::OPTAddPage::btn_Confirm_Click(System::Object^ sender, System::Eve
         }
 
         if (status == -1) {
-            lbl_error->Text = "Insert Fail";
+            lbl_error->Text = "新建失败";
             lbl_error->ForeColor = Color::Red;
             lbl_error->Visible = true;
         }
         else {
-            lbl_error->Text = "Insert Succuss";
+            lbl_error->Text = "新建成功";
             lbl_error->ForeColor = Color::Green;
             lbl_error->Visible = true;
             finish = true;
@@ -208,6 +247,9 @@ Void WeAlumni::OPTAddPage::btn_Confirm_Click(System::Object^ sender, System::Eve
     }
 
     if (finish == true) {
+        String^ action = "Added a new OPT record";
+        InsertRecord();
+        Database::Log(Convert::ToInt32(_StfId), action);
         btn_Confirm->Visible = false;
         btn_Cancel->Visible = false;
         btn_Exit->Visible = true;
