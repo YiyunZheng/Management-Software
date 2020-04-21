@@ -65,17 +65,6 @@ bool WeAlumni::DatabasePrecheck::checkFile() {
 }
 
 
-/*
- * CheckTre
- * This method check existence of treasury.db
- * @param None
- * @return true if exsit
- *		   false if not exist
- */
-bool WeAlumni::DatabasePrecheck::CheckTre() {
-    String^ fileName = "treasury.db";
-    return System::IO::File::Exists(fileName);
-}
 
 /*
  * loginPrecheck
