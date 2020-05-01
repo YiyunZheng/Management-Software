@@ -10,6 +10,7 @@
  *          4/4/20 Time textbox show current date and time.Provide exit btn after add new info
  *          4/12/20 Add public user info as input
  *          4/20/20 fix the bug of unable to showing Chinese. Modify language and UI.
+ *          4/30/20 Add Staff name to addpage
  *
  */
 
@@ -22,7 +23,7 @@
 System::Void WeAlumni::TreAddPage::UpdateInfo(String^ SId) {
     OrderId = Convert::ToString(_TreDB->GetNextId(Database::DatabaseTable::Treasury));
     lbl_Id->Text = OrderId;
-     
+    lbl_StfName->Text = StaffName;
     lbl_StfId->Text = SId;
     txt_Time->Text = _TreDB->GetSystemTime();
 }
@@ -34,9 +35,10 @@ System::Void WeAlumni::TreAddPage::UpdateInfo(String^ SId) {
  * @return None
  */
 System::Void WeAlumni::TreAddPage::btn_Confirm_Click(System::Object^ sender, System::EventArgs^ e) {
-    String^ cmd = "INSERT INTO Treasury (ID, StfId, Time, Type, Amount, Comment) " +
+    String^ cmd = "INSERT INTO Treasury (ID, StfId, StfName, Time, Type, Amount, Comment) " +
                   "VALUES ('" + lbl_Id->Text + "', " +
                                 Convert::ToInt32(lbl_StfId->Text) + "," +
+                          "'" + lbl_StfName->Text + "'," +
                           "'" + txt_Time->Text + "'," +
                           "'" + cmb_Type->Text + "'," +
                           "'" + txt_Amount->Text + "'," +
@@ -62,7 +64,14 @@ System::Void WeAlumni::TreAddPage::btn_Confirm_Click(System::Object^ sender, Sys
         lbl_Error->ForeColor = Color::Green;
         lbl_Error->Visible = true;
 
-        _TreDB->Log(UserInfo->GetId(), "添加新财务记录 "+OrderId);
+        try {
+            _TreDB->Log(UserInfo->GetId(), "添加新财务记录 " + OrderId);
+        }
+        catch (Exception^ exception) {
+            lbl_Error->Text = "Log数据库错误:" + exception->Message;
+            lbl_Error->ForeColor = System::Drawing::Color::Red;
+            return;
+        }
 
         btn_Confirm->Enabled = false;
         btn_Cancel->Text = "Exit";

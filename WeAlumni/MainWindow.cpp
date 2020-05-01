@@ -1,5 +1,6 @@
-#include "MainWindow.h"
+﻿#include "MainWindow.h"
 #include <vector>
+#include <iostream>
 /*
  * MainWindow.h
  *
@@ -11,10 +12,12 @@
  *          4/12/20 add staff MainWindow and auth control for staff and member
  *          4/15/20 bug fix
  *          4/21/20 Added OPT MainWindow Part(Xiangdong Che)
+ *          4/30/20 Added Treasury MainWindow (Yiyun Zheng)
  *
  */
 
 using namespace System;
+using namespace std;
 
 /*
  * SetAllPanelInvisible
@@ -56,6 +59,9 @@ Void WeAlumni::MainWindow::Initialize() {
     ord_GeneralInformation();
     OPT_UpdateDataGridView(OPT_SELECT_ALL);
     OPT_GeneralInformation();
+
+    Tre_CheckDB();
+    Tre_GeneralInformation();
 }
 
 /*
@@ -864,5 +870,182 @@ Void WeAlumni::MainWindow::OPT_GeneralInformation() {
     }
     else {
         OPT_lbl_Count->Text = Convert::ToString(OPT_dataGridView->RowCount - 1);
+    }
+}
+
+
+/*
+ *
+ *  Treasury
+ *
+ */
+
+ /*
+  * Tre_UpdateDataGridView()
+  * Update DataGridView
+  * @param None
+  * @return None
+  */
+Void WeAlumni::MainWindow::Tre_UpdateDataGridView(String^ command) {
+    BindingSource^ bSource = gcnew BindingSource();
+    int status = -1;
+
+    try {
+        status = _TreDB->ReadDataAdapter(command);
+    }
+    catch (Exception^ exception) {
+        tre_lbl_error->ForeColor = System::Drawing::Color::Red;
+        tre_lbl_error->Text = exception->Message;
+        tre_lbl_error->Visible = true;
+        return;
+    }
+
+    if (status > 0) {
+        tre_lbl_error->Visible = false;
+        bSource->DataSource = _TreDB->dataTable;
+        tre_dataGridView->DataSource = bSource;
+    }
+    else {
+        tre_lbl_error->ForeColor = System::Drawing::Color::Red;
+        tre_lbl_error->Text = "无可查询的财务信息";
+        tre_lbl_error->Visible = true;
+        tre_dataGridView->DataSource = nullptr;
+    }
+}
+
+/*
+ * Tre_btn_Search_Click()
+ * Search data with provided info
+ * @param None
+ * @return None
+ */
+Void WeAlumni::MainWindow::Tre_btn_Search_Click(System::Object^ sender, System::EventArgs^ e) {
+    String^ TreId = tre_txt_TreId->Text;
+    String^ TreType = tre_cmb_type->Text;
+
+    String^ command = "SELECT Treasury.Id AS '财务编号', " +
+                             "Treasury.StfName AS '成员姓名', "+
+                             "Treasury.Time AS '登记时间', " +
+                             "Treasury.type AS '类型', " +
+                             "Treasury.Amount AS '金额', " +
+                             "Treasury.Comment AS '备注' " +
+                       "FROM Treasury WHERE ";
+    String^ command2 = "";
+
+    std::vector<int> vec;
+    if (TreId->Length)         vec.push_back(0);
+    if (TreType->Length)        vec.push_back(1);
+    if (vec.size() == 0) {
+        Tre_CheckAuth();
+        Tre_GeneralInformation();
+        return;
+    }
+
+    bool flag = false;
+    for (auto i : vec) {
+        if (vec.size() != 1 && flag) command2 += " AND ";
+        switch (i) {
+        case 0: command2 += "Treasury.Id = '" + TreId + "' "; break;
+        case 1: command2 += "Treasury.type = '" + TreType + "' "; break;
+        }
+        flag = true;
+    }
+    command += command2 + " ORDER BY Treasury.Id ASC;";
+
+    Tre_UpdateDataGridView(command);
+    Tre_GeneralInformation();
+}
+
+/*
+ * Tre_btn_Clear_Click()
+ * Reset all textboxs and DataGridView
+ * @param None
+ * @return None
+ */
+Void WeAlumni::MainWindow::Tre_btn_Clear_Click(System::Object^ sender, System::EventArgs^ e) {
+
+    tre_txt_TreId->Text = "";
+    tre_cmb_type->Text = "";
+    Tre_CheckAuth();
+    Tre_GeneralInformation();
+}
+
+/*
+ * Tre_dataGridView_CellDoubleClick()
+ * Open Treasury InfoPage when double click a row
+ * @param None
+ * @return None
+ */
+Void WeAlumni::MainWindow::Tre_dataGridView_CellDoubleClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+
+    TreInfoPage^ page = gcnew TreInfoPage(_pui, Convert::ToInt32(tre_dataGridView->CurrentRow->Cells[0]->Value));
+    page->ShowDialog();
+    Tre_CheckAuth();
+    Tre_GeneralInformation();
+    
+}
+
+/*
+ * Tre_btn_New_Click()
+ * Open OPT AddPage for adding new Treasury record
+ * @param None
+ * @return None
+ */
+Void WeAlumni::MainWindow::Tre_btn_New_Click(System::Object^ sender, System::EventArgs^ e) {
+    TreAddPage^ page = gcnew TreAddPage(_pui);
+    page->ShowDialog();
+    Tre_CheckAuth();
+    Tre_GeneralInformation();
+    
+}
+
+/*
+ * Tre_GeneralInformation()
+ * Provide total number of rows in DataGridView
+ * @param None
+ * @return None
+ */
+Void WeAlumni::MainWindow::Tre_GeneralInformation() {
+    int^ count = tre_dataGridView->RowCount;
+    if (Convert::ToInt32(count) == 0) {
+        tre_lbl_count->Text = "0";
+    }
+    else {
+        tre_lbl_count->Text = Convert::ToString(tre_dataGridView->RowCount - 1);
+    }
+}
+
+/*
+ * Tre_CheckAuth
+ * Show Data Depend on Authority
+ * @param None
+ * @return None
+ */
+Void WeAlumni::MainWindow::Tre_CheckAuth() {
+    if (_Auth.Equals(PublicUserInfo::Auth::Level_5)) {
+        Tre_UpdateDataGridView(TRE_LEVEL5);
+    }
+    else {
+        String^ cmd = TRE_Normal + Convert::ToString(_pui->GetId()) + " ORDER BY Treasury.Id ASC;";
+        Tre_UpdateDataGridView(cmd);
+    }
+}
+
+
+/*
+ * Tre_CheckDB()
+ * Check threasury Data base
+ * @param None
+ * @return None
+ */
+void WeAlumni::MainWindow::Tre_CheckDB() {
+    if (DatabasePrecheck::TrePrecheck()) {
+        _TreDB = gcnew Database(Database::DatabaseType::Treasury);
+        Tre_CheckAuth();
+    }
+    else {
+        tre_lbl_error->Text = "错误：无法读取数据库，请重新导入数据库或退出.";
+        tre_lbl_error->ForeColor = System::Drawing::Color::Red;
+        
     }
 }
