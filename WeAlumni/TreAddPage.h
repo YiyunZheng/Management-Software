@@ -14,6 +14,7 @@
   *         4/12/20 Add public user info as input
  *          4/20/20 fix the bug of unable to showing Chinese. Modify language and UI.
  *          4/30/20 Add Staff name to addpage
+ *          5/2/20 Add Record, and handle database exception
  *
  */
 
@@ -47,6 +48,10 @@ namespace WeAlumni {
 			if (_TreDB) {
 				_TreDB->~Database();
 			}
+			if (_DataDB) {
+				_DataDB->~Database();
+			}
+
 		}
 	private: System::Windows::Forms::Label^ lbl_Prompt_Title;
 	private: System::Windows::Forms::Label^ lbl_Prompt_Time;
@@ -357,6 +362,7 @@ namespace WeAlumni {
 		String^ StaffName;
 		PublicUserInfo^ UserInfo;
 		Database^ _TreDB = gcnew Database(Database::DatabaseType::Treasury);
+		Database^ _DataDB;
 
 	// Btn Click function
 	private: 
@@ -367,5 +373,6 @@ namespace WeAlumni {
 	private:
 		Void SetBoxReadOnly();
 		String^ GetUserName;
+		bool AddNewRecord(String^);
 };
 }
