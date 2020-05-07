@@ -1,0 +1,4 @@
+Treasury add page 页面太小,信息被挡
+Teasury info page 点击确认修改, 报错信息一直存在
+点击删除记录或者确认修改后，程序会死机
+有treasury.db文件但会报错database is locked
