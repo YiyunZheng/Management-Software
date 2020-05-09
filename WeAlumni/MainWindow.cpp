@@ -1,4 +1,4 @@
-ï»¿#include "MainWindow.h"
+#include "MainWindow.h"
 #include <vector>
 /*
  * MainWindow.h
@@ -63,9 +63,9 @@ Void WeAlumni::MainWindow::Initialize() {
     OPT_UpdateDataGridView(OPT_SELECT_ALL);
     OPT_GeneralInformation();
     OPT_CheckAuth();
-
     Tre_CheckDB();
     Tre_GeneralInformation();
+    min_GeneralInformation();
 }
 
 /*
@@ -86,9 +86,9 @@ Void WeAlumni::MainWindow::mem_btn_Search_Click(System::Object^ sender, System::
     String^ careerStatus = mem_cmb_CareerStatus->Text;
     String^ major = mem_txt_Major->Text;
     String^ searchAuth = mem_cmb_SearchAuth->Text;
-    String^ cmd = "SELECT Member.Id AS 'MemberId', Member.Status AS 'MemberStatus'," +
-        " Member.Type AS 'MemberType'," + " Member.Name AS 'MemberName'," +
-        " Member.Gender AS 'MemberGender'," + "Member.Email AS 'MemberEmail'" +
+    String^ cmd = "SELECT Member.Id AS '³ÉÔ±±àºÅ', Member.Status AS '³ÉÔ±×´Ì¬'," +
+        " Member.Type AS '³ÉÔ±ÀàĞÍ'," + " Member.Name AS 'ĞÕÃû'," +
+        " Member.Gender AS 'ĞÔ±ğ'," + "Member.Email AS 'Email'" +
         "FROM Member WHERE ";
     String^ cmd2 = "";
 
@@ -103,7 +103,7 @@ Void WeAlumni::MainWindow::mem_btn_Search_Click(System::Object^ sender, System::
     if (searchAuth->Length)   vec.push_back(7);
     if (vec.size() == 0) {
         mem_lbl_error->ForeColor = System::Drawing::Color::Red;
-        mem_lbl_error->Text = "æŸ¥æ— æ­¤äºº";
+        mem_lbl_error->Text = "²éÎŞ´ËÈË";
         mem_lbl_error->Visible = true;
         mem_dataGridView1->DataSource = nullptr;
         return;
@@ -217,7 +217,7 @@ Void WeAlumni::MainWindow::mem_UpdateDataGridView(String^ command) {
     }
     else {
         mem_lbl_error->ForeColor = System::Drawing::Color::Red;
-        mem_lbl_error->Text = "CANNOT FIND MEMBER";
+        mem_lbl_error->Text = "²éÎŞ´ËÈË";
         mem_lbl_error->Visible = true;
         mem_dataGridView1->DataSource = nullptr;
     }
@@ -246,7 +246,7 @@ Void WeAlumni::MainWindow::mem_GeneralInformation() {
         mem_lbl_Count->Text = database->dataReader->GetInt32(0).ToString();
     }
     else {
-        mem_lbl_error->Text = "Can't find data";
+        mem_lbl_error->Text = "ÎŞ·¨²éÕÒÊı¾İ";
         mem_lbl_error->Visible = true;
     }
     database->dataReader->Close();
@@ -284,13 +284,14 @@ Void WeAlumni::MainWindow::stf_btn_Search_Click(System::Object^ sender, System::
     String^ Name = stf_txt_Name->Text;
     String^ Dept = stf_cmb_Dept->Text;
     String^ Auth = stf_cmb_Auth->Text;
+
     String^ command = "SELECT Staff.MemId    AS 'ID', " +
-        "Member.Name    As 'å§“å', " +
-        "Member.Gender  AS 'Gender', " +
+        "Member.Name    As 'ĞÕÃû', " +
+        "Member.Gender  AS 'ĞÔ±ğ', " +
         "Member.Email   AS 'Email', " +
-        "Staff.Dept     As 'Department', " +
-        "Staff.Position As 'Position', " +
-        "Staff.Auth     As 'Auth' " +
+        "Staff.Dept     As 'ËùÔÚ²¿ÃÅ', " +
+        "Staff.Position As 'Ö°Î»Ö°Îñ', " +
+        "Staff.Auth     As 'È¨ÏŞµÈ¼¶' " +
         "FROM   Member, Staff " +
         "WHERE Staff.MemId = Member.Id AND ";
     BindingSource^ bSource = gcnew BindingSource();
@@ -305,7 +306,7 @@ Void WeAlumni::MainWindow::stf_btn_Search_Click(System::Object^ sender, System::
         mem_UpdateDataGridView(STF_SELECT_ALL);
         stf_dataGridView->DataSource = nullptr;
         stf_lbl_Error->Visible = true;
-        stf_lbl_Error->Text = "CANNOT FIND STAFF";
+        stf_lbl_Error->Text = "ÕÒ²»µ½Êı¾İ";
         return;
     }
 
@@ -313,7 +314,7 @@ Void WeAlumni::MainWindow::stf_btn_Search_Click(System::Object^ sender, System::
     for (auto i : vec) {
         if (vec.size() != 1 && flag) cmd2 += " AND ";
         switch (i) {
-        case 0: cmd2 += "Staff.MemId = " + Convert::ToInt32(Id); break;
+        case 0: cmd2 += "Staff.MemId = '" + Id + "' "; break;
         case 1: cmd2 += "Member.Name = '" + Name + "' "; break;
         case 2: cmd2 += "Staff.Dept = '" + Dept + "' "; break;
         case 3: cmd2 += "Staff.Auth = '" + Auth + "' "; break;
@@ -386,7 +387,7 @@ Void WeAlumni::MainWindow::stf_GeneralInformation() {
         stf_lbl_Count->Text = database->dataReader->GetInt32(0).ToString();
     }
     else {
-        stf_lbl_Error->Text = "Can't find the data";
+        stf_lbl_Error->Text = "ÕÒ²»µ½Êı¾İ";
         stf_lbl_Error->Visible = true;
     }
     database->dataReader->Close();
@@ -420,7 +421,7 @@ Void WeAlumni::MainWindow::stf_UpdateDataGridView(String^ command) {
         stf_dataGridView->DataSource = nullptr;
         stf_lbl_Error->Visible = true;
         stf_lbl_Error->ForeColor = System::Drawing::Color::Red;
-        stf_lbl_Error->Text = "CANNOT FIND STAFF";
+        stf_lbl_Error->Text = "ÕÒ²»µ½Êı¾İ";
     }
 }
 
@@ -601,7 +602,7 @@ Void WeAlumni::MainWindow::ord_GeneralInformation() {
 /*
  *  Record
  */
- 
+
  /*
   * Rec_CheckAuth()
   * Check order Auth. If Level == 1 2, 3, user can't see the record mainWindow.
@@ -614,21 +615,21 @@ Void WeAlumni::MainWindow::Rec_CheckAuth() {
         pan_record->Visible = false;
     }
 }
- /*
- * Rec_btn_Search_Click
- *
- * This method will try to search from Record table for the record of this record
- * Then update record to rec_DataGridView
- */
+/*
+* Rec_btn_Search_Click
+*
+* This method will try to search from Record table for the record of this record
+* Then update record to rec_DataGridView
+*/
 Void WeAlumni::MainWindow::Rec_btn_Search_Click(System::Object^ sender, System::EventArgs^ e) {
     String^ recId = Rec_txt_RecId->Text;
     String^ stfId = Rec_txt_StfId->Text;
     String^ name = Rec_txt_MemName->Text;
     String^ dept = Rec_txt_department->Text;
-    String^ cmd = "SELECT Record.Id AS 'ID', Record.Time AS 'ç™»è®°æ—¶é—´'," +
-        " Record.StfId AS 'å‘˜å·¥ç¼–å·'," + " Record.Memname AS 'å‘˜å·¥å§“å'," +
-        " Staff.Dept AS 'æ‰€åœ¨éƒ¨é—¨'," + "Staff.Position AS 'èŒä½èŒåŠ¡'," +
-        " Record.Action AS 'æ“ä½œå†…å®¹'" + "FROM Record, Staff WHERE Record.MemId = Staff.MemId AND ";
+    String^ cmd = "SELECT Record.Id AS 'ID', Record.Time AS 'µÇ¼ÇÊ±¼ä'," +
+        " Record.StfId AS 'Ô±¹¤±àºÅ'," + " Record.Memname AS 'Ô±¹¤ĞÕÃû'," +
+        " Staff.Dept AS 'ËùÔÚ²¿ÃÅ'," + "Staff.Position AS 'Ö°Î»Ö°Îñ'," +
+        " Record.Action AS '²Ù×÷ÄÚÈİ'" + "FROM Record, Staff WHERE Record.MemId = Staff.MemId AND ";
     String^ cmd1 = "";
 
     std::vector<int> vec;
@@ -638,7 +639,7 @@ Void WeAlumni::MainWindow::Rec_btn_Search_Click(System::Object^ sender, System::
     if (dept->Length)            vec.push_back(3);
     if (vec.size() == 0) {
         Rec_lbl_Error->ForeColor = System::Drawing::Color::Red;
-        Rec_lbl_Error->Text = "æœªæ‰¾åˆ°è®°å½•";
+        Rec_lbl_Error->Text = "Î´ÕÒµ½¼ÇÂ¼";
         Rec_lbl_Error->Visible = true;
         Rec_dataGridView->DataSource = nullptr;
         return;
@@ -680,7 +681,7 @@ Void WeAlumni::MainWindow::Rec_btn_Clear_Click(System::Object^ sender, System::E
  * by double clicking specific row of recc_dataGridView, a corresponding RecInfoPage will show up.
  */
 Void WeAlumni::MainWindow::Rec_dataGridView_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-    RecInfoPage^ rip = gcnew RecInfoPage(Convert::ToInt32(Rec_dataGridView->CurrentRow->Cells[0]->Value),_pui);
+    RecInfoPage^ rip = gcnew RecInfoPage(Convert::ToInt32(Rec_dataGridView->CurrentRow->Cells[0]->Value), _pui);
     rip->ShowDialog();
     Rec_UpdateDataGridView(REC_SELECT_ALL);
     Rec_GeneralInformation();
@@ -712,7 +713,7 @@ Void WeAlumni::MainWindow::Rec_UpdateDataGridView(String^ command) {
     }
     else {
         Rec_lbl_Error->ForeColor = System::Drawing::Color::Red;
-        Rec_lbl_Error->Text = "æœªæ‰¾åˆ°è®°å½•";
+        Rec_lbl_Error->Text = "Î´ÕÒµ½¼ÇÂ¼";
         Rec_lbl_Error->Visible = true;
         Rec_dataGridView->DataSource = nullptr;
     }
@@ -741,7 +742,7 @@ Void WeAlumni::MainWindow::Rec_GeneralInformation() {
         rec_lbl_Count->Text = database->dataReader->GetInt32(0).ToString();
     }
     else {
-        Rec_lbl_Error->Text = "æ— ç›¸å…³æ•°æ®";
+        Rec_lbl_Error->Text = "ÎŞÏà¹ØÊı¾İ";
         Rec_lbl_Error->Visible = true;
     }
     database->dataReader->Close();
@@ -800,17 +801,17 @@ Void WeAlumni::MainWindow::OPT_btn_Search_Click(System::Object^ sender, System::
     String^ MemName = OPT_txt_MemName->Text;
     String^ CardNumber = OPT_txt_CardNumber->Text;
 
-    String^ command = "SELECT OPT.Id                                                        AS 'OPTç¼–å·', " +
-                             "OPT.Status                                                    AS 'çŠ¶æ€', " +
-                             "(SELECT Member.Name FROM Member WHERE Member.Id = OPT.MemId)  AS 'æˆå‘˜å§“å', " +
-                             "(SELECT Member.Name FROM Member " +
-                             "INNER JOIN Staff INNER JOIN OPT " +
-                             "WHERE Member.Id = Staff.MemId AND Staff.MemId = OPT.StfId)    AS 'å‘˜å·¥å§“å', " +
-                             "OPT.StartDate                                                 AS 'å¼€å§‹æ—¥æœŸ', " +
-                             "OPT.EndDate                                                   AS 'ç»“æŸæ—¥æœŸ', " +
-                             "OPT.Title                                                     AS 'å¤´è¡”', " +
-                             "OPT.Position                                                  AS 'èŒä½' " +
-                      "FROM OPT INNER JOIN Member WHERE ";
+    String^ command = "SELECT OPT.Id                                                        AS 'OPT±àºÅ', " +
+        "OPT.Status                                                    AS '×´Ì¬', " +
+        "(SELECT Member.Name FROM Member WHERE Member.Id = OPT.MemId)  AS '³ÉÔ±ĞÕÃû', " +
+        "(SELECT Member.Name FROM Member " +
+        "INNER JOIN Staff INNER JOIN OPT " +
+        "WHERE Member.Id = Staff.MemId AND Staff.MemId = OPT.StfId)    AS 'Ô±¹¤ĞÕÃû', " +
+        "OPT.StartDate                                                 AS '¿ªÊ¼ÈÕÆÚ', " +
+        "OPT.EndDate                                                   AS '½áÊøÈÕÆÚ', " +
+        "OPT.Title                                                     AS 'Í·ÏÎ', " +
+        "OPT.Position                                                  AS 'Ö°Î»' " +
+        "FROM OPT INNER JOIN Member WHERE ";
     String^ command2 = "";
 
     std::vector<int> vec;
@@ -906,6 +907,8 @@ Void WeAlumni::MainWindow::OPT_GeneralInformation() {
 }
 
 /*
+<<<<<<< HEAD
+=======
  * OPT_CheckAuth()
  * Check auth of current user
  * @param None
@@ -919,6 +922,7 @@ Void WeAlumni::MainWindow::OPT_CheckAuth() {
 }
 
 /*
+>>>>>>> a683c45b1dcc9c9aa910360d7978338217ec720e
  *  System
  */
 
@@ -977,7 +981,7 @@ Void WeAlumni::MainWindow::Tre_UpdateDataGridView(String^ command) {
     }
     else {
         tre_lbl_error->ForeColor = System::Drawing::Color::Red;
-        tre_lbl_error->Text = "æ— å¯æŸ¥è¯¢çš„è´¢åŠ¡ä¿¡æ¯";
+        tre_lbl_error->Text = "ÎŞ¿É²éÑ¯µÄ²ÆÎñĞÅÏ¢";
         tre_lbl_error->Visible = true;
         tre_dataGridView->DataSource = nullptr;
     }
@@ -993,12 +997,12 @@ Void WeAlumni::MainWindow::Tre_btn_Search_Click(System::Object^ sender, System::
     String^ TreId = tre_txt_treId->Text;
     String^ TreType = tre_cmb_type->Text;
 
-    String^ command = "SELECT Treasury.Id AS 'è´¢åŠ¡ç¼–å·', " +
-        "Treasury.StfName AS 'æˆå‘˜å§“å', " +
-        "Treasury.Time AS 'ç™»è®°æ—¶é—´', " +
-        "Treasury.type AS 'ç±»å‹', " +
-        "Treasury.Amount AS 'é‡‘é¢', " +
-        "Treasury.Comment AS 'å¤‡æ³¨' " +
+    String^ command = "SELECT Treasury.Id AS '²ÆÎñ±àºÅ', " +
+        "Treasury.StfName AS '³ÉÔ±ĞÕÃû', " +
+        "Treasury.Time AS 'µÇ¼ÇÊ±¼ä', " +
+        "Treasury.type AS 'ÀàĞÍ', " +
+        "Treasury.Amount AS '½ğ¶î', " +
+        "Treasury.Comment AS '±¸×¢' " +
         "FROM Treasury WHERE ";
     String^ command2 = "";
 
@@ -1020,7 +1024,7 @@ Void WeAlumni::MainWindow::Tre_btn_Search_Click(System::Object^ sender, System::
         }
         flag = true;
     }
-    
+
     if (!_Auth.Equals(PublicUserInfo::Auth::Level_5)) {
         command2 += " AND Treasury.StfId = " + Convert::ToString(_pui->GetId());
     }
@@ -1117,8 +1121,124 @@ void WeAlumni::MainWindow::Tre_CheckDB() {
         Tre_CheckAuth();
     }
     else {
-        tre_lbl_error->Text = "é”™è¯¯ï¼šæ— æ³•è¯»å–æ•°æ®åº“ï¼Œè¯·é‡æ–°å¯¼å…¥æ•°æ®åº“æˆ–é€€å‡º.";
+        tre_lbl_error->Text = "´íÎó£ºÎŞ·¨¶ÁÈ¡Êı¾İ¿â£¬ÇëÖØĞÂµ¼ÈëÊı¾İ¿â»òÍË³ö.";
         tre_lbl_error->ForeColor = System::Drawing::Color::Red;
 
     }
+}
+
+/*
+ * My Info
+ */
+void WeAlumni::MainWindow::min_EnableChange() {
+    min_lbl_warning->Visible = false;
+    min_btn_accept->Visible = true;
+    min_btn_cancel->Visible = true;
+    min_txt_address1->ReadOnly = false;
+    min_txt_address2->ReadOnly = false;
+    min_txt_city->ReadOnly = false;
+    min_txt_country->ReadOnly = false;
+    min_txt_degree->ReadOnly = false;
+    min_txt_email->ReadOnly = false;
+    min_txt_endtime->ReadOnly = false;
+    min_txt_major1->ReadOnly = false;
+    min_txt_major2->ReadOnly = false;
+    min_txt_phone->ReadOnly = false;
+    min_txt_postal->ReadOnly = false;
+    min_txt_program->ReadOnly = false;
+    min_txt_stdId->ReadOnly = false;
+    min_txt_wechat->ReadOnly = false;
+}
+
+void WeAlumni::MainWindow::min_DisableChange() {
+    min_btn_accept->Visible = false;
+    min_btn_cancel->Visible = false;
+    min_txt_address1->ReadOnly = true;
+    min_txt_address2->ReadOnly = true;
+    min_txt_city->ReadOnly = true;
+    min_txt_country->ReadOnly = true;
+    min_txt_degree->ReadOnly = true;
+    min_txt_email->ReadOnly = true;
+    min_txt_endtime->ReadOnly = true;
+    min_txt_major1->ReadOnly = true;
+    min_txt_major2->ReadOnly = true;
+    min_txt_phone->ReadOnly = true;
+    min_txt_postal->ReadOnly = true;
+    min_txt_program->ReadOnly = true;
+    min_txt_stdId->ReadOnly = true;
+    min_txt_wechat->ReadOnly = true;
+}
+
+void WeAlumni::MainWindow::min_GeneralInformation() {
+    String^ command = "SELECT * FROM Member, Staff " +
+        "WHERE Member.Id = " + _pui->GetId() + " AND Staff.MemId = Member.Id";
+    try {
+        database->ReadData(command);
+    }
+    catch (Exception^) {
+        min_lbl_warning->Text = "ÎŞ·¨¶ÁÈ¡ÓÃ»§Êı¾İ";
+        min_btn_changeInfo->Enabled = false;
+        return;
+    }
+    min_lbl_Id->Text = Convert::ToString(_pui->GetId());
+    min_lbl_name->Text = _pui->GetName();
+    min_lbl_auth->Text = _pui->GetAuthName();
+    min_lbl_dept->Text = database->dataReader[25]->ToString();
+    min_lbl_position->Text = database->dataReader[26]->ToString();
+    min_lbl_gender->Text = database->dataReader[4]->ToString();
+    min_lbl_birth->Text = database->dataReader[5]->ToString();
+    min_txt_address1->Text = database->dataReader[10]->ToString();
+    min_txt_address2->Text = database->dataReader[11]->ToString();
+    min_txt_city->Text = database->dataReader[12]->ToString();
+    min_txt_country->Text = database->dataReader[9]->ToString();
+    min_txt_degree->Text = database->dataReader[17]->ToString();
+    min_txt_email->Text = database->dataReader[6]->ToString();
+    min_txt_endtime->Text = database->dataReader[16]->ToString();
+    min_txt_major1->Text = database->dataReader[18]->ToString();
+    min_txt_major2->Text = database->dataReader[19]->ToString();
+    min_txt_phone->Text = database->dataReader[7]->ToString();
+    min_txt_postal->Text = database->dataReader[13]->ToString();
+    min_txt_program->Text = database->dataReader[15]->ToString();
+    min_txt_stdId->Text = database->dataReader[14]->ToString();
+    min_txt_wechat->Text = database->dataReader[8]->ToString();
+}
+
+Void WeAlumni::MainWindow::min_btn_accept_Click(System::Object^ sender, System::EventArgs^ e) {
+    String^ command = "UPDATE Member " +
+        "SET Email = '" + min_txt_email->Text +
+        "',Phone = '" + min_txt_phone->Text +
+        "',Wechat= '" + min_txt_wechat->Text +
+        "',Country= '" + min_txt_country->Text +
+        "',Address1= '" + min_txt_address1->Text +
+        "',Address2= '" + min_txt_address2->Text +
+        "',City= '" + min_txt_city->Text +
+        "',Postal= '" + min_txt_postal->Text +
+        "',StdId= '" + min_txt_stdId->Text +
+        "',Program= '" + min_txt_program->Text +
+        "',EndDate= '" + min_txt_endtime->Text +
+        "',Degree= '" + min_txt_degree->Text +
+        "',Major1= '" + min_txt_major1->Text +
+        "',Major2= '" + min_txt_major2->Text +
+        "' WHERE Id = " + _pui->GetId();
+    try {
+        database->UpdateData(command);
+    }
+    catch (Exception^ e) {
+        min_lbl_warning->Visible = true;
+        min_lbl_warning->ForeColor = Color::Red;
+        min_lbl_warning->Text = e->Message;//"¸üĞÂÊı¾İÊ§°Ü£¡";
+        min_DisableChange();
+        min_btn_changeInfo->Enabled = false;
+        min_GeneralInformation();
+        return;
+    }
+}
+
+Void WeAlumni::MainWindow::min_btn_cancel_Click(System::Object^ sender, System::EventArgs^ e) {
+    min_DisableChange();
+    min_GeneralInformation();
+}
+
+Void WeAlumni::MainWindow::min_btn_changeInfo_Click(System::Object^ sender, System::EventArgs^ e) {
+    min_EnableChange();
 }
