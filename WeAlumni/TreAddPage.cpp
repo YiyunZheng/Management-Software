@@ -12,6 +12,7 @@
  *          4/20/20 fix the bug of unable to showing Chinese. Modify language and UI.
  *          4/30/20 Add Staff name to addpage
  *          5/2/20 Add Record, and handle database exception
+ *          5/9/20 Fix the bug causes database lock. Closing all reader after read data.
  *
  */
 
@@ -52,6 +53,7 @@ System::Void WeAlumni::TreAddPage::btn_Confirm_Click(System::Object^ sender, Sys
         lbl_Error->Text = "Treasury数据库错误："+exception->Message;
         lbl_Error->ForeColor = Color::Red;
         lbl_Error->Visible = true;
+        CloseAllReader();
         return;
     }
 
@@ -64,7 +66,6 @@ System::Void WeAlumni::TreAddPage::btn_Confirm_Click(System::Object^ sender, Sys
         lbl_Error->Text = "成功：新记录已成功添加";
         lbl_Error->ForeColor = Color::Green;
         lbl_Error->Visible = true;
-
         String^ actionRecord = "添加新财务信息，编号 " + OrderId;
         if (AddNewRecord(actionRecord)) {
             try {
@@ -74,11 +75,13 @@ System::Void WeAlumni::TreAddPage::btn_Confirm_Click(System::Object^ sender, Sys
             catch (Exception^ exception) {
                 lbl_Error->Text = "Log数据库错误:" + exception->Message;
                 lbl_Error->ForeColor = System::Drawing::Color::Red;
+                CloseAllReader();
                 return;
             }
         }
         
-
+        
+        CloseAllReader();
         btn_Confirm->Enabled = false;
         btn_Cancel->Text = "Exit";
         SetBoxReadOnly();
@@ -118,7 +121,6 @@ System::Void WeAlumni::TreAddPage::SetBoxReadOnly() {
  */
 
 bool WeAlumni::TreAddPage::AddNewRecord(String^ action) {
-    _DataDB = gcnew Database(Database::DatabaseType::Data);
     int status = -1;
     bool result;
     int RecordId = _DataDB->GetNextId(Database::DatabaseTable::Record);
@@ -136,9 +138,7 @@ bool WeAlumni::TreAddPage::AddNewRecord(String^ action) {
     catch (Exception^ exception) {
         lbl_Error->Text = "Record错误: "+ exception->Message;
         lbl_Error->ForeColor = Color::Red;
-        if (_DataDB) {
-            _DataDB->~Database();
-        }
+        CloseAllReader();
         return false;
     }
 
@@ -151,11 +151,16 @@ bool WeAlumni::TreAddPage::AddNewRecord(String^ action) {
         lbl_Error->ForeColor = Color::Red;
         result = false;
     }
-    if (_DataDB) {
-        _DataDB->~Database();
-    }
+    CloseAllReader();
     return result;
 }
 
 
-
+void WeAlumni::TreAddPage::CloseAllReader() {
+    if (_DataDB && _DataDB->dataReader) {
+        _DataDB->dataReader->Close();
+    }
+    if (_TreDB && _TreDB->dataReader) {
+        _TreDB->dataReader->Close();
+    }
+}

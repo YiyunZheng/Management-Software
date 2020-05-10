@@ -15,6 +15,8 @@
  *          4/12/20 Add tre DB check, authority and public user info
  *          4/20/20 fix the bug of unable to showing Chinese. Modify language and UI.
  *          5/2/20 Add Record, and handle database exception
+ *          5/9/20 Fix the bug causes database lock. Closing all reader after read data.
+ *                 Modify UI
  *
  */
 
@@ -76,7 +78,7 @@ namespace WeAlumni {
 
 
 
-	private: System::Windows::Forms::TextBox^ txt_Type;
+
 	private: System::Windows::Forms::RichTextBox^ txt_Comment;
 
 	private: System::Windows::Forms::Label^ lbl_Id;
@@ -97,6 +99,9 @@ namespace WeAlumni {
 	private: System::Windows::Forms::TextBox^ txt_Position;
 	private: System::Windows::Forms::TextBox^ txt_Dept;
 	private: System::Windows::Forms::TextBox^ txt_StfName;
+	private: System::Windows::Forms::ComboBox^ cmb_Type;
+
+
 
 	private:
 		/// <summary>
@@ -136,7 +141,6 @@ namespace WeAlumni {
 			this->lbl_Amount = (gcnew System::Windows::Forms::Label());
 			this->lbl_Comment = (gcnew System::Windows::Forms::Label());
 			this->lbl_Type = (gcnew System::Windows::Forms::Label());
-			this->txt_Type = (gcnew System::Windows::Forms::TextBox());
 			this->lbl_Prompt_Type = (gcnew System::Windows::Forms::Label());
 			this->btn_Cancle = (gcnew System::Windows::Forms::Button());
 			this->btn_Accpet = (gcnew System::Windows::Forms::Button());
@@ -144,6 +148,7 @@ namespace WeAlumni {
 			this->txt_Position = (gcnew System::Windows::Forms::TextBox());
 			this->txt_Dept = (gcnew System::Windows::Forms::TextBox());
 			this->txt_StfName = (gcnew System::Windows::Forms::TextBox());
+			this->cmb_Type = (gcnew System::Windows::Forms::ComboBox());
 			this->SuspendLayout();
 			// 
 			// lbl_Prompt_Title
@@ -434,17 +439,6 @@ namespace WeAlumni {
 			this->lbl_Type->Size = System::Drawing::Size(0, 36);
 			this->lbl_Type->TabIndex = 31;
 			// 
-			// txt_Type
-			// 
-			this->txt_Type->Anchor = System::Windows::Forms::AnchorStyles::Top;
-			this->txt_Type->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->txt_Type->Location = System::Drawing::Point(345, 368);
-			this->txt_Type->Name = L"txt_Type";
-			this->txt_Type->Size = System::Drawing::Size(195, 41);
-			this->txt_Type->TabIndex = 30;
-			this->txt_Type->Visible = false;
-			// 
 			// lbl_Prompt_Type
 			// 
 			this->lbl_Prompt_Type->Anchor = System::Windows::Forms::AnchorStyles::Top;
@@ -502,9 +496,9 @@ namespace WeAlumni {
 			this->txt_Position->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->txt_Position->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->txt_Position->Location = System::Drawing::Point(350, 271);
+			this->txt_Position->Location = System::Drawing::Point(345, 271);
 			this->txt_Position->Name = L"txt_Position";
-			this->txt_Position->Size = System::Drawing::Size(189, 41);
+			this->txt_Position->Size = System::Drawing::Size(234, 41);
 			this->txt_Position->TabIndex = 16;
 			this->txt_Position->Visible = false;
 			// 
@@ -522,22 +516,34 @@ namespace WeAlumni {
 			this->txt_StfName->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->txt_StfName->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->txt_StfName->Location = System::Drawing::Point(350, 201);
+			this->txt_StfName->Location = System::Drawing::Point(345, 201);
 			this->txt_StfName->Name = L"txt_StfName";
-			this->txt_StfName->Size = System::Drawing::Size(189, 41);
+			this->txt_StfName->Size = System::Drawing::Size(234, 41);
 			this->txt_StfName->TabIndex = 17;
 			this->txt_StfName->Visible = false;
+			// 
+			// cmb_Type
+			// 
+			this->cmb_Type->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(134)));
+			this->cmb_Type->FormattingEnabled = true;
+			this->cmb_Type->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"Donation", L"Selling", L"Purchase", L"Other" });
+			this->cmb_Type->Location = System::Drawing::Point(345, 362);
+			this->cmb_Type->Name = L"cmb_Type";
+			this->cmb_Type->Size = System::Drawing::Size(234, 44);
+			this->cmb_Type->TabIndex = 35;
+			this->cmb_Type->Visible = false;
 			// 
 			// TreInfoPage
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(14, 29);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1338, 689);
+			this->Controls->Add(this->cmb_Type);
 			this->Controls->Add(this->lbl_Error);
 			this->Controls->Add(this->btn_Cancle);
 			this->Controls->Add(this->btn_Accpet);
 			this->Controls->Add(this->lbl_Type);
-			this->Controls->Add(this->txt_Type);
 			this->Controls->Add(this->lbl_Prompt_Type);
 			this->Controls->Add(this->lbl_Comment);
 			this->Controls->Add(this->lbl_Amount);
@@ -587,7 +593,7 @@ namespace WeAlumni {
 		PublicUserInfo^ UserInfo;
 		PublicUserInfo::Auth^ Authority;
 		Database^ _TreDB ;
-		Database^ _DataDB;
+		Database^ _DataDB = gcnew Database(Database::DatabaseType::Data);
 
 	// Btn click function
 	private:
@@ -605,6 +611,7 @@ namespace WeAlumni {
 		System::Void WeAlumni::TreInfoPage::SetButtonStatus(bool);
 		System::Void WeAlumni::TreInfoPage::UnableAllBtn();
 		bool AddNewRecord(String^);
+		void CloseAllReader();
 
 
 };

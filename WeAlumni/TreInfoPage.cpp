@@ -11,6 +11,7 @@
  *          4/12/20 Add tre DB check, authority and public user info
  *          4/20/20 fix the bug of unable to showing Chinese. Modify language and UI.
  *          5/2/20 Add Record, and handle database exception
+ *          5/9/20 Fix the bug causes database lock. Closing all reader after read data.
  *
  */
 
@@ -35,6 +36,7 @@ System::Void WeAlumni::TreInfoPage::UpdateInfo(String^ Record_Id) {
         lbl_Error->Text = exception->Message;
         lbl_Error->ForeColor = System::Drawing::Color::Red;
         UnableAllBtn();
+        CloseAllReader();
         return;
     }
     if (Status == 1) {
@@ -59,6 +61,8 @@ System::Void WeAlumni::TreInfoPage::UpdateInfo(String^ Record_Id) {
         UnableAllBtn();
     }
 
+    CloseAllReader();
+
 }
 
 /*
@@ -68,7 +72,6 @@ System::Void WeAlumni::TreInfoPage::UpdateInfo(String^ Record_Id) {
  * @return None
  */
 int WeAlumni::TreInfoPage::UpdateOutsideInfo(String^ SId) {
-    _DataDB = gcnew Database(Database::DatabaseType::Data);
     int Status = -1;
     String^ cmd = "SELECT S.Dept, S.Position, M.Name "
                   "FROM Staff S, Member M "
@@ -79,9 +82,7 @@ int WeAlumni::TreInfoPage::UpdateOutsideInfo(String^ SId) {
     catch (Exception^ exception) {
         lbl_Error->Text = exception->Message;
         lbl_Error->ForeColor = System::Drawing::Color::Red;
-        if (_DataDB) {
-            _DataDB->~Database();
-        }
+        CloseAllReader();
         return -1;
     }
     if (Status == 1) {
@@ -97,10 +98,7 @@ int WeAlumni::TreInfoPage::UpdateOutsideInfo(String^ SId) {
         lbl_Error->ForeColor = System::Drawing::Color::Red;
     }
 
-    if (_DataDB) {
-        _DataDB->~Database();
-    }
-
+    CloseAllReader();
     return Status;
 }
 
@@ -148,7 +146,7 @@ System::Void WeAlumni::TreInfoPage::SetPrivateLabelStatus(bool NewStatus) {
 System::Void WeAlumni::TreInfoPage::SetTextStatus(bool NewStatus) {
     txt_StfId->Visible = NewStatus;
     txt_Time->Visible = NewStatus;
-    txt_Type->Visible = NewStatus;
+    cmb_Type->Visible = NewStatus;
     txt_Amount->Visible = NewStatus;
     txt_Comment->Visible = NewStatus;
 }
@@ -164,14 +162,14 @@ System::Void WeAlumni::TreInfoPage::SetShowToText(bool Mode) {
     if (Mode) {
         txt_StfId->Text = lbl_StfId->Text;
         txt_Time->Text = lbl_Time->Text;;
-        txt_Type->Text = lbl_Type->Text;
+        cmb_Type->Text = lbl_Type->Text;
         txt_Amount->Text = lbl_Amount->Text;
         txt_Comment->Text = lbl_Comment->Text;
     }
     else {
         lbl_StfId->Text = txt_StfId->Text;
         lbl_Time->Text = txt_Time->Text;
-        lbl_Type->Text = txt_Type->Text;
+        lbl_Type->Text = cmb_Type->Text;
         lbl_Amount->Text = txt_Amount->Text;
         lbl_Comment->Text = txt_Comment->Text;
     }
@@ -212,7 +210,7 @@ System::Void WeAlumni::TreInfoPage::btn_Accpet_Click(System::Object^ sender, Sys
         String^ cmd = "UPDATE Treasury "
             "SET StfId = " + txt_StfId->Text + ", "
             "Time = '" + txt_Time->Text + "', "
-            "Type = '" + txt_Type->Text + "', "
+            "Type = '" + cmb_Type->Text + "', "
             "Amount = '" + txt_Amount->Text + "', "
             "Comment = '" + txt_Comment->Text + "' "
             "WHERE Id = " + OrderId + ";";
@@ -221,6 +219,7 @@ System::Void WeAlumni::TreInfoPage::btn_Accpet_Click(System::Object^ sender, Sys
     catch (Exception^ exception) {
         lbl_Error->Text = "Treasury数据库错误：" + exception->Message;
         lbl_Error->ForeColor = System::Drawing::Color::Red;
+        CloseAllReader();
         return;
     }
     if (Status > 0) {
@@ -240,9 +239,12 @@ System::Void WeAlumni::TreInfoPage::btn_Accpet_Click(System::Object^ sender, Sys
             catch (Exception^ exception) {
                 lbl_Error->Text = "Log数据库错误:" + exception->Message;
                 lbl_Error->ForeColor = System::Drawing::Color::Red;
+                CloseAllReader();
                 return;
             }
         }
+        
+        
         
 
     }
@@ -250,6 +252,7 @@ System::Void WeAlumni::TreInfoPage::btn_Accpet_Click(System::Object^ sender, Sys
         lbl_Error->Text = "错误：更改失败.";
         lbl_Error->ForeColor = System::Drawing::Color::Red;
     }
+    CloseAllReader();
  
 }
 /*
@@ -268,12 +271,15 @@ System::Void WeAlumni::TreInfoPage::btn_Delete_Click(System::Object^ sender, Sys
     catch (Exception^ exception) {
         lbl_Error->Text = exception->Message;
         lbl_Error->ForeColor = System::Drawing::Color::Red;
+        CloseAllReader();
         return;
     }
     if (Status == 1) {
         this->Close();
         lbl_Error->Text = "成功：删除成功.";
         lbl_Error->ForeColor = System::Drawing::Color::Green;
+
+ 
         String^ actionRecord = "删除财务记录 " + OrderId;
         if (AddNewRecord(actionRecord)) {
             try {
@@ -283,14 +289,17 @@ System::Void WeAlumni::TreInfoPage::btn_Delete_Click(System::Object^ sender, Sys
             catch (Exception^ exception) {
                 lbl_Error->Text = "Log数据库错误:" + exception->Message;
                 lbl_Error->ForeColor = System::Drawing::Color::Red;
+                CloseAllReader();
                 return;
             }
         }
+        
     }
     else {
         lbl_Error->Text = "错误：删除失败.";
         lbl_Error->ForeColor = System::Drawing::Color::Red;
     }
+    CloseAllReader();
 }
 
 /*
@@ -347,7 +356,7 @@ void WeAlumni::TreInfoPage::CheckDB(String^ OrderId) {
  */
 
 bool WeAlumni::TreInfoPage::AddNewRecord(String^ action) {
-    _DataDB = gcnew Database(Database::DatabaseType::Data);
+    
     int status = -1;
     bool result;
     int RecordId = _DataDB->GetNextId(Database::DatabaseTable::Record);
@@ -366,9 +375,7 @@ bool WeAlumni::TreInfoPage::AddNewRecord(String^ action) {
     catch (Exception^ exception) {
         lbl_Error->Text = "Record错误: " + exception->Message;
         lbl_Error->ForeColor = Color::Red;
-        if (_DataDB) {
-            _DataDB->~Database();
-        }
+        CloseAllReader();
         return false;
     }
 
@@ -381,9 +388,15 @@ bool WeAlumni::TreInfoPage::AddNewRecord(String^ action) {
         lbl_Error->ForeColor = Color::Red;
         result = false;
     }
-    if (_DataDB) {
-        _DataDB->~Database();
-    }
+    CloseAllReader();
     return result;
 }
 
+void WeAlumni::TreInfoPage::CloseAllReader() {
+    if (_DataDB && _DataDB->dataReader) {
+        _DataDB->dataReader->Close();
+    }
+    if (_TreDB && _TreDB->dataReader) {
+        _TreDB->dataReader->Close();
+    }
+}

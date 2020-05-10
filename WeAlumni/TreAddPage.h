@@ -15,6 +15,7 @@
  *          4/20/20 fix the bug of unable to showing Chinese. Modify language and UI.
  *          4/30/20 Add Staff name to addpage
  *          5/2/20 Add Record, and handle database exception
+ *          5/9/20 Modify UI
  *
  */
 
@@ -114,7 +115,7 @@ namespace WeAlumni {
 			this->lbl_Prompt_Title->AutoSize = true;
 			this->lbl_Prompt_Title->Font = (gcnew System::Drawing::Font(L"黑体", 16, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Prompt_Title->Location = System::Drawing::Point(528, 52);
+			this->lbl_Prompt_Title->Location = System::Drawing::Point(534, 46);
 			this->lbl_Prompt_Title->Name = L"lbl_Prompt_Title";
 			this->lbl_Prompt_Title->Size = System::Drawing::Size(308, 48);
 			this->lbl_Prompt_Title->TabIndex = 0;
@@ -126,7 +127,7 @@ namespace WeAlumni {
 			this->lbl_Prompt_Time->AutoSize = true;
 			this->lbl_Prompt_Time->Font = (gcnew System::Drawing::Font(L"黑体", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Prompt_Time->Location = System::Drawing::Point(230, 280);
+			this->lbl_Prompt_Time->Location = System::Drawing::Point(167, 280);
 			this->lbl_Prompt_Time->Name = L"lbl_Prompt_Time";
 			this->lbl_Prompt_Time->Size = System::Drawing::Size(186, 42);
 			this->lbl_Prompt_Time->TabIndex = 2;
@@ -138,7 +139,7 @@ namespace WeAlumni {
 			this->lbl_Prompt_Id->AutoSize = true;
 			this->lbl_Prompt_Id->Font = (gcnew System::Drawing::Font(L"黑体", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Prompt_Id->Location = System::Drawing::Point(230, 151);
+			this->lbl_Prompt_Id->Location = System::Drawing::Point(167, 151);
 			this->lbl_Prompt_Id->Name = L"lbl_Prompt_Id";
 			this->lbl_Prompt_Id->Size = System::Drawing::Size(186, 42);
 			this->lbl_Prompt_Id->TabIndex = 3;
@@ -150,7 +151,7 @@ namespace WeAlumni {
 			this->lbl_Prompt_Comment->AutoSize = true;
 			this->lbl_Prompt_Comment->Font = (gcnew System::Drawing::Font(L"黑体", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Prompt_Comment->Location = System::Drawing::Point(230, 495);
+			this->lbl_Prompt_Comment->Location = System::Drawing::Point(167, 495);
 			this->lbl_Prompt_Comment->Name = L"lbl_Prompt_Comment";
 			this->lbl_Prompt_Comment->Size = System::Drawing::Size(102, 42);
 			this->lbl_Prompt_Comment->TabIndex = 4;
@@ -162,7 +163,7 @@ namespace WeAlumni {
 			this->lbl_Prompt_Amount->AutoSize = true;
 			this->lbl_Prompt_Amount->Font = (gcnew System::Drawing::Font(L"黑体", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Prompt_Amount->Location = System::Drawing::Point(836, 271);
+			this->lbl_Prompt_Amount->Location = System::Drawing::Point(773, 271);
 			this->lbl_Prompt_Amount->Name = L"lbl_Prompt_Amount";
 			this->lbl_Prompt_Amount->Size = System::Drawing::Size(102, 42);
 			this->lbl_Prompt_Amount->TabIndex = 5;
@@ -174,7 +175,7 @@ namespace WeAlumni {
 			this->lbl_Prompt_Type->AutoSize = true;
 			this->lbl_Prompt_Type->Font = (gcnew System::Drawing::Font(L"黑体", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Prompt_Type->Location = System::Drawing::Point(230, 401);
+			this->lbl_Prompt_Type->Location = System::Drawing::Point(167, 401);
 			this->lbl_Prompt_Type->Name = L"lbl_Prompt_Type";
 			this->lbl_Prompt_Type->Size = System::Drawing::Size(102, 42);
 			this->lbl_Prompt_Type->TabIndex = 6;
@@ -186,7 +187,7 @@ namespace WeAlumni {
 			this->lbl_Prompt_StfId->AutoSize = true;
 			this->lbl_Prompt_StfId->Font = (gcnew System::Drawing::Font(L"黑体", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Prompt_StfId->Location = System::Drawing::Point(598, 152);
+			this->lbl_Prompt_StfId->Location = System::Drawing::Point(535, 152);
 			this->lbl_Prompt_StfId->Name = L"lbl_Prompt_StfId";
 			this->lbl_Prompt_StfId->Size = System::Drawing::Size(186, 42);
 			this->lbl_Prompt_StfId->TabIndex = 7;
@@ -198,7 +199,7 @@ namespace WeAlumni {
 			this->lbl_Id->AutoSize = true;
 			this->lbl_Id->Font = (gcnew System::Drawing::Font(L"黑体", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Id->Location = System::Drawing::Point(449, 157);
+			this->lbl_Id->Location = System::Drawing::Point(386, 157);
 			this->lbl_Id->Name = L"lbl_Id";
 			this->lbl_Id->Size = System::Drawing::Size(69, 36);
 			this->lbl_Id->TabIndex = 8;
@@ -210,7 +211,7 @@ namespace WeAlumni {
 			this->lbl_StfId->AutoSize = true;
 			this->lbl_StfId->Font = (gcnew System::Drawing::Font(L"黑体", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_StfId->Location = System::Drawing::Point(816, 152);
+			this->lbl_StfId->Location = System::Drawing::Point(753, 152);
 			this->lbl_StfId->Name = L"lbl_StfId";
 			this->lbl_StfId->Size = System::Drawing::Size(69, 36);
 			this->lbl_StfId->TabIndex = 11;
@@ -223,7 +224,7 @@ namespace WeAlumni {
 				static_cast<System::Byte>(0)));
 			this->cmb_Type->FormattingEnabled = true;
 			this->cmb_Type->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"Donation", L"Selling", L"Purchase", L"Other" });
-			this->cmb_Type->Location = System::Drawing::Point(417, 403);
+			this->cmb_Type->Location = System::Drawing::Point(354, 403);
 			this->cmb_Type->Name = L"cmb_Type";
 			this->cmb_Type->Size = System::Drawing::Size(340, 44);
 			this->cmb_Type->TabIndex = 13;
@@ -233,7 +234,7 @@ namespace WeAlumni {
 			this->txt_Comment->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->txt_Comment->Font = (gcnew System::Drawing::Font(L"黑体", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->txt_Comment->Location = System::Drawing::Point(237, 587);
+			this->txt_Comment->Location = System::Drawing::Point(174, 587);
 			this->txt_Comment->Name = L"txt_Comment";
 			this->txt_Comment->Size = System::Drawing::Size(1023, 98);
 			this->txt_Comment->TabIndex = 14;
@@ -244,7 +245,7 @@ namespace WeAlumni {
 			this->txt_Time->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->txt_Time->Font = (gcnew System::Drawing::Font(L"黑体", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->txt_Time->Location = System::Drawing::Point(444, 273);
+			this->txt_Time->Location = System::Drawing::Point(381, 273);
 			this->txt_Time->Name = L"txt_Time";
 			this->txt_Time->Size = System::Drawing::Size(340, 49);
 			this->txt_Time->TabIndex = 15;
@@ -254,7 +255,7 @@ namespace WeAlumni {
 			this->txt_Amount->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->txt_Amount->Font = (gcnew System::Drawing::Font(L"黑体", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->txt_Amount->Location = System::Drawing::Point(1030, 273);
+			this->txt_Amount->Location = System::Drawing::Point(967, 273);
 			this->txt_Amount->Name = L"txt_Amount";
 			this->txt_Amount->Size = System::Drawing::Size(251, 49);
 			this->txt_Amount->TabIndex = 16;
@@ -264,7 +265,7 @@ namespace WeAlumni {
 			this->btn_Confirm->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->btn_Confirm->Font = (gcnew System::Drawing::Font(L"黑体", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->btn_Confirm->Location = System::Drawing::Point(788, 740);
+			this->btn_Confirm->Location = System::Drawing::Point(725, 740);
 			this->btn_Confirm->Name = L"btn_Confirm";
 			this->btn_Confirm->Size = System::Drawing::Size(199, 103);
 			this->btn_Confirm->TabIndex = 17;
@@ -277,7 +278,7 @@ namespace WeAlumni {
 			this->btn_Cancel->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->btn_Cancel->Font = (gcnew System::Drawing::Font(L"黑体", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->btn_Cancel->Location = System::Drawing::Point(1061, 740);
+			this->btn_Cancel->Location = System::Drawing::Point(998, 740);
 			this->btn_Cancel->Name = L"btn_Cancel";
 			this->btn_Cancel->Size = System::Drawing::Size(199, 103);
 			this->btn_Cancel->TabIndex = 18;
@@ -291,7 +292,7 @@ namespace WeAlumni {
 			this->lbl_Error->AutoSize = true;
 			this->lbl_Error->Font = (gcnew System::Drawing::Font(L"黑体", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Error->Location = System::Drawing::Point(243, 773);
+			this->lbl_Error->Location = System::Drawing::Point(180, 773);
 			this->lbl_Error->Name = L"lbl_Error";
 			this->lbl_Error->Size = System::Drawing::Size(0, 36);
 			this->lbl_Error->TabIndex = 19;
@@ -302,7 +303,7 @@ namespace WeAlumni {
 			this->lbl_StfName->AutoSize = true;
 			this->lbl_StfName->Font = (gcnew System::Drawing::Font(L"黑体", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_StfName->Location = System::Drawing::Point(1195, 147);
+			this->lbl_StfName->Location = System::Drawing::Point(1094, 152);
 			this->lbl_StfName->Name = L"lbl_StfName";
 			this->lbl_StfName->Size = System::Drawing::Size(69, 36);
 			this->lbl_StfName->TabIndex = 21;
@@ -314,7 +315,7 @@ namespace WeAlumni {
 			this->lbl_Prompt_StfName->AutoSize = true;
 			this->lbl_Prompt_StfName->Font = (gcnew System::Drawing::Font(L"黑体", 14, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->lbl_Prompt_StfName->Location = System::Drawing::Point(977, 147);
+			this->lbl_Prompt_StfName->Location = System::Drawing::Point(876, 152);
 			this->lbl_Prompt_StfName->Name = L"lbl_Prompt_StfName";
 			this->lbl_Prompt_StfName->Size = System::Drawing::Size(186, 42);
 			this->lbl_Prompt_StfName->TabIndex = 20;
@@ -362,7 +363,7 @@ namespace WeAlumni {
 		String^ StaffName;
 		PublicUserInfo^ UserInfo;
 		Database^ _TreDB = gcnew Database(Database::DatabaseType::Treasury);
-		Database^ _DataDB;
+		Database^ _DataDB = gcnew Database(Database::DatabaseType::Data);
 
 	// Btn Click function
 	private: 
@@ -374,5 +375,6 @@ namespace WeAlumni {
 		Void SetBoxReadOnly();
 		String^ GetUserName;
 		bool AddNewRecord(String^);
+		void CloseAllReader();
 };
 }
